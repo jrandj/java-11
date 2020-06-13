@@ -2,6 +2,19 @@
 
 ## Java SE 11 Programmer I
 
+- [Understanding Java Technology and environment](#Understanding-Java-Technology-and-environment)
+- [Creating a Simple Java Program](#Creating-a-Simple-Java-Program)
+- [Working With Java Primitive Data Types and String APIs](#Working-With-Java-Primitive-Data-Types-and-String-APIs)
+- [Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
+- [Working with Java Arrays](#Working-with-Java-Arrays)
+- [Describing and Using Objects and Classes](#Describing-and-Using-Objects-and-Classes)
+- [Creating and Using Methods](#Creating-and-Using-Methods) 
+- [Applying Encapsulation](#Applying-Encapsulation) 
+- [Reusing Implementations Through Inheritance](#Reusing-Implementations-Through-Inheritance) 
+- [Programming Abstractly Through Interfaces](#Programming-Abstractly-Through-Interfaces) 
+- [Handling Exception](#Handling-Exception) 
+- [Understanding Modules](#Creating-and-Using-Methods) 
+
 ### Understanding Java Technology and environment
 
 ### Creating a Simple Java Program
@@ -206,6 +219,67 @@
 1. If there are no more references to an Object, the JVM concludes that the object is not required anymore and is marked as **garbage**. The object is then removed using **garbage collection**.
 
 ### Creating and Using Methods
+
+1. The basic structure of a method is shown below:
+
+    ```java
+    returnType methodName(parameters){
+        methodBody
+    ```
+
+1. The method must return a value of the type specified, with the following exceptions:
+    * If the type is numeric then the return value can be one of any other numeric type as long as the type of the return value is smaller than the declared type.
+    * Wrapper classes and primitives are interchangable.
+    * A subtype of the declared type can be returned (referred to as **covariant return**).
+
+1. The method signature includes the method name and its ordered list of parameter types. Where multiple methods exist with the same name but different parameter types, it is said that the class has **overloaded** the method name.
+
+1. If the type but not exact number of parameters is known, the varargs syntax can be used. This is represented by 3 dots after a data type. Restrictions on the usage of varargs are:
+    * A method cannot have more than 1 varargs parameter.
+    * The varargs parameter must be the last parameter in the parameter list.
+
+1. The following rules used by the compiler to disambiguate method calls to overloaded methods:
+    * A compilation error will occur if the compiler is not able to successfully disambiguate a particular method call.
+    * If the compiler finds a method whose parameter list is an exact match to the argument list of the method call, that method is selected.
+    * If more than one method is capable of accepting a method call and none of them are an exact match, the one that is most specific is chosen by the compiler.
+    * Higher priority is given to primitive versions if the argument can be widened to the method parameter type, this occurs before autoboxing is considered.
+    * Autoboxing is considered before varargs.
+
+1. When a new instance of a class is created, the JVM does four things:
+    * Checks if the class has been initialised, if not, loads and initialises the class.
+    * Allocates the memory to hold the instance variables of the class in the heap space.
+    * Initialises the instance variables to their default values.
+    * Gives the instance an opportunity to set the values of the instance variables as per the instance initialisers and constructors.
+
+1. An instance initialiser is shown below:
+
+    ```java
+    class TestClass{
+        {
+            System.out.println("In instance initialiser");
+        }
+    }
+
+    ```
+
+1. An instance variable is not allowed to use the value of a variable if that variable is declared below the initialiser. It can assign a value to such a variable. An instance initialiser is not expected to throw any exceptions. Instance initialisers should generally be avoided, and a well designed class should not need to use them.
+
+1. A constructor is a method that always has the same name as the class, and does not have a return type.
+
+1. A no argument constructor is defined by default only if no constructors are provided explicitly.
+
+1. Constructors can be overloaded through **constructor overloading**. When a constructor calls another constructor of the same class, this is done with the **this** keyword and is called **constructor chaining**. The call to another constructor must be the first line of code in a constructor.
+
+1. Java forces the programmer to assign a value to a final variable explicitly. A static variable can be used by other classes only after the class is loaded made ready to use. You can assign a value to a final static variable at the time of declaration or in any one of the **static initialisers**.
+
+1. Access to static members is decided by the compiler at compile time by checking the declared type of the variable. This is referred to as **static binding**. Static binding uses type information to bind a method to a method call, as opposed to **dynamic binding** which takes into account the actual object.
+
+1. The first step in creating an instance of a class is to initialise the class itself. Whenever the JVM encounters the usage of a class for the first time, it allocates and initialises space for the static fields of that class. The rules for static blocks:
+    * A class can have any number of static blocks. They are executed in the order that they appear in the class.
+    * A static block can access all static variables and static methods of the class. However, if the declaration of a static variable appears after the static block, then only the value can be set.
+    * If the class has a superclass, and the superclass hasn't been initialised already, the JVM will initialise the superclass first.
+    * There is no way to access or refer to a static block. It can only be invoked by the JVM, and only once.
+
 
 ### Applying Encapsulation
 
