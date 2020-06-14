@@ -28,13 +28,13 @@
     | Date Type | Size    | Description                                                             | Sample                  |
     |-----------|---------|-------------------------------------------------------------------------|-------------------------|
     | byte      | 1 byte  | -128 to 127                                                             | -1, 0, 1                |
-    | short     | 2 bytes | -32,768 to 32,767                                                       | 0, 1, 2, 'a', '\u00061' |
-    | int       | 4 bytes | -2,147,483,648 to 2,147,483,647                                         | -1, 2, 3                |
-    | long      | 8 bytes | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807                 | -1, 2, 3                |
-    | float     | 4 bytes | Stores fractional numbers. Sufficient for storing 6 to 7 decimal digits | -1, 2, 3                |
-    | double    | 8 bytes | Stores fractional numbers. Sufficient for storing 15 decimal digits     | 1.1f, 2.0f              |
-    | boolean   | 1 bit   | Stores true or false values                                             | 1.1, 2.0                |
-    | char      | 2 bytes | Stores a single character                                               | true, false             |
+    | short     | 2 bytes | -32,768 to 32,767                                                       | -1, 0, 1                |
+    | int       | 4 bytes | -2,147,483,648 to 2,147,483,647                                         | -1, 0, 1                |
+    | long      | 8 bytes | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807                 | -1, 0, 1                |
+    | float     | 4 bytes | Stores fractional numbers. Sufficient for storing 6 to 7 decimal digits | 1.1f, 2.0f              |
+    | double    | 8 bytes | Stores fractional numbers. Sufficient for storing 15 decimal digits     | 1.1d, 2.0d              |
+    | boolean   | 1 bit   | Stores true or false values                                             | true, false             |
+    | char      | 2 bytes | Stores a single character                                               | '\u0000', 'a'           |
 
     Wrapper classes exist for Byte, Short, Integer, Long, Float and Double.
 
@@ -49,7 +49,7 @@
 
 1. Assigning a smaller type to a larger type is known as **implicit widening conversion** as no cast is required. To assign a larger type to a smaller type, for a compile time constant (i.e. final) the compiler will automatically narrow the value. If the source variable is not a constant then a cast is required, this is known as **explicit narrowing**. Determining the value that will actually be assigned when doing an explicit can be complicated.
 
-1. A string is an object if class java.lang.String. String is a final class and implements java.lang.CharSequence. String is immutable so the value cannot be changed after instantiating.
+1. A string is an object of class java.lang.String. String is a final class and implements java.lang.CharSequence. String is immutable so the value cannot be changed after instatiation.
 
 1. A string can be instantiated using:
     ```java
@@ -152,7 +152,7 @@
     | Ternary       | ternary              | ? :                                     |
     | Assignment    | assignment           | = += -= *= /= %= &= ^= \|= <<= >>= >>>= |
 
-1. Java applies the rules of **numeric promotion** while working with operators that deal with numeric values. **Unary numeric promotion** occurs if an operand is smaller than int, the operand is automatically promoted to int. **Binary numeric promotion** occurs if one of the promoted operands is larger than int, and causes both operands to be promoted to the larger operand.
+1. Java applies the rules of **numeric promotion** while working with operators that deal with numeric values. **Unary numeric promotion** occurs if an operand is smaller than int, and causes the operand to be automatically promoted to int. **Binary numeric promotion** occurs if one of the promoted operands is larger than int, and causes both operands to be promoted to the larger operand.
 
 1. In the case of a Dangling Else statement, the Else is associated to the nearest if statement.
 
@@ -200,7 +200,7 @@
 1. In Java if you don't specify any reference variable explicitly within any instance method, the JVM assumes that you mean to access the same object for which the method has been invoked. You can make this explicit with the **this** keyword.
 
 1. The structure of a Java source file is:
-    * Zero one package statements.
+    * At most one package statement.
     * Zero or more import statements.
     * One or more reference type (i.e. class, interface, or enum) definitions.
 
@@ -283,7 +283,79 @@
 
 ### Applying Encapsulation
 
+1. Encapsulation, Inheritance and Polymorphism are the three pillars of Object-Orientated Programming.
+
+1. Encapsulation is about restricting direct access to an objects data fields. This is achieved through the use of access modifiers. Access modifiers and their impact on accessibility are shown below:
+
+    | Modifier    | Class | Package | Subclass | World |
+    |-------------|-------|---------|----------|-------|
+    | public      | Y     | Y       | Y        | Y     |
+    | protected   | Y     | Y       | Y        | N     |
+    | no modifier | Y     | Y       | N        | N     |
+    | private     | Y     | N       | N        | N     |
+
+1. A top level class, interface or enum can only have a public or default access modifier.
+
+1. Members of an interface are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. From Java 9 an interface can have private methods.
+
+1. Enum constants are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. Enum constructors are always private.
+
+1. Encapsulation encourages loose coupling between classes. If the functionality of a class is exposed through methods, there are two advantages:
+    * The implementation can be modified without users being aware (i.e. the implementation details of the functionality are hidden from the users).
+    * The value of a variable can be ensured to be consistant with the business logic of the class. For example you could restrict setting the age of a Person class instance from being a negative number.
+
 ### Reusing Implementations Through Inheritance
+
+1. A class defines a type, and contains a state (the instance fields) and the implementation (the methods). Thus, inheritance could be of state, implementation or type.
+
+1. Only a class can contain state and therefore, only a class can extend another class. Java restricts a class from extending more than one class, so it is said that Java does not support multiple inheritance of state.
+
+1. A class can inherit implementation by extending a class and/or by implementating interfaces. This is one form of multiple implementation inheritance.
+
+1. Java allows you to define a type using an interface as well as a class, so Java supports multiple inheritance of type.
+
+1. To inherit features from another class, that class is extended using the extends keyword. Constructors, static and instance initialisers of a class are not considered members of a class so are not inherited by a subclass. Only class members that are visible to another class as per the rules of access modifiers are inherited in a subclass.
+
+1. Note that when the JVM initialises a class, memory is allocated for all instance variables irrespective of whether they will be accessible.
+
+1. A subclass cannot be initialised before its parent. A call to super() is automatically inserted by the compiler in the first line of the constructor, if no other call is provided.
+
+1. The order of initialisation for loading a class is summarised below:
+    * If there is a super class, initialise static fields and execute static initialisers of the super class in the order of their appearance.
+    * Initialise static fields and execute static initialisers of the class in the order of their appearance.
+    * If there is a super class, initialise the instance fields and execute instance initialisers of the super class in the order of their appearance.
+    * Execute the super class's constructor.
+    * Initialise the instance fields and execute instance initialisers of the class in the order of their appearance.
+    * Execute class constructor.
+
+1. An abstract class is used to capture common features of multiple related object types while knowing that no object that exhibits only the feature captured in the abstract class can actually exist.
+
+1. An abstract method allows you to capture declaration without providing implementation.
+
+1. A summary of the application of access modifiers, final, abstract and static keywords is shown below:
+    * An abstract class doesn't have to have an abstract method but if a class has an abstract method, it must be declared abstract. In other words, a concrete class cannot have an abstract method.
+    * An abstract class cannot be instantiated irrespective of whether it has an abstract method or not.
+    * A final class or a final method cannot be abstract.
+    * A final class cannot contain an abstract method but an abstract class may contain a final method.
+    * A private method is always final.
+    * A private method can never be abstract.
+    * A static method can be final but can never be abstract.
+
+1. The conventional sequence of modifiers in a method declaration are shown below:
+
+    ```java
+    <access modifier> <static> <final or abstract> <return type> methodName(<parameter list>)
+
+    ```
+
+1. **Polymorphism** refers to the ability of an object to exhibit behaviour associated with different types. The objective of polymorphism is to enable classes to become standardised components that can be easily exchanged without any impact on other components.
+
+1. The rules for overriding a method are shown below:
+    * An overriding method must not be less accessible than the overriden method.
+    * The return type of the overriding method must be a covariant return of the overridden method.
+    * The types and order of the parameter list must be exactly the same.
+    * An overriding method cannot put a wider exception in its throws clause than the ones present in the throws clause of the overriden method.
+
 
 ### Programming Abstractly Through Interfaces
 
