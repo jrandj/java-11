@@ -308,17 +308,13 @@
 
 1. A class defines a type, and contains a state (the instance fields) and the implementation (the methods). Thus, inheritance could be of state, implementation or type.
 
-1. Only a class can contain state and therefore, only a class can extend another class. Java restricts a class from extending more than one class, so it is said that Java does not support multiple inheritance of state.
-
-1. A class can inherit implementation by extending a class and/or by implementating interfaces. This is one form of multiple implementation inheritance.
-
-1. Java allows you to define a type using an interface as well as a class, so Java supports multiple inheritance of type.
+1. Java restricts a class from extending more than one class, so it is said that Java does not support multiple inheritance of state. A class can inherit implementation by extending a class and/or by implementating interfaces. As a class can implement multiple interfaces, Java supports multiple implementation inheritance. Java also supports multiple inheritance of type as an object can have multiple types: the type of its own class and the types of all the interfaces that the class implements. 
 
 1. To inherit features from another class, that class is extended using the extends keyword. Constructors, static and instance initialisers of a class are not considered members of a class so are not inherited by a subclass. Only class members that are visible to another class as per the rules of access modifiers are inherited in a subclass.
 
 1. Note that when the JVM initialises a class, memory is allocated for all instance variables irrespective of whether they will be accessible.
 
-1. A subclass cannot be initialised before its parent. A call to super() is automatically inserted by the compiler in the first line of the constructor, if no other call is provided.
+1. A subclass cannot be initialised before its parent. A call to super() is automatically inserted by the compiler in the first line of the constructor if no other call is provided.
 
 1. The order of initialisation for loading a class is summarised below:
     * If there is a super class, initialise static fields and execute static initialisers of the super class in the order of their appearance.
@@ -350,12 +346,26 @@
 
 1. **Polymorphism** refers to the ability of an object to exhibit behaviour associated with different types. The objective of polymorphism is to enable classes to become standardised components that can be easily exchanged without any impact on other components.
 
-1. The rules for overriding a method are shown below:
+1. Polymorphism works because of **dynamic binding** of method calls. When you invoke an instance method using a reference variable, it is not the compiler but the JVM that determines which code to execute based on the class of the actual object referenced by the variable. In Java, calls to non-private and non-final instance methods are dynamically bound. Everything else is **statically bound** at compile time by the compiler.
+
+1. Static methods, static variables, and instance variables are accessed as per the declared type of the variable through which they are accessed and not according to the actual type of the object to which the variable refers. Contrast this with methods, where the actual type of the object determines which instance method is used.
+
+1. A class is allowed to completely replace the behaviour of an instance method that it inherited by providing its own implementation of that method. This is known as **overriding**. The rules for overriding a method are shown below:
     * An overriding method must not be less accessible than the overriden method.
     * The return type of the overriding method must be a covariant return of the overridden method.
     * The types and order of the parameter list must be exactly the same.
     * An overriding method cannot put a wider exception in its throws clause than the ones present in the throws clause of the overriden method.
 
+1. A class can **hide** static methods and variables and instance variables. Basically, static methods are hidden, non-static methods are overriden.
+
+1. The purpose of casting is to provide the compiler with the type information of the actual object to which a variable will be pointing at run time. When you cast a reference to another type, you are basically saying that the program does something that is not evident from the code itself. Ideally, you should never need to use casting.
+
+1. The instanceof operator can be used to check if an object is an instance of a particular reference type. An example is shown below:
+
+    ```java
+    if(f instanceof Mango){
+    }
+    ```
 
 ### Programming Abstractly Through Interfaces
 
