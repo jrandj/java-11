@@ -369,6 +369,307 @@
 
 ### Programming Abstractly Through Interfaces
 
+1. An **interface** is used to describe behaviour as captured by a group of objects. An example is shown below:
+
+    ```java
+    interface Movable{
+        void move(int x);
+    }
+    ```
+
+1. From an OOP perspective an interface should not contain any implementation. It should only contain method declarations. However, Java allows interfaces to contain static fields as well as default, static and private methods.
+
+1. Key rules for interfaces are shown below:
+    * Members of an interface are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. From Java 9 an interface can have private methods.
+    * An interface is always abstract.
+    * All variables are implicitly public, static and final.
+
+1. Methods that interfaces can contain are shown below:
+    * Abstract methods. Contain only declarations. An example is shown below:
+
+        ```java
+        interface Movable{
+            void move(int x); //implicitly abstract
+            abstract void move2(int x); //explicitly abstract
+        }
+        ```
+
+    * Default methods. Opposite of abstract, cannot have a method that is both default and abstract. An example is shown below:
+
+        ```java
+        interface Movable{
+            default move(int x){
+                System.out.println("Moving by "+x+" points");  
+            }
+        }
+        ```
+
+    * Static methods. Can be public or private but not protected or default. If no access modifier is specified, they are implicitly public. An example is shown below:
+ 
+        ```java
+        interface Movable{
+            static void sayHello(){
+                System.out.println("Hello!");  
+            }
+        }
+        ```
+
+    * Private methods. Helpful when methods get too big and need to be refactored into smaller internal methods. An example is shown below:
+    
+        ```java
+        interface Movable{
+            private void moveInternal(){
+                System.out.println("in moveInternal");  
+            }
+            default void move(int n){
+                while(n-->0) moveInternal();
+            }
+        }
+        ```
+
+1. An empty interface is known as a **marker interface**. The most common marker interface used in Java is java.io.Serializable. It signifies to the JVM that objects of classes implementing this interface can be serialised and deserialised.
+
+1. A class can implement any number of interfaces. Once a class declares that it implements an interface, it must have an implementation for all of the abstract methods declared in that interface. Implementation could be inherited from an ancestor class. If the class does not have implementation for even one of the methods, the class must be declared abstract. An example is shown below:
+
+    ```java
+    interface Movable{
+        void Move();
+    }
+
+    interface Readable{
+        void read();
+    }
+
+    class Price implements Movable, Readable{
+        public void move(){
+            System.out.println("Moving...");
+        }
+        public void read(){
+            System.out.println("Reading...");
+        }
+    }
+    ```
+
+1. Unlike the static methods of a class, the static methods of an interface cannot be inherited. Multiple fields with the same name can be inherited as long as they are not used ambiguously.
+
+1. An interface can extend any number of interfaces. The extending interface inherits all members except static methods of each of the extended interfaces.
+
+1. An interface defines behaviour. An interface tells you nothing about the actual object other than how it behaves. An abstract class defines an object which in turn drives the behaviour.
+
+1. An ArrayList is a class that implements java.util.List, which in turn extends java.util.Collection.
+
+1. A **parametrised** class uses a type parameter instead of the data type. An example is shown below:
+
+    ```java
+    public class DataHolder<E>{
+        E data;
+        public E getData() { return data; }
+        public void setData(E e){ data = e; }
+    }
+
+    public class SomeClass<E>{
+        public static void consumeData(DataHolder<String> stringData){
+            String s = stringData.getData(); //no cast required
+        }
+    }
+    ```
+
+1. This allows a class to be written in a generic fashion, without hardcoding it to any particular type. This also allows that class to be typed to any type as per the requirement at the time of use.
+
+1. A parametrised method is similar to a parametrised class. The only difference is that the type parameter is valid only for that method instead of the whole class.
+
+1. All generic information is stripped at run time, this is known as **type erasure**. This means that the presence of generics can throw up complicated situations with respect to Overloading and Overriding.
+
+1. The java.util.Collection interface is the root interface in the collection heirarchy. java.util.List defines the behaviour of collections that keep objects in an order. The functionality is implemented by classes such as ArrayList and LinkedList.
+
+1. Useful List methods are shown below:
+    ```java
+    E get(int index);
+    E set(int index, E e);
+    boolean add(E e);
+    void add(int index, E e);
+    boolean addAll(Collection<? extends E> c);
+    void addAll(int index, Collection<? extends E> c);
+    E remove(int index);
+    boolean remove(Object obj);
+    boolean removeAll(Collection<?> c);
+    boolean retainAll(Collection c);
+    void clear();
+    int size();
+    default void forEach(Consume<? super T> action);
+    boolean isEmpty();
+    boolean contains(Object o);
+    boolean containsAll(Collection c);
+    List subList(int fromIndex, int toIndex);
+    int indexOf(Object o);
+    int lastIndexOf(Object o);
+    Object[] toArray();
+    <T> T[] toArray(T[] a);
+    ```
+
+1. The of and copyOf methods take 0 to 10 parameters and return an unmodifiable list.
+
+1. ArrayList constructors are shown below:
+    ```java
+    ArrayList();
+    ArrayList(Collection c);
+    ArrayList(int initialCapacity);
+    ```
+
+1. Advantages of ArrayList over an array include dynamic sizing, type safety, and readymade features. Disadvantages of ArrayList over an array include higher memory usage, no type safety, and no support for primitive values.
+
+1. The java.util.HashMap class implements the java.util.Map interface. Map does not extend the Collection interface. Useful Map methods are shown below:
+
+    ```java
+    V get(Object key);
+    V put(K key, V value);
+    V remove(Object key);
+    Set<K> keySet();
+    Collection<V> values();
+    void clear();
+    int size();
+    default void forEach(BiConsumer<? super K, ? super V> action);
+    ```
+
+1. A lambda expression is a shortcut for the compiler that defines a class with a method and instantiates that class. The below is an example of a class that implements a car shop:
+
+    ```java
+    class Car {
+      String company;
+      int year;
+      double price;
+      String type;
+    
+      Car(String c, int y, double p, String t) {
+        this.company = c;
+        this.year = y;
+        this.price = p;
+        this.type = t;
+      }
+    
+      public String toString() {
+        return "(" + company + "" + year + ")";
+      }
+    }
+    
+    class CarMall {
+      List<Car> cars = new ArrayList<>();
+    
+      CarMall() {
+        cars.add(new Car("Honda", 2012, 9000.0, "HATCH"));
+        cars.add(new Car("Honda", 2018, 17000.0, "SEDAN"));
+        cars.add(new Car("Toyota", 2014, 19000.0, "SUV"));
+        cars.add(new Car("Ford", 2014, 13000.0, "SPORTS"));
+        cars.add(new Car("Nissan", 2017, 8000.0, "SUV"));
+      }
+    
+      List<Car> showCars(CarFilter cf) {
+        ArrayList<Car> carsToShow = new ArrayList<>();
+        for (Car c : cars) {
+          if (cf.showCar(c))
+            carsToShow.add(c);
+        }
+        return carsToShow;
+      }
+    }
+    
+    interface CarFilter {
+      boolean showCar(Car c);
+    }
+    ```
+1. The showCars method returns a list of cars based on any given criteria. By accepting an interface as an argument, the showCars method lets the caller decide the criteria for the search. TestClass below represents a third party class that uses CarMall: 
+
+    ```java
+    public class TestClass {
+        public static void main(String[] args) {
+        CarMall cm = new CarMall();
+        CarFilter cf = new CompanyFilter("Honda");
+        List<Car> carsByCompany = cm.showCars(cf);
+        System.out.println(carsByCompany);
+        }
+    }
+
+    class CompanyFilter implements CarFilter {
+      private String company;
+    
+      public CompanyFilter(String c) {
+        this.company = c;
+      }
+    
+      public boolean showCar(Car c) {
+        return company.contentEquals(c.company);
+      }
+    }
+    ```
+
+1. Observe that the above implementation can be replaced with the below:
+
+    ```java
+    public class TestClass {
+        public static void main(String[] args) {
+            CarMall cm = new CarMall();
+            List<Car> carsByCompany = cm.showCars(c -> c.company.contentEquals("Honda"));
+            System.out.println(carsByCompany);
+        }
+    }
+    ```
+1. The compiler knows that the showCars method must pass an object of a class that implements CarFilter. As a result it is easy to generate the below:
+
+    ```java
+    class XYZ implements CarFilter{
+        public boolean showCar(Car <<parameterName>>){
+            return <<an expression that returns a boolean>>;
+    }
+    ```
+
+1. The parameterName and expression are contained wtihin the lambda expression.
+
+1. A lambda expression can be written only where the target type is an interface with exactly one abstract method. Such an interface is known as a **functional interface**.
+
+1. The syntax for a lambda expression is the variable declarations on the left side of the arrow operator and the right side for the code that you want execution.
+
+1. Multiple lines of code must be written within curly braces. Parameter options are shown below:
+
+    ```java
+    () -> true // no parameter
+    a -> a*a // 1 parameter
+    (a) -> a*a // 1 parameter
+    (int a) -> a*a // 1 parameter
+    (a, b, c) -> a + b + c // multiple parameters
+    (var a) -> a*a // var also allowed
+    ```
+
+1. Filtering a list of objects is so common that Java provides a generic interface java.util.function.Predicate for this purpose. This is shown below:
+
+    ```java
+    interface Predicate<T>{
+        boolean test(T t);
+    }
+    ```
+
+1. This allows us to remove the CarFilter interface in the above example:
+
+    ```java
+    List<Car> showCars(Predicate<Car> cp) {
+      ArrayList<Car> carsToShow = new ArrayList<>();
+      for (Car c : cars) {
+        if (cp.test(c)){
+          carsToShow.add(c);
+        }
+      }
+      return carsToShow;
+    }
+    ```
+1. Other methods for the Predicate interface are shown below:
+
+    ```java
+    default Predicate<T> and(Predicate<? super T> other);
+    default Predicate<T> negate();
+    default Predicate<T> or(Predicate<? super T> other);
+    static <T> Predicate<T> isEqual(Object targetRef);   
+    ```
+1. The Predicate interface is an example of a functional interface. They are called functional interfaces because they represent a single function and are for doing exactly one thing.
+
 ### Handling Exception
 
 ### Understanding Modules
