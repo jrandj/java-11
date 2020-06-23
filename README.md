@@ -469,7 +469,7 @@
 
     public class SomeClass<E>{
         public static void consumeData(DataHolder<String> stringData){
-            String s = stringData.getData(); //no cast required
+            String s = stringData.getData(); // no cast required
         }
     }
     ```
@@ -671,6 +671,33 @@
 1. The Predicate interface is an example of a functional interface. They are called functional interfaces because they represent a single function and are for doing exactly one thing.
 
 ### Handling Exception
+
+1. Java exceptions are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situtaions and unknown exceptional situations. This is shown below:
+
+    ```java
+    try{    
+        // code for normal course of action
+    } catch(SecurityException se) {
+        // code for known exceptional situation
+        System.out.println("No permission!");
+    }
+    catch(Throwable t) {
+        // code for unknown exceptional situations
+        System.out.println("Some problem in copying: "+t.getMessage());
+        t.printStackTrace();
+    }
+    ```
+
+1. When developing code there is always the provider and the client. Exceptions are a means for the provider to let the client know about any exceptional events, and allow the client to determine how they want to deal with them. The mechanism to let the client know is to **throw** an exception. An example is shown below:
+
+    ```java
+    public void copyFile(String inputPath, String outputPath) throws IOException {
+        // code to copy file
+    }
+    ```
+
+1. If the client can resolve the situation a **catch** statement acn be used. If the client cannot handle the exceptional situation either, the exception can be propogated to the client's client. An exception is considered handled when it is caught in a catch block.
+
 
 ### Understanding Modules
 
