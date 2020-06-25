@@ -670,7 +670,7 @@
     ```
 1. The Predicate interface is an example of a functional interface. They are called functional interfaces because they represent a single function and are for doing exactly one thing.
 
-### Handling Exception
+### Handling Exceptions
 
 1. Java exceptions are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situtaions and unknown exceptional situations. This is shown below:
 
@@ -698,6 +698,41 @@
 
 1. If the client can resolve the situation a **catch** statement acn be used. If the client cannot handle the exceptional situation either, the exception can be propogated to the client's client. An exception is considered handled when it is caught in a catch block.
 
+1. The java.lang.Throwable class is the root of all exceptions.   A Throwable object includes the chain of the method calls that led to the exception (known as the "stack trace") and any informational message specified by the programmer.
+
+1. The Throwable heirarchy is shown below:
+
+    ![heirarchy](https://i.ibb.co/58YTzkb/heirarchy.png)
+
+1. The throw statement is used to explicitly throw an exception. Throwing an exception implies that the code has encountered an unexpected situation with which it does not want to deal. Java requires that you list the exceptions that a method might throw in the throws clause of that method. This is shown below:
+
+    ```java
+    public double computeSimpleInterest (double p, double r, double t) throws Exception{
+        if(t<0) {
+            throw new IllegalArgumentException("time is less than 0");
+        }
+        // other code
+    }
+    ```
+
+1. A **try statement** provides an opportunity to recover from an exceptional situation that arises while executing a block of code.
+
+    ```java
+    try {
+        // code that might throw exceptions
+    } catch(<ExceptionClass1> e1){
+        // code to execute if code in try throws exception 1
+    } catch(<ExceptionClass2> e2){
+        // code to execute if code in try throws exception 2
+    } catch(<ExceptionClassN> en){
+        // code to execute if code in try throws exception N
+    } finally{
+        // code to execute after try and catch blocks finish execution
+ 
+    }
+    ```
+
+1. A
 
 ### Understanding Modules
 
