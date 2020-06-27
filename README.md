@@ -2,7 +2,6 @@
 
 ## Java SE 11 Programmer I
 
-- [Understanding Java Technology and environment](#Understanding-Java-Technology-and-environment)
 - [Creating a Simple Java Program](#Creating-a-Simple-Java-Program)
 - [Working With Java Primitive Data Types and String APIs](#Working-With-Java-Primitive-Data-Types-and-String-APIs)
 - [Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
@@ -13,16 +12,35 @@
 - [Reusing Implementations Through Inheritance](#Reusing-Implementations-Through-Inheritance) 
 - [Programming Abstractly Through Interfaces](#Programming-Abstractly-Through-Interfaces) 
 - [Handling Exception](#Handling-Exception) 
-- [Understanding Modules](#Creating-and-Using-Methods) 
-
-### Understanding Java Technology and environment
+- [Understanding Modules](#Creating-and-Using-Methods)
+- [Understanding Java Technology and environment](#Understanding-Java-Technology-and-environment)
 
 ### Creating a Simple Java Program
 
+1. A Java class is compiled using the **javac** program. Compilation results in one or more class files depending on the contents of the Java source file. An example is shown below:
+
+    ```java
+    javac TestClass.java
+    ```
+
+1. A Java class is executed using the **java** program. An example is shown below:
+
+    ```java
+    java TestClass a b c
+    ```
+
+1. The **Java Virtual Machine (JVM)** is an executable. When the JVM runs, it loads the given class and looks for the main method of that class to run. The executable for the JVM is named java.
+
+1. Every Java class belongs a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referrred to without using hte Fully Qualified Class Name (FQCN).
+
+1. The stack is used for storing local variables, functional calls, and references to objects. The heap is used for storing objects.
+
 ### Working With Java Primitive Data Types and String APIs
 
-1. Java is a statically typed language. This means that the data type of a variable is defined at compile time and cannot change during run time. 
+1. Java is a statically typed language. This means that the data type of a variable is defined at compile time and cannot change during run time.
+
 1. Java has primitive and reference variables. The Java compiler and JVM inherently know what primitive types mean, while reference data types are built by combining primitive data types and other reference data types.
+
 1. Primitive data types below:
 
     | Date Type | Size    | Description                                                             | Sample                  |
@@ -696,13 +714,7 @@
     }
     ```
 
-1. If the client can resolve the situation a **catch** statement acn be used. If the client cannot handle the exceptional situation either, the exception can be propogated to the client's client. An exception is considered handled when it is caught in a catch block.
-
-1. The java.lang.Throwable class is the root of all exceptions.   A Throwable object includes the chain of the method calls that led to the exception (known as the "stack trace") and any informational message specified by the programmer.
-
-1. The Throwable heirarchy is shown below:
-
-    ![heirarchy](https://i.ibb.co/58YTzkb/heirarchy.png)
+1. If the client can resolve the situation a **catch** statement can be used. If the client cannot handle the exceptional situation either, the exception can be propogated to the client's client. An exception is considered handled when it is caught in a catch block.
 
 1. The throw statement is used to explicitly throw an exception. Throwing an exception implies that the code has encountered an unexpected situation with which it does not want to deal. Java requires that you list the exceptions that a method might throw in the throws clause of that method. This is shown below:
 
@@ -732,8 +744,31 @@
     }
     ```
 
-1. A
+1. The java.lang.Throwable class is the root of all exceptions.   A Throwable object includes the chain of the method calls that led to the exception (known as the "stack trace") and any informational message specified by the programmer.
+
+1. The Throwable heirarchy is shown below:
+
+    ![heirarchy](https://i.ibb.co/58YTzkb/heirarchy.png)
+
+1. Generally **checked exceptions** are those that extend java.lang.Throwable but do not extend java.lang.RuntimeException or java.lang.Error. The remaining exceptionsare **checked exceptions**. Checked exceptions must be declared in the throws clause of the method.
 
 ### Understanding Modules
+
+1. A module is declared using the module-info.java file. By convention, this file is placed in a folder with the same name as the module name. An example of the contents of this file is shown below:
+
+    ```java
+    module simpleinterest{
+    }
+    ```
+
+1. A module
+
+### Understanding Java Technology and environment
+
+1. Java code is compiled into **Java bytecode**, which is interpreted by the JVM. A class file produced on one platform will run on any platform that has a JVM.
+
+1. Java is a seperate application installed on top of an Operating System.
+
+1. The **Java Runtime Environment (JRE)** includes the class libraries and executables that are required to run a Java program while the **Java Development Kit (JDK)** includes tools such as the Java compiler and the Java debugger. 
 
 ## Java SE 11 Programmer II
