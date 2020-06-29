@@ -761,7 +761,38 @@
     }
     ```
 
-1. A module
+1. An example of the file structure is shown below:
+
+    ![heirarchy](https://i.ibb.co/BwYqxWM/moduleinfo.jpg)
+
+1. The module is compiled using the below:
+
+    ```java
+    javac -d out --module-source-path src --module simpleinterest
+    ```
+
+1. The above command used 3 switches. The -d switch directed the output to a particular directory, the --module-source-path switch provided the location of the source module definition, and the --module switch specified the name of the module to compile.
+
+1. The file structure after compilation is shown below:
+
+    ![heirarchy](https://i.ibb.co/kBDmvhG/moduleinfofull.jpg)
+
+1. The module can be run using the below: 
+
+    ```java
+    java --module-path out --module simpleinterest/simpleinterest.SimpleInterestCalculator
+    ```
+
+1. Note that the format of for the --module switch argument is \<module name>/\<main class name>.
+
+1. The module is compiled into a .jar using the below:
+
+    ```java
+    jar --create --file simpleinterest.jar --main-class simpleinterest.SimpleInterestCalculator -C out\simpleinterest
+    ```
+
+1. The above command used 4 switches. The --create switch tells the jar tool to create, the --file switch specifies the name of the file, the --main-class switch adds a Main-Class entry in the jar file manifest, and the -C switch makes the jar tool change working directories so that the structure inside the jar file is the same as the structure inside out\simpleinterest. 
+
 
 ### Understanding Java Technology and environment
 
