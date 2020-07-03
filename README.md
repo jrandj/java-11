@@ -407,8 +407,8 @@
 
         ```java
         interface Movable{
-            void move(int x); //implicitly abstract
-            abstract void move2(int x); //explicitly abstract
+            void move(int x); // implicitly abstract
+            abstract void move2(int x); // explicitly abstract
         }
         ```
 
@@ -754,6 +754,10 @@
 
 ### Understanding Modules
 
+1. Jar files are used to package multiple classes into a file and deliver the file as an application to users. However, packaging classes into a jar file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. Jar files also make it difficult to use part of an application wihtout having the whole set of jar files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
+
+1. In Java 9 the Java Module System was introduced to assist with these problems. The idea of Modules is that classes are mixed and matched at run time to form an application. 
+
 1. A module is declared using the module-info.java file. By convention, this file is placed in a folder with the same name as the module name. An example of the contents of this file is shown below:
 
     ```java
@@ -793,6 +797,83 @@
 
 1. The above command used 4 switches. The --create switch tells the jar tool to create, the --file switch specifies the name of the file, the --main-class switch adds a Main-Class entry in the jar file manifest, and the -C switch makes the jar tool change working directories so that the structure inside the jar file is the same as the structure inside out\simpleinterest. 
 
+1. The module can now be run using the below:
+
+    ```java
+    java --module-path . --module simpleinterest
+    ```
+
+1. It is a good design practise to define functionality in the form of an interface and let the actual implementation implement that interface. Seperating the interface and the implementation into separate modules allows us to build an application by mixing and matching modules without the need to bundle classes that are not required for the application. An interface is added as shown below:
+
+    ```java
+    package calculators;
+	public interface InterestCalculator{
+		public double calculate(double principle, double rate, double time);
+	}
+    ```
+
+1. The exports clause allows the public types within a package be eligible to be accessible by other modules. The contents of module-info.java for the calculators module is shown below:
+
+    ```java
+    module calculators{
+		exports calculators;
+	}
+    ```
+
+1. The requires clause is the counterpart of the exports clause. The purpose of having a requires class is to make the dependencies of a module explicitly clear to the users. The contents of module-info.java for the simpleinterest module is shown below:
+
+    ```java
+    module simpleinterest{
+		requires calculators;
+	}
+    ```
+
+1. A simplified SimpleINterestCalculator.java is shown below:
+
+    ```java
+    package simpleinterest;
+	import calculators.InterestCalculator;
+	public class SimpleInterestCalculator implements InterestCalculator{
+		public double calculate(double principle, double rate, double time){
+			return principle*rate*time;
+		}
+		public static void main(String[] args){
+			InterestCalculator ic = new SimpleInterestCalculator();
+			System.out.println(ic.calculate(100, .05, 2));
+		}
+	}
+    ```
+
+1. The directory structure after compilation is shown below:
+
+	TBC
+
+1. The exports clause allows any other module to require it. The Java module systems allows you to fine tune access to a module only to specific modules using a variation of the exports clause. This is shown below:
+
+    ```java
+    module <modulename>{
+		exports <packagename> to <modulename(s)>;
+	}
+    ```
+
+1. If a module A reads another module B, and module B reads another module C, module A does not read module C. Module dependencies are not transitive. An example is shown below:
+
+    ```java
+    module ui{
+		requires hr;
+	}
+
+    module hr{
+		requires valueobjects;
+		exports hrservice;
+	}
+
+	// code appearing in a class in the ui module
+	HRService hrService = new HRService(); // HRService is defined in hr module
+	Employee e = hrService.getEmployee(employeeId); // Employee is defined in valueObjects module
+    ```
+
+1. In this case the ui module does not have a requires valueobjects, so the ui module cannot access the Employee class from the valueobjects module. This code will fail to compile. A requires valueobjects could be added to the ui module, but there could be many requires clauses in the hr module. Only multiple compilation failures can make this information known to the ui module. A **requires transitive** clause allows the hr 
 
 ### Understanding Java Technology and environment
 
