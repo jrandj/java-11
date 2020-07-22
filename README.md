@@ -754,7 +754,7 @@
 
 ### Understanding Modules
 
-1. Jar files are used to package multiple classes into a file and deliver the file as an application to users. However, packaging classes into a jar file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. Jar files also make it difficult to use part of an application wihtout having the whole set of jar files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
+1. Jar files are used to package multiple classes into a file and deliver the file as an application to users. However, packaging classes into a jar file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. Jar files also make it difficult to use part of an application without having the whole set of jar files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
 
 1. In Java 9 the Java Module System was introduced to assist with these problems. The idea of Modules is that classes are mixed and matched at run time to form an application. 
 
@@ -765,7 +765,7 @@
     }
     ```
 
-1. An example of the file structure is shown below:
+1. An example of the file structure for a module shown below:
 
     ![heirarchy](https://i.ibb.co/BwYqxWM/moduleinfo.jpg)
 
@@ -787,9 +787,9 @@
     java --module-path out --module simpleinterest/simpleinterest.SimpleInterestCalculator
     ```
 
-1. Note that the format of for the --module switch argument is \<module name>/\<main class name>.
+1. Note that the format of the --module switch argument is \<module name>/\<main class name>.
 
-1. The module is compiled into a .jar using the below:
+1. The module is compiled into a jar using the below:
 
     ```java
     jar --create --file simpleinterest.jar --main-class simpleinterest.SimpleInterestCalculator -C out\simpleinterest
@@ -828,7 +828,7 @@
 	}
     ```
 
-1. A simplified SimpleINterestCalculator.java is shown below:
+1. A simplified SimpleInterestCalculator.java is shown below:
 
     ```java
     package simpleinterest;
@@ -846,7 +846,7 @@
 
 1. The directory structure after compilation is shown below:
 
-	TBC
+	![heirarchy](https://i.ibb.co/C0zF5rk/moduleexport-JPG.jpg)
 
 1. The exports clause allows any other module to require it. The Java module systems allows you to fine tune access to a module only to specific modules using a variation of the exports clause. This is shown below:
 
@@ -856,7 +856,7 @@
 	}
     ```
 
-1. If a module A reads another module B, and module B reads another module C, module A does not read module C. Module dependencies are not transitive. An example is shown below:
+1. If a module A reads another module B, and module B reads another module C, module A does not read module C. That is to say that dependencies are not transitive. An example is shown below:
 
     ```java
     module ui{
@@ -873,7 +873,26 @@
 	Employee e = hrService.getEmployee(employeeId); // Employee is defined in valueObjects module
     ```
 
-1. In this case the ui module does not have a requires valueobjects, so the ui module cannot access the Employee class from the valueobjects module. This code will fail to compile. A requires valueobjects could be added to the ui module, but there could be many requires clauses in the hr module. Only multiple compilation failures can make this information known to the ui module. A **requires transitive** clause allows the hr 
+1. In this case the ui module does not have a requires valueobjects, so the ui module cannot access the Employee class from the valueobjects module. This code will fail to compile. A requires valueobjects could be added to the ui module, but there could be many requires clauses in the hr module. Only multiple compilation failures can make this information known to the ui module.
+
+1. A **requires transitive** clause allows you to specify that if a module depends on another module, any module that depends on it should also depend on the other module. An example is shown below
+
+    ```java
+    module hr{
+		requires transitive valueobjects;
+		exports hrservice;
+	}
+    ```
+
+1. This has the added advantage of not requiring a requires valueobjects clause in the ui module. The requires hr clause in the ui module automatically makes all of the modules transitively required by the hr module, readable to the ui module. This is called implied readability.
+
+1. A modular jar file can be ran using the -classpath or -jar options, however the JVM will not enforce the access rules specified in the module descriptor.
+
+1. A common use case is wanting to develop a module that depends on a third party non-modular jar. If you put a non-modular jar on the module-path, Java will consider the non-modular jar to be a module. Such a module is known as an **automatic module** or a **named module** and the name of the module is created automatically using the name of the jar file.
+
+1. As there is no module-info.class in a non-modular jar, an automatic module exports all its packages and is allowed to read all exported packages of modules on the module-path and classes vailable on the classpath.
+
+1. If a module depends on a non-modular third party jar, you need to add a requires clause in module-info and put the third party jar in the --module-path. If additionally the automatic module requires a class from another non-modular jar, that jar needs to be included on the classpath.
 
 ### Understanding Java Technology and environment
 
