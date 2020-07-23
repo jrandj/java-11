@@ -905,3 +905,21 @@
 1. The **Java Runtime Environment (JRE)** includes the class libraries and executables that are required to run a Java program while the **Java Development Kit (JDK)** includes tools such as the Java compiler and the Java debugger. 
 
 ## Java SE 11 Programmer II
+
+- [Java Fundamentals](#Java-Fundamentals)
+- [Annotations](#Annotations)
+- [Generics and Collections](#Generics-and-Collections)
+- [Functional Programming](#Functional-Programming)
+- [Exceptions, Assertions, and Localization](#Exceptions,-Assertions,-and-Localization)
+- [Modular Applications](#Modular-Applications) 
+- [Concurrency](#Concurrency) 
+- [I/O](#I/O) 
+- [NIO.2](#NIO.2) 
+- [JDBC](#JDBC) 
+- [Security](#Security)
+
+### Java Fundamentals
+
+1. A final variable does not need to be assigned when it is declared, only before it is used. A variable reference being marked as final does not mean the associated object cannot be modified. If an instance variable is final, then it must be assigned a value when it is declared or when the object is instantiated. Similiarly, static variables must be assigned a value when declared or in a static initialiser.
+
+1. Methods marked final cannot be overriden by a subclass. This essentially prevents any polymorphic behaviour on the method call and ensures that a specific version of the method is always called. The opposite of a final method is an abstract method as an abstract method must be implemented.
