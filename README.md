@@ -923,3 +923,45 @@
 1. A final variable does not need to be assigned when it is declared, only before it is used. A variable reference being marked as final does not mean the associated object cannot be modified. If an instance variable is final, then it must be assigned a value when it is declared or when the object is instantiated. Similiarly, static variables must be assigned a value when declared or in a static initialiser.
 
 1. Methods marked final cannot be overriden by a subclass. This essentially prevents any polymorphic behaviour on the method call and ensures that a specific version of the method is always called. The opposite of a final method is an abstract method as an abstract method must be implemented.
+
+1. A final class cannot be extended. A class cannot be both abstract and final.
+
+1. An enum can be used to specify a fixed set of constants. Using an enum is better than using constants because it provides type-safe checking. Another advantage of an enum is the enum value can be used in a switch statement. An enum can contain methods but the first line must be the list of values.
+
+    ```java
+    public enum Season{
+		WINTER, SPRING, SUMMER, FALL
+	}
+    ```
+
+1. A nested class is one that is defined within another class. There are 4 types:
+    * Inner class: A non-static type defined at the member level.
+    * Static nested class: A static typed defined at the member level.
+    * Local class: A class defined within a method body.
+    * Anonymous class: A special case of a local class that does not have a name.
+
+1. An inner class cannot declare static fields or methods, except for static final fields. It can also access members of the outer class including private methods. An inner classes will result in a Outer$Inner.class file being created by the compiler. As inner classes can have the same variable names as outer classes, a call to **this** is prefixed with the class name.
+
+1. A static nested class can be instantiated without an instance of the enclosing class. However, it can't access the instance variables or methods in the outer class directly. It requires an explicit reference to the outer class variable. The nesting creates a namespace because the enclosing class name must be used to refer to it.
+
+1. A local class is declared in a method, constructor or initialiser. A local class does not have any access modifiers and cannot be declared static, or declare static fields unless they are static final. When defined in an instance method, they have access to all fields and methods of the enclosing class. They can access local variables only if the variables are final or effectively final. An effictively final variable is one whose value does not change after it is set.
+
+1. An anonymous class is a special form of a local class that does not have a name. It is declared and instantiated in one statement using the new keyword, a type name with parentheses, and a set of braces. Anonymous classes are required to extend an existing class or implement an existing interface.
+
+1. The rules for modifiers in nested classes are summarised below:
+
+	![nested_modifiers](https://i.ibb.co/d70f0c1/table1-1.jpg)
+
+1. The rules for members in nested classes are summarised below:
+
+	![nested_members](https://i.ibb.co/f1JpHn1/table1-2.jpg)
+
+1. The rules for access in nested classes are summarised below:
+
+	![nested_access](https://i.ibb.co/XYW0Q22/table1-3.jpg)
+
+1. When Java was first released, there were only two types of members an interface declaration could include: abstract methods and static final variables. Since Java 8 and 9, new method types have been added. The interface member types are summarised below:
+
+	![nested_access](https://i.ibb.co/MB0G8Br/table1-4.jpg)
+
+
