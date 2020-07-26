@@ -964,4 +964,40 @@
 
 	![nested_access](https://i.ibb.co/MB0G8Br/table1-4.jpg)
 
+1. A default method may be declared within an interface to provide a default implementation. The default method is assumed to be public and cannot be marked abstract, final or static. It may also be overridden by a class that implements the interface. If a class inherits two or more default methods with the same method signature, then the class must override the method.
 
+1. To call a default method from a class which overrides the implementation:
+    ```java
+    interfaceName.super.methodName();
+    ```
+
+1. A static interface method must include a method body and is assumed to be public. It cannot be marked abstract or final and cannot be referenced without using the interface name. Static interface methods are not inherited by a class implementing the interface.
+
+1. A private interface method is used to avoid code duplication in instance methods. It must be marked private and include a method body. It may only be called by default and private (non-static) methods within the interface definition.
+
+1. A private static method is used to avoid code duplication in static methods. It must be marked private and static and may only be called by other methods within the interface definition.
+
+1. The rules for interface member access are summarised below:
+
+    ![nested_access](https://i.ibb.co/LRhDvN2/table1-5.jpg)
+
+1. A functional interface is an interface that contains a single abstract method. A lambda expression is like an anonymous class that defines one method. Any functional interface can be implemented as a lambda expression.
+
+1. Note that if a functional method includes an abstract method with the same signature as a public method found in Object, then those methods do not count towards the single abstract method test. This includes:
+
+    ```java
+    String toString()
+    boolean equals(Ojbect)
+    int hashCode()
+    ```
+
+1. A lambda expression contains a parameter name, arrow and body. The parameters list the variables, which must be compatible with the type and number of input parameters of the functional interface's single abstract method. The body must also be compatible with the return type of the functional interface's abstract method. Example lamba expressions are shown below:
+
+    ```java
+    a -> a.canHop()
+    (Animal a) -> {return a.canHop();}
+    ```
+
+1. A var parameter can be used in the parameter list, but then all parameters must use var.
+
+### Annotations
