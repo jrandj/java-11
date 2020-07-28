@@ -412,7 +412,7 @@
         }
         ```
 
-    * Default methods. Opposite of abstract, cannot have a method that is both default and abstract. An example is shown below:
+    * Default methods. The opposite of abstract, a method cannot be both default and abstract. An example is shown below:
 
         ```java
         interface Movable{
@@ -422,7 +422,7 @@
         }
         ```
 
-    * Static methods. Can be public or private but not protected or default. If no access modifier is specified, they are implicitly public. An example is shown below:
+    * Static methods. Can be public or private but not protected or default. This is because static methods are not inherited or overridden in any meaningful way, and because protected methods can be seen by classes in the same package and which extend the class containing the method. However, a static method cannot be inherited so the package-private access modifier should be used instead of protected, as the only remaining intention is for it to be accessible within the same package. If no access modifier is specified, they are implicitly public. An example is shown below:
  
         ```java
         interface Movable{
@@ -926,7 +926,7 @@
 
 1. A final class cannot be extended. A class cannot be both abstract and final.
 
-1. An enum can be used to specify a fixed set of constants. Using an enum is better than using constants because it provides type-safe checking. Another advantage of an enum is the enum value can be used in a switch statement. An enum can contain methods but the first line must be the list of values.
+1. An enum can be used to specify a fixed set of constants. Using an enum is better than using constants because it provides type-safe checking. Another advantage of an enum is the enum value can be used in a switch statement. An enum can contain methods but the first line must be the list of values. Note that if an enum has a body (e.g. default value) then the semicolon becomes mandatory.
 
     ```java
     public enum Season{
@@ -998,6 +998,6 @@
     (Animal a) -> {return a.canHop();}
     ```
 
-1. A var parameter can be used in the parameter list, but then all parameters must use var.
+1. A var parameter can be used in the parameter list, but then all parameters must use var. A semicolon is mandatory in the body if there is only a single expression.
 
 ### Annotations
