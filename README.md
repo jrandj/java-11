@@ -1,5 +1,8 @@
 # Java 11
 
+- [Java SE 11 Programmer I](#Java-SE-11-Programmer-I)
+- [Java SE 11 Programmer II](#Java-SE-11-Programmer-II)
+
 ## Java SE 11 Programmer I
 
 - [Creating a Simple Java Program](#Creating-a-Simple-Java-Program)
@@ -31,7 +34,26 @@
 
 1. The **Java Virtual Machine (JVM)** is an executable. When the JVM runs, it loads the given class and looks for the main method of that class to run. The executable for the JVM is named java.
 
-1. Every Java class belongs a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referrred to without using hte Fully Qualified Class Name (FQCN).
+1. Every Java class belongs a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referrred to without using hte Fully Qualified Class Name (FQCN). 
+
+1. Java code is made up of expressions, statements and blocks. An expression is made up of variables, operators, and method invocations. An expression evaluates to a single value. An expression is something which evaluates a value, while a statement is a line of code that does something. Some expressions can be made into a statement by terminating it with a semicolon, such as assignment expressions, usage of ++ or --, method invocation and object creation expressions. A block is a group of zero or more statements between balanced brances and can be used wherever a single statement is allowed. 
+
+
+2. 
+3. A statement forms a unit of execution and can be made into a statement
+
+
+An expression is a construct made up of variables, operators, and method invocations, which are constructed according to the syntax of the language, that evaluates to a single value.
+
+Statements are roughly equivalent to sentences in natural languages. A statement forms a complete unit of execution. The following types of expressions can be made into a statement by terminating the expression with a semicolon (;).
+
+    Assignment expressions
+    Any use of ++ or --
+    Method invocations
+    Object creation expressions
+
+ block is a group of zero or more statements between balanced braces and can be used anywhere a single statement is allowed.
+
 
 1. The stack is used for storing local variables, functional calls, and references to objects. The heap is used for storing objects.
 
@@ -998,6 +1020,7 @@
     (Animal a) -> {return a.canHop();}
     ```
 
-1. A var parameter can be used in the parameter list, but then all parameters must use var. A semicolon is mandatory in the body if there is only a single expression.
+1. A var parameter can be used in the parameter list, but then all parameters must use var. A semicolon is mandatory in the body if there is only a single expression. An expression-based lambda body isn't terminated with a semicolon as it is an expression not a statement. However, a statement-based lambda with multiple lines requires that each statement be terminated with a semicolon. 
+
 
 ### Annotations
