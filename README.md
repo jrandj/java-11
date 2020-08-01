@@ -38,23 +38,6 @@
 
 1. Java code is made up of expressions, statements and blocks. An expression is made up of variables, operators, and method invocations. An expression evaluates to a single value. An expression is something which evaluates a value, while a statement is a line of code that does something. Some expressions can be made into a statement by terminating it with a semicolon, such as assignment expressions, usage of ++ or --, method invocation and object creation expressions. A block is a group of zero or more statements between balanced brances and can be used wherever a single statement is allowed. 
 
-
-2. 
-3. A statement forms a unit of execution and can be made into a statement
-
-
-An expression is a construct made up of variables, operators, and method invocations, which are constructed according to the syntax of the language, that evaluates to a single value.
-
-Statements are roughly equivalent to sentences in natural languages. A statement forms a complete unit of execution. The following types of expressions can be made into a statement by terminating the expression with a semicolon (;).
-
-    Assignment expressions
-    Any use of ++ or --
-    Method invocations
-    Object creation expressions
-
- block is a group of zero or more statements between balanced braces and can be used anywhere a single statement is allowed.
-
-
 1. The stack is used for storing local variables, functional calls, and references to objects. The heap is used for storing objects.
 
 ### Working With Java Primitive Data Types and String APIs
@@ -201,7 +184,7 @@ Statements are roughly equivalent to sentences in natural languages. A statement
     * enum type.
     * A String.
 
-1. In a switch statement case labels are optional, but if provided they must be compile time constants.
+1. In a switch statement case labels are optional, but if provided they must be compile time constants. If an enum is used the unqualifed enum constant must be used.
 
 1. In a switch statement the default block is optional, but if provided there can only be 1.
 
@@ -422,7 +405,7 @@ Statements are roughly equivalent to sentences in natural languages. A statement
 1. Key rules for interfaces are shown below:
     * Members of an interface are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. From Java 9 an interface can have private methods.
     * An interface is always abstract.
-    * All variables are implicitly public, static and final.
+    * All variables are implicitly public, static and final. Static methods are assumed to be public if not otherwise marked. Non-static methods must be explicitly marked private or default.
 
 1. Methods that interfaces can contain are shown below:
     * Abstract methods. Contain only declarations. An example is shown below:
@@ -1009,7 +992,7 @@ Statements are roughly equivalent to sentences in natural languages. A statement
 
     ```java
     String toString()
-    boolean equals(Ojbect)
+    boolean equals(Object)
     int hashCode()
     ```
 
@@ -1020,7 +1003,46 @@ Statements are roughly equivalent to sentences in natural languages. A statement
     (Animal a) -> {return a.canHop();}
     ```
 
-1. A var parameter can be used in the parameter list, but then all parameters must use var. A semicolon is mandatory in the body if there is only a single expression. An expression-based lambda body isn't terminated with a semicolon as it is an expression not a statement. However, a statement-based lambda with multiple lines requires that each statement be terminated with a semicolon. 
+1. A var parameter can be used in the parameter list, but then all parameters must use var. If the type is specified for one parameter then it must be specified for all parameters. A semicolon is mandatory in the body if there is only a single expression. An expression-based lambda body isn't terminated with a semicolon as it is an expression not a statement. However, a statement-based lambda with multiple lines requires that each statement be terminated with a semicolon. 
 
 
 ### Annotations
+
+1. Annotations are all about metadata. They let you assign metadata attributes to classes, methods, variables and other Java types. An example is shown below:
+
+    ```java
+    public class Mammal{}
+    public class Bird{}
+    
+    @ZooAnimal public class Lion extends Mammal{}
+    @ZooAnimal public class Peacock extends Bird{}
+    ```
+
+1. The above could have been achieved by extending a ZooAnimal class but that would require the class hierarchy to be changed. Annotations are similar to interfaces. While interface can be applied to classes, annotations can be applied to classes, methods, expressions, and even other annotations. Annotations also allow a set of values to be passed. An example is shown below:
+
+    ```java
+    public class Veterinarian{
+        @ZooAnimal(habitat="Infirmary") private Lion sickLion;
+        @ZooAnimal(habitat="Safari") private Lion healthyLion;
+        @ZooAnimal(habitat="Special Enclosure") private Lion blindLion;
+    }
+    ```
+
+1. The values are part of the type declaration and not of the variable. Without annotations, a new Lion type for each habitat value would need to be defined. This would become difficult in large applications.
+
+1. To declare an an annotation the @interface annotation is used. An example is shown below:
+
+    ```java
+    public @interface Exercise{}
+    }
+    ```
+
+1. To apply the annotation to other code we simply use the @Exercise annotation. Examples are shown below:
+
+    ```java
+    @Exercise() public class Cheetah{}
+    @Exercise public class Sloth{}
+    @Exercise
+    public class ZooEmployee{}
+    }
+    ```
