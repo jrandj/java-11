@@ -1005,7 +1005,6 @@
 
 1. A var parameter can be used in the parameter list, but then all parameters must use var. If the type is specified for one parameter then it must be specified for all parameters. A semicolon is mandatory in the body if there is only a single expression. An expression-based lambda body isn't terminated with a semicolon as it is an expression not a statement. However, a statement-based lambda with multiple lines requires that each statement be terminated with a semicolon. 
 
-
 ### Annotations
 
 1. Annotations are all about metadata. They let you assign metadata attributes to classes, methods, variables and other Java types. An example is shown below:
@@ -1037,12 +1036,143 @@
     }
     ```
 
-1. To apply the annotation to other code we simply use the @Exercise annotation. Examples are shown below:
+1. To apply the annotation to other code we simply use the @Exercise annotation. A parenthesis is required if there are elements specified, and optional otherwise. Examples are shown below:
 
     ```java
     @Exercise() public class Cheetah{}
     @Exercise public class Sloth{}
     @Exercise
     public class ZooEmployee{}
+    ```
+
+1. To declare an annotation with elements the elements need to be available in the annotation declaration. An example is shown below:
+
+    ```java
+    public @interface Exercise{}
+        int hoursPerDay();
     }
     ```
+
+1. This changes how the annotation is used. An example is shown below:
+
+    ```java
+    @Exercise(hoursPerDay=3) public class Cheetah{}
+    ```
+
+1. When declaring an annotation, any element without a default value is considered required. A default value must be a non-null constant expression. An example including a default value is shown below:
+
+    ```java
+    public @interface Exercise{}
+        int hoursPerDay();
+        int startHour() default 6;
+    }
+    ```
+
+1. The element type must be a primitive type, a String, a Class, an enum, another annotation, or an array of any of these types. Note that this excludes wrapper classes and arrays of arrays.
+
+1. Like abstract interface methods, annotation elements are implicitly abstract and public. Declaring elements protected, private or final will result in a compilation failure.
+
+1. Like interface variables, annotation variables are implicitly public, static and final. A constant variable can be declared in an annotation but are not considered elements.
+
+1. A shorthand format exists for using annotations. This can occur if the annotation declaration contains an element named value(), the usage of the annotation provides no values for other elements, and the declaration does not contain any elements that are required. An example is shown below:
+
+    ```java
+    public @interface Injured{
+        String veterinarian() default "unassigned";
+        String value() default "foot";
+        int age() default 1;
+    }
+
+    @Injured("Legs") public void fallDown() {}
+    ```
+
+1. A shorthand format also exists for providing an array that contains a single element. An example is shown below:
+
+    ```java
+    public @interface Music{
+        String[] genres();
+    }
+
+    public class Giraffe{
+        @Music(genres={"Rock and roll"}) String mostDisliked;
+        @Music(genres="Classical") String favorite;
+    }
+    ```
+
+1. An annotation can be applied to an annotation to specify what types the annotation can be applied to. This is done by specifying the ElementType using @Target. An example is shown below:
+
+    ```java
+    @Target({ElementType.METHOD,ElementType.CONSTRUCTOR})
+    public @interface ZooAttraction{}
+    ```
+
+1. The options for ElementType are shown below: 
+
+
+
+1. The TYPE_USE value covers nearly all other values. One exception is that it can only be used on a method that returns a value, a void method would still need METHOD defined in the annotation. TYPE_USE is typically used for cast operations, object creation with new and inside type declarations.
+
+1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
+
+![table2.1](https://i.ibb.co/YPN4zCL/table2-2.jpg)
+
+1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
+
+    ```java
+    // Hunter.java
+    import java.lang.annotation.Documented;
+    @Documented public @interface Hunter{}
+
+    // Lion.java
+    @Hunter public class Lion{}
+    ```
+
+1. In the above example @Hunter would be published with the Lion Javadoc information because it's marked with @Documented.
+
+1. The @Inherited annotation is used to allow subclasses to inherit the annotation information found in the parent class.
+
+    ```java
+    // Vertebrate.java
+    import java.lang.annotation.Inherited;
+    @Inherited public @interface Vertebrate{}
+
+    // Mammal.java
+    @Vertebrate public class Mammal{}
+
+    // Dolphin.java
+    public class Dolphin extends Mammal{}
+    ```
+
+1. In the above example the @Vertebrate annotation will be applied to both Mammal and Dolphin.
+
+1. The @Repeatable annotation can be used to apply an annotation more than once. To declare a @Repeatable annotation, a containing annotation with type value must be defined.
+
+    ```java
+    // Containing annotation type
+    public @interface Risks{
+        Risk[] value();
+    }
+
+    // Containing annotation class
+    @Repeatable(Risks.class)
+    public @interface Risk{
+        String danger();
+        int level() default 1;
+    }
+
+    public class Zoo{
+        public static class Monkey{}
+        @Risk(danger="Silly")
+        @Risk(danger="Aggressive",level=5)
+        @Risk(danger="Violent",level=10)
+        private Monkey monkey;
+    }
+    ```
+
+1. Commonly used built-in annotations and how they are applied are shown below:
+
+![table2.5](https://i.ibb.co/j514FZ6/table2-5.jpg)
+
+![table2.6](https://i.ibb.co/3WyjtwF/table2-6.jpg)
+
+### Generics and Collections
