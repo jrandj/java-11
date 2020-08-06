@@ -1176,3 +1176,59 @@
 ![table2.6](https://i.ibb.co/3WyjtwF/table2-6.jpg)
 
 ### Generics and Collections
+
+1. Method references can make code more easy to read. An example is shown below:
+
+    ```java
+    @FunctionalInterface
+    public interface LearnToSpeak{
+        void speak(String sound);
+    }
+
+    public class DuckHelper{
+        public static void teacher(String name, LearnToSpeak trainer){
+            trainer.speak(name);
+        }
+    }
+
+    // long version
+    public class Duckling{
+        public static void makeSound(String sound){
+            LearnToSpeak learner = s -> System.out.println(s);
+            DuckHelper.teacher(sound, learner);
+        }
+    }
+
+    // short version
+    public class Ducking{
+        public static void makeSound(String sound){
+            LearnToSpeak learner = System.out::println;
+            DuckHelper.teacher(sound, learner);
+        }
+    }
+    ```
+
+1. There are four formats for method references.
+
+    ```java
+    // Static Methods
+    Consumer<List<Integer>> methodRef = Collections::sort;
+    Consumer<List<Integer>> lambda = x -> Collections.sort(x);
+
+    // Instance Methods on a Particular Object
+    var str = "abc";
+    Predicate<String> methodRef = str::startsWith;
+    Predicate<String> lambda = s -> str.startsWith(s);
+
+    var random = new Random();
+    Supplier<Integer> methodRef = random::nextInt;
+    Supplier<Integer> lambda = () -> random.nextInt();
+
+    // Instance Methods on a Parameter
+    Predicate<String> methodRef = String::isEmpty;
+    Predicate<String> lambda = s -> s.isEmpty();
+
+    // Constructors
+    Supplier<List<String>> methodRef = ArrayList::new;
+    Supplier<List<String>> lambda = () -> new ArrayList();
+    ```
