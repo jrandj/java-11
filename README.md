@@ -1108,8 +1108,6 @@
 
 1. The options for ElementType are shown below: 
 
-
-
 1. The TYPE_USE value covers nearly all other values. One exception is that it can only be used on a method that returns a value, a void method would still need METHOD defined in the annotation. TYPE_USE is typically used for cast operations, object creation with new and inside type declarations.
 
 1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
@@ -1208,7 +1206,7 @@
     }
     ```
 
-1. There are four formats for method references.
+1. There are four formats for method references. Examples are shown below:
 
     ```java
     // Static Methods
@@ -1232,3 +1230,34 @@
     Supplier<List<String>> methodRef = ArrayList::new;
     Supplier<List<String>> lambda = () -> new ArrayList();
     ```
+
+1. Each Java primitive has a corresponding wrapper class. A null value can be assigned to a wrapper class as a null value can be assiged to any reference variable. Attempting to unbox a wrapper class with a null value will cause a NullPointerException.
+
+1. The Diamond Operator is a shorthand notation that allows you to omit the gneric type from the right side of a statement when the type can be inferred. An example is shown below:
+
+    ```java
+    List<Integer> list = new ArrayList<Integer>();
+	List<Integer> list = new ArrayList<>();
+    ```
+
+1. A collection is a group of objects contained in a single object. The Java Collection Framework is a set of classes in java.uil for storing collections. The common
+	* List: Ordered collection of elements that can contain duplicates. Accessed by an int index.
+	* Set: A collection that does not allow duplicate entries.
+	* Queue: A collcetion that orders its elements in a specific order. A typical queue is FIFO.
+	* Map: A collection that maps keys to values, with no duplciate keys allowed. The elements are key/value pairs.
+
+1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
+	* TBC
+
+1. The Collection interface contains useful convenience methods. These are shown below:
+
+    ```java
+    boolean add(E element);
+	boolean remove(Object object);
+	boolean isEmpty();
+	int size();
+	void clear();
+	boolean contains(Object object);
+	boolean removeIf(PRedicate<? super E> filter);
+	void forEach(Consumer<? super T> action);
+	```
