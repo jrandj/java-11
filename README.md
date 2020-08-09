@@ -1247,7 +1247,8 @@
 	* Map: A collection that maps keys to values, with no duplciate keys allowed. The elements are key/value pairs.
 
 1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
-	* TBC
+
+    ![figure3.1](https://i.ibb.co/92zNktt/figure3-1.jpg)
 
 1. The Collection interface contains useful convenience methods. These are shown below:
 
@@ -1261,3 +1262,186 @@
 	boolean removeIf(PRedicate<? super E> filter);
 	void forEach(Consumer<? super T> action);
 	```
+
+1. The Collections.sort() method is commonly used when working with collections. To sort objects that you create yourself, Java provides an interface called Comparable. This is shown below:
+
+    ```java
+    public interface Comparable<T>{
+        int compareTo(T o);
+    }
+	```
+
+1. The compareTo() method returns:
+    * The number 0 when the current object is equivalent to the argument to compareTo().
+    * A negative number when the current object is smaller than the argument to compareTo().
+    * A positive number when the current object is larger than the argument to compareTo().
+
+1. An example is shown below:
+
+    ```java
+    public class MissingDuck implements Comparable<MissingDuck>{
+        private String name;
+        public int compareTo(MissingDuck quack){
+            if(quack == null)
+                throw new IllegalArgumentException("Poorly formed duck!");
+            if(this.name == null && quack.name == null)
+                return 0;
+            else if(this.name == null) return -1;
+            else if(quack.name == null) return 1;
+            else return name.compareTo(quack.name);
+        }
+    }
+	```
+
+1. Note that only one compareTo() method can be implemented for a class. If we want to sort by something else, a Comparator can be used. Comparator is a functional interface. An example is shown below:
+
+    ```java
+    public static void main(String[] args){
+        Comparator<Duck> byWeight = new Comparator<Duck>(){
+            public int compare(Duck d1, Duck d2){
+                return d1.getWeight()-d2.getWeight();
+            }
+        }
+    };
+
+    // alternate implementation with lambda
+    Comparator<Duck> byWeight = (d1,d2) -> d1.getWeight()-d2.getWeight();
+    
+    // alternate implementation with method reference
+    Comparator<Duck> byWeight = Comparator.comparing(Duck::getWeight);
+    
+    Collection.sort(ducks, byWeight);
+	```
+
+1. A summary of the differences between Comparable and Comparator are shown below:
+
+    ![figure3.1](https://i.ibb.co/LJZMjBm/table3-1.jpg)
+
+1. When building a comparator there are several helper methods that can be used. These are shown below:
+
+    ```java
+    reversed();
+    thenComparing(function);
+    thenComparingDouble(function);
+    thenComparingInt(function);
+    thenComparing(function);
+	```
+
+1. Generics allow you to write and use parametrised types. This allows the compiler to detect issues rather than a ClassCastException exception being thrown.
+
+1. Generics can be introduced into classes using angle brackets. An example is shown below:
+
+    ```java
+    public class Crate<T>{
+        private T contents;
+        public T emptyCrate(){
+            return contents;
+        }
+        public void packCrate(T contents){
+            this.contents = contents;
+        }
+    }
+	```
+
+1. A type parameter can have any name. By convention the below letters are used:
+    * E for an element
+    * K for a map key
+    * V for a map value
+    * N for a number
+    * T for a generic data type
+    * S, U, V etc. for multiple generic types
+
+1. Generics can also be introduced into methods using angle brackets. An example is shown below:
+
+    ```java
+    public class Handler{
+        public statc <T> Crate<T> ship(T t){
+            System.out.println("Shipping " + t);
+            return new Crate<T>();
+        }
+    }
+	```
+
+1. A bounded parameter type is a generic type that specifies a bound for the generic. A wildcard generic type is an unknown generic type represented with a question mark.  
+
+1. An unbounded wildcard is used when any type is okay.
+
+    ```java
+    public static void printList(List<?> list){
+        for (Object x:list)
+            System.out.println(x);
+    }
+    ```
+
+1. Note that a generic type can't use a subclass. An example that will not compile is shown below:
+
+    ```java
+    ArrayList<Number> list = new ArrayList<Integer>();
+    ```
+
+1. An upper-bounded wildcard can be used to say that any class that extends a class or that class itself can be the parameter type. An example is shown below:
+
+    ```java
+    public static long total(List<? extends Number> list){
+        long count = 0;
+        for(Number number:list)
+            count += number.longValue();
+        return count;
+    }
+    ```
+
+1. Note that due to type erasure the above code is converted to something like:
+
+    ```java
+    public static long total(List list){
+        long count = 0;
+        for(Object obj:list)
+            Number number = (Number) obj;
+            count += number.longValue();
+        }
+        return count;
+    }
+    ```
+
+1. When upper bounds or unbounded wildcards are used in such a way the list becomes immutable and cannot be modified.
+
+1. A lower-bounded wildcard can be used to say that any instance of a class or an instance of a superclass can be the parameter type. An example is shown below:
+
+    ```java
+    public static void addSound(List<? super String> list){
+        list.add("quack");
+    }
+
+    List<String> strings = new ArrayList<String>();
+    strings.add("tweet");
+    
+    List<Object> objects = new ArrayList<Object>(strings);
+    addSound(strings);
+    addSound(objects);
+    ```
+
+1. A useful mnemonic is PECS: Producer Extends, Consumer Super. If you need a List to produce T values (you want to read Ts from the list), you need to declare it using extends. If you need a list to consume T values (you want to write Ts into the list), you need to declare it using super. If you need to both read and write to a list you need to declare it exactly with no wildcards.
+
+1. In the below example, if you want to write elements into the list, you can't add a Number, Integer or a Double because each one is not compatable with all types. A Number can be read because any of the lists will contain a Number or a subclass of Number. When using extends like this you can only read, and not write.
+
+    ```java
+    List<? extends Number> foo = new ArrayList<>();
+
+    // The foo list could be one of these
+    List<? super IOException> foo = new ArrayList<Number>();
+    List<? super IOException> foo = new ArrayList<Integer>();
+    List<? super IOException> foo = new ArrayList<Double();
+    ```
+
+1. In the below example, if you want to write elements into the list, you can add an IOException or a FileNotFoundException but not an Exception.  This is because an Exception can't be added to a a list of a more specific subclass. An Object can be read from this list but you won't know which type.
+
+    ```java
+    List<? super IOException> foo = new ArrayList<>();
+
+    // The foo list could be one of these
+    List<? super IOException> foo = new ArrayList<Exception>();
+    List<? super IOException> foo = new ArrayList<IOException>();
+    List<? super IOException> foo = new ArrayList<Object>();
+    ```
+
+### Functional Programming
