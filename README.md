@@ -1445,3 +1445,138 @@
     ```
 
 ### Functional Programming
+
+1. The functional interfaces shown below are pfoivded in the java.util.function package.
+
+	```java
+    TBC
+    ```
+
+1. A Supplier is used when you want to generate or supply values without taking any input. A supplier is often used to construct new objects. The definition is shown below:
+
+	```java
+    @FunctionalInterface
+	public interface Supplier<T>{
+		T get();
+	}
+    ```
+
+1. An example is shown below:
+
+	```java
+    Supplier<LocalDate> s1 = LocalDate::now;
+	Supplier<LocalDate> s2 = () -> LocalDate.now();
+
+	LocalDate d1 = s1.get();
+	LocalDate d2 = s2.get();
+    ```
+
+1. A Consumer is used when you want to do something with a parameter but not return anything. A BiConsumer is the same but takes two parameters. The definition is shown below:
+
+	```java
+    @FunctionalInterface
+	public interface Consumer<T>{
+		void accept(T t);
+		// default method omitted
+	}
+
+    @FunctionalInterface
+	public interface BiConsumer<T, U>{
+		void accept(T t, U u);
+		// default method omitted
+	}
+    ```
+
+1. An example for Consumer is shown below:
+
+	```java
+	Consumer<String> c1 = System.out::println;
+	Consumer<String> c2 = x-> System.out.println(x);
+	
+	c1.accept("Hi");
+	c2.accept("Hi");
+	```
+
+1. An example for BiConsumer is shown below:
+
+	```java
+    var map = new HashMap<String, Integer>();
+	BiConsumer<String, Integer> b1 = map::put;
+	BiConsumer<String, Integer> b2 = (k, v) -> map.put(k, v);
+
+	b1.accept("chicken", 7);
+	b2.accept("chick", 1);
+    ```
+
+1. A Predicate is often used when filtering or matching. A BiPredicate is the same but takes two parameters. The definition is shown below:
+
+	```java
+    @FunctionalInterface
+	public interface Predicate<T>{
+		boolean test(T t);
+		// default and static methods omitted
+	}
+
+    @FunctionalInterface
+	public interface BiPredicate<T, U>{
+		boolean test(T t, U t);
+		// default methods omitted
+	}
+    ```
+
+1. An example for Predicate is shown below:
+
+	```java
+	Predicate<String> p1 = String::isEmpty;
+	Predicate<String> p2 = x -> x.isEmpty();
+	System.out.println(p1,test("");; // true
+	System.out.println(p2,test("");; // true
+	```
+
+1. An example for BiPredicate is shown below:
+
+	```java
+	BiPredicate<String, String> b1 = String::startsWith;
+	BiPredicate<String, String> b2 = (string, suffix) -> string.startsWith(prefix);
+
+	System.out.println(b1.test("chicken", "chick")); // true
+	System.out.println(b2.test("chicken", "chick")); // true
+	```
+
+1. A Function turns one parameter into a value of a potentially different type and returns it. A BiFunction turns two parameters into a value and returns it. The definition is shown below:
+
+	```java
+    @FunctionalInterface
+	public interface Function<T, R>{
+		R apply(T t);
+		// default and static methods omitted
+	}
+
+    @FunctionalInterface
+	public interface BiFunction<T, U, R>{
+		R apply(T t, U u);
+		// default method omitted
+	}
+    ```
+
+1. An example for Function is shown below:
+
+	```java
+	Function<String, Integer> f1 = String::length;
+	Function<String, Integer> f2 = x -> x.length();
+	
+	System.out.println(f1.apply("cat")); // 3
+	System.out.println(f2.apply("cat")); // 3
+	```
+
+1. An example for BiFunction is shown below:
+
+	```java
+	BiFunction<String, <String, String> b1 = String::concat;
+	BiFunction<String, <String, String> b2 = (string, toAdd) -> string.concat(toAdd);
+
+	System.out.println(b1.apply("cat ", "dog")); // cat dog
+	System.out.println(b2.apply("cat ", "dog")); // cat dog
+	```
+
+1. An exam
