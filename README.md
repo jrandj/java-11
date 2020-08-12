@@ -1471,7 +1471,7 @@
 	LocalDate d2 = s2.get();
     ```
 
-1. A Consumer is used when you want to do something with a parameter but not return anything. A BiConsumer is the same but takes two parameters. The definition is shown below:
+1. A Consumer is used when you want to do something with a parameter but not return anything. A BiConsumer is the same but takes two parameters. The definitions are shown below:
 
 	```java
     @FunctionalInterface
@@ -1508,7 +1508,7 @@
 	b2.accept("chick", 1);
     ```
 
-1. A Predicate is often used when filtering or matching. A BiPredicate is the same but takes two parameters. The definition is shown below:
+1. A Predicate is often used when filtering or matching. A BiPredicate is the same but takes two parameters. The definitions are shown below:
 
 	```java
     @FunctionalInterface
@@ -1543,7 +1543,7 @@
 	System.out.println(b2.test("chicken", "chick")); // true
 	```
 
-1. A Function turns one parameter into a value of a potentially different type and returns it. A BiFunction turns two parameters into a value and returns it. The definition is shown below:
+1. A Function turns one parameter into a value of a potentially different type and returns it. A BiFunction turns two parameters into a value and returns it. The definitions are shown below:
 
 	```java
     @FunctionalInterface
@@ -1579,4 +1579,34 @@
 	System.out.println(b2.apply("cat ", "dog")); // cat dog
 	```
 
-1. An exam
+1. A UnaryOperator is a special case of a Function where all the type parameters are the same type. A BinaryOperator merges two values into one of the same type. The definitions are shown below:
+
+	```java
+	@FunctionalInterface
+	public interface UnaryOperator<T> extends Function<T, T>{}
+
+	@FunctionalInterface
+	public interface BinaryOperator<T> extends BiFunction<T,T,T>{
+	// omitted static methods
+	}
+	```
+
+1. An example for UnaryOperator is shown below:
+
+	```java
+	UnaryOperator<String> u1 = String::toUpperCase;
+	UnaryOperator<String> u2 = x -> x.toUpperCase();
+
+	System.out.println(u1.apply("hi")); // HI
+	System.out.println(u2.apply("hi")); // HI
+	```
+
+1. An example for BinaryOperator is shown below:
+
+	```java
+	BinaryOperator<String> b1 = String::concat;
+	BinaryOperator<String> b2 = (string, toAdd) -> string.concat(toAdd);
+
+	System.out.println(u1.apply("hi ", "there")); // hi there
+	System.out.println(u2.apply("hi ", "there")); // hi there
+	```
