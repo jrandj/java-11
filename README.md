@@ -1446,7 +1446,7 @@
 
 ### Functional Programming
 
-1. The functional interfaces shown below are pfoivded in the java.util.function package.
+1. The functional interfaces shown below are provided as built-in functional interfaces in the java.util.function package.
 
 	```java
     TBC
@@ -1609,4 +1609,33 @@
 
 	System.out.println(u1.apply("hi ", "there")); // hi there
 	System.out.println(u2.apply("hi ", "there")); // hi there
+	```
+
+1. The built-in functional interfaces contain various helpful default methods.
+
+1. An example for the Predicate helper methods is shown below with the two statements being equivalent:
+
+	```java
+	Predicate<String> combination = s -> s.contains("cat") && ! s.contains("brown");
+	Predicate<String> combination = cat.and(brown.negate());
+	```
+
+1. An example for the Consumer helper methods is shown below:
+
+	```java
+	Consumer<String> c1 = x -> System.out.print("1:" + x);
+	Consumer<String> c2 = x -> System.out.print(",2:" + x);
+
+	Consumer<String> combined = c1.andThen(c2);
+	combined.accept("hi"); // 1:hi,2:hi
+	```
+
+1. An example for the Function helper methods is shown below:
+
+	```java
+	Function<Integer, Integer> before = x -> x + 1;
+	Function<INteger, Integer> after = x -> x * 2;
+	
+	Function<Integer, Integer> combined = after.compose(before);
+	System.out.println(combined.apply(3)); // 
 	```
