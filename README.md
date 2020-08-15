@@ -1449,7 +1449,7 @@
 1. The functional interfaces shown below are provided as built-in functional interfaces in the java.util.function package.
 
 	```java
-    TBC
+    ![table4.1](res/table4.1.jpg)
     ```
 
 1. A Supplier is used when you want to generate or supply values without taking any input. A supplier is often used to construct new objects. The definition is shown below:
