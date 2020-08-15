@@ -772,7 +772,7 @@
 
 1. An example of the file structure for a module shown below:
 
-    ![heirarchy](https://i.ibb.co/BwYqxWM/moduleinfo.jpg)
+    ![moduleinfo](src/moduleinfo.jpg)
 
 1. The module is compiled using the below:
 
@@ -784,7 +784,7 @@
 
 1. The file structure after compilation is shown below:
 
-    ![heirarchy](https://i.ibb.co/kBDmvhG/moduleinfofull.jpg)
+    ![moduleinfofull](src/moduleinfofull.jpg)
 
 1. The module can be run using the below: 
 
@@ -851,7 +851,7 @@
 
 1. The directory structure after compilation is shown below:
 
-	![heirarchy](https://i.ibb.co/C0zF5rk/moduleexport-JPG.jpg)
+	![moduleexport](res/moduleexport.jpg)
 
 1. The exports clause allows any other module to require it. The Java module systems allows you to fine tune access to a module only to specific modules using a variation of the exports clause. This is shown below:
 
@@ -955,19 +955,19 @@
 
 1. The rules for modifiers in nested classes are summarised below:
 
-	![nested_modifiers](https://i.ibb.co/d70f0c1/table1-1.jpg)
+	![table1.1](res/table1.1.jpg)
 
 1. The rules for members in nested classes are summarised below:
 
-	![nested_members](https://i.ibb.co/f1JpHn1/table1-2.jpg)
+	![table1.2](table1.2.jpg)
 
 1. The rules for access in nested classes are summarised below:
 
-	![nested_access](https://i.ibb.co/XYW0Q22/table1-3.jpg)
+	![table1.3](res/table1.3.jpg)
 
 1. When Java was first released, there were only two types of members an interface declaration could include: abstract methods and static final variables. Since Java 8 and 9, new method types have been added. The interface member types are summarised below:
 
-	![nested_access](https://i.ibb.co/MB0G8Br/table1-4.jpg)
+	![table1.4](res/table1.4.jpg)
 
 1. A default method may be declared within an interface to provide a default implementation. The default method is assumed to be public and cannot be marked abstract, final or static. It may also be overridden by a class that implements the interface. If a class inherits two or more default methods with the same method signature, then the class must override the method.
 
@@ -984,7 +984,7 @@
 
 1. The rules for interface member access are summarised below:
 
-    ![nested_access](https://i.ibb.co/LRhDvN2/table1-5.jpg)
+    ![table1.5](res/table1.5.JPG)
 
 1. A functional interface is an interface that contains a single abstract method. A lambda expression is like an anonymous class that defines one method. Any functional interface can be implemented as a lambda expression.
 
@@ -1112,7 +1112,7 @@
 
 1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
 
-![table2.1](https://i.ibb.co/YPN4zCL/table2-2.jpg)
+![table2.1](res/table2.2.jpg)
 
 1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
 
@@ -1169,9 +1169,9 @@
 
 1. Commonly used built-in annotations and how they are applied are shown below:
 
-![table2.5](https://i.ibb.co/j514FZ6/table2-5.jpg)
+![table2.5](res/table2.5.jpg)
 
-![table2.6](https://i.ibb.co/3WyjtwF/table2-6.jpg)
+![table2.6](res/table2.6.jpg)
 
 ### Generics and Collections
 
@@ -1248,7 +1248,7 @@
 
 1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
 
-    ![figure3.1](https://i.ibb.co/92zNktt/figure3-1.jpg)
+    ![figure3.1](res/table3.1.jpg)
 
 1. The Collection interface contains useful convenience methods. These are shown below:
 
@@ -1315,7 +1315,7 @@
 
 1. A summary of the differences between Comparable and Comparator are shown below:
 
-    ![figure3.1](https://i.ibb.co/LJZMjBm/table3-1.jpg)
+    ![figure3.1](res/table3.1.JPG)
 
 1. When building a comparator there are several helper methods that can be used. These are shown below:
 
@@ -1448,9 +1448,7 @@
 
 1. The functional interfaces shown below are provided as built-in functional interfaces in the java.util.function package.
 
-	```java
-    ![table4.1](res/table4.1.jpg)
-    ```
+    ![table4.1](res/table4.1.JPG)
 
 1. A Supplier is used when you want to generate or supply values without taking any input. A supplier is often used to construct new objects. The definition is shown below:
 
