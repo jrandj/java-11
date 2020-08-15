@@ -282,7 +282,6 @@
             System.out.println("In instance initialiser");
         }
     }
-
     ```
 
 1. An instance variable is not allowed to use the value of a variable if that variable is declared below the initialiser. It can assign a value to such a variable. An instance initialiser is not expected to throw any exceptions. Instance initialisers should generally be avoided, and a well designed class should not need to use them.
@@ -772,7 +771,7 @@
 
 1. An example of the file structure for a module shown below:
 
-    ![moduleinfo](src/moduleinfo.jpg)
+    ![moduleinfo](res/moduleinfo.jpg)
 
 1. The module is compiled using the below:
 
@@ -784,7 +783,7 @@
 
 1. The file structure after compilation is shown below:
 
-    ![moduleinfofull](src/moduleinfofull.jpg)
+    ![moduleinfofull](res/moduleinfofull.jpg)
 
 1. The module can be run using the below: 
 
@@ -959,7 +958,7 @@
 
 1. The rules for members in nested classes are summarised below:
 
-	![table1.2](table1.2.jpg)
+	![table1.2](res/table1.2.jpg)
 
 1. The rules for access in nested classes are summarised below:
 
@@ -1112,7 +1111,7 @@
 
 1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
 
-![table2.1](res/table2.2.jpg)
+    ![table2.1](res/table2.2.jpg)
 
 1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
 
@@ -1636,4 +1635,48 @@
 	
 	Function<Integer, Integer> combined = after.compose(before);
 	System.out.println(combined.apply(3)); // 
+	```
+
+1. An Optional type is used to express a result that could be "not applicable" without using null references. The Optional instance methods are summarised below:
+
+	![table4.3](res/table4.3.JPG)
+
+5. An example using the isPresent() and get() methods is shown below:
+
+	```java
+	public static Optional<Double> average(int... scores){
+        if(scores.length == 0) return Optional.empty();
+        int sum = 0;
+        for(int score:scores) sum += score;
+        return Optional.of((double) sum/scores.length);
+    }
+
+    Optional<Double> opt = average(90, 100);
+    if(opt.isPresent())
+        System.out.println(opt.get()); // 95.0
+	```
+
+1. The ofNullable() method can be used to return an empty Optional if the value is null:
+
+	```java
+	Optional o (value == null) ? Optional.empty() : Optional.of(value);
+    Optional o = Optional.ofNullable(value);
+	```
+
+1. The ifPresent() method can be used to specify a Consumer to be run when there is a value inside of an Optional:
+
+	```java
+	Optional<Double> opt = average(90, 100);
+    opt.ifPresent(System.out::println);
+	```
+
+1. There are multiple methods that can be used to handle an empty Optional. Note that if the value does exist then the value will just be printed. Examples are shown below:
+
+	```java
+	Optional<Double> opt = average();
+    System.out.println(opt.orElse(Double.NaN)); // NaN
+    System.out.println(opt.orElseGet(() -> Math.random())); // random number
+    System.out.println(opt.orElseThrow()); // NoSuchElementException
+    System.out.println(opt.orElseThrow(
+        () -> new IllegalStateException())); // Can throw something else
 	```
