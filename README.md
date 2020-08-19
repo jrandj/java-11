@@ -939,10 +939,10 @@
     ```
 
 1. A nested class is one that is defined within another class. There are 4 types:
-    * Inner class: A non-static type defined at the member level.
-    * Static nested class: A static typed defined at the member level.
-    * Local class: A class defined within a method body.
-    * Anonymous class: A special case of a local class that does not have a name.
+    * **Inner class:** A non-static type defined at the member level.
+    * **Static nested class:** A static typed defined at the member level.
+    * **Local class:** A class defined within a method body.
+    * **Anonymous class:** A special case of a local class that does not have a name.
 
 1. An inner class cannot declare static fields or methods, except for static final fields. It can also access members of the outer class including private methods. An inner classes will result in a Outer$Inner.class file being created by the compiler. As inner classes can have the same variable names as outer classes, a call to **this** is prefixed with the class name.
 
@@ -1240,10 +1240,10 @@
     ```
 
 1. A collection is a group of objects contained in a single object. The Java Collection Framework is a set of classes in java.uil for storing collections. The common
-	* List: Ordered collection of elements that can contain duplicates. Accessed by an int index.
-	* Set: A collection that does not allow duplicate entries.
-	* Queue: A collcetion that orders its elements in a specific order. A typical queue is FIFO.
-	* Map: A collection that maps keys to values, with no duplciate keys allowed. The elements are key/value pairs.
+	* **List:** Ordered collection of elements that can contain duplicates. Accessed by an int index.
+	* **Set:** A collection that does not allow duplicate entries.
+	* **Queue:** A collcetion that orders its elements in a specific order. A typical queue is FIFO.
+	* **Map:** A collection that maps keys to values, with no duplciate keys allowed. The elements are key/value pairs.
 
 1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
 
@@ -1679,4 +1679,54 @@
     System.out.println(opt.orElseThrow()); // NoSuchElementException
     System.out.println(opt.orElseThrow(
         () -> new IllegalStateException())); // Can throw something else
+	```
+
+1. A stream in Java is a sequence of data. A stream pipeline consists of the operations that run on a stream to produce a result. A stream can be finite or infinite.
+
+1. A stream pipeline consists of:
+	* **Source:** Where the stream comes from.
+	* **Intermediate operations:** Transforms the stream into another one. There can be many intermediate operations. They do not run until the terminal operation runs.
+	* **Terminal operations: ** Produces a result. A stream can only be used once, the stream is no longer valid after a terminal operation completes.
+
+1. The Stream<T> interface is defined in the java.util.stream package.
+
+1. To create a finite stream:
+	```java
+	Stream<String> empty = Stream.empty(); // 0
+	Stream<Integer> singleElement = Stream.of(1); // 1
+	Stream<Integer> fromArray = Stream.of(1,2,3); // 3
+
+	var list = List.of("a","b","c");
+	Stream<String> fromList = list.stream();
+	Stream<String> fromListParallel = list.parallelStream();
+	```
+
+1. To create an infinite stream:
+	```java
+	Stream<Double> randoms = Stream.generate(Math::random);
+	Stream<Integer> oddNumbers = Stream.iterate(1, n -> n + 2);
+	Stream<Integer> oddNumbersUnder100 = Stream.iterate{
+		1, // seed
+		n -> n < 100; // Predicate to specify when done
+		n -> n + 2; // UnaryOperator to get next value
+	}
+	```
+
+1. A terminal operation can be performed without an interediate operations. Reductions are a special type of terminal operation where the contents of the stream are combined into a single primitive or Object. Terminal stream operation method signatures and examples are shown below:
+
+	```java
+	// long count()
+	Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
+	System.out.println(s.count()); // 3
+
+	// Optional<T> min(Comparator<? super T> comparator)
+	// Optional<T> max(Comparator<? super T> comparator)
+	Stream<String> s = Stream.of("monkey", "ape", "bonobo");
+	Optional<String> min = s.min((s1, s2) -> s1.length()-s2.length());
+	min.ifPresent(System.out.println); // ape
+
+	Optional<?> minEmpty = Stream.empty().min((s1, s2) -> 0);
+	System.out.println(minEmpty.isPresent()); // false
+	// 
+	}
 	```
