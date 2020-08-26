@@ -1727,6 +1727,96 @@
 
 	Optional<?> minEmpty = Stream.empty().min((s1, s2) -> 0);
 	System.out.println(minEmpty.isPresent()); // false
-	// 
-	}
+	
+	// Optional<T> finndAny()
+	// Optional<T> findFirst()
+	Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
+	Stream<String> infinite = Stream.generate(() -> "chimp");
+	s.findAny().ifPresent(System.out:prinln); // monkey (usually)
+	infinite.findAny().ifPresent(System.out::println); // chimp
+
+	// boolean anyMatch(Predicate<? super T> predicate)
+	// boolean allMatch(Predicate<? super T> predicate)
+	// boolean noneMatch(Predicae<? super T> predicate)
+
+	var list = List.of("monkey", "2", "chimp");
+	Stream<String> infinite = Stream.generate(() -> "chimp");
+	Predicate<String> pred = x -> Character.isLetter(x.charAt(0));
+
+	System.out.println(list.stream().anyMatch(pred)); // true
+	System.out.println(list.stream().allMatch(pred)); // false
+	System.out.println(list.stream().noneMatch(pred)); // false
+	System.out.println(infinite.anyMatch(pred)); // true
+
+	// void forEach(Consumer<? super T> action)
+
+	Stream<String> s = Stream.of("Monkey", "Gorilla", "Bonobo");
+	s.forEach(System.out::print); // MonkeyGorillaBonobo
+
+	// T reduce(T identity, BinaryOperator<T> accumulator)
+	// Optional<T> reduce(BinaryOperator<T> accumulator)
+	// <U> reduce(U identity,
+	// BiFunction<U, ? super T, U> accumulator,
+	// BinaryOperator<U> combiner)
+
+	Stream<String> stream = Stream.of{"w", "o", "l", "f"};
+	String word = stream.reduce("", (s,c) -> s + c;
+	System.out.println(word); // wolf;
+
+	// <R> R collect(Supplier<R> supplier,
+	// BiConsumer(R, ? super T> accumulator,
+	// BiConsumer<R, R> combiner)
+	// <R, A> R collect(Collector<? super T, A, R> collector)
+
+	Stream<String> stream = Stream.of("w", "o", "l", "f");
+	TreeSet<String> set = stream.collect(
+		Treeset::new,
+		Treeset::add,
+		Treeset::addAll);
+	System.out.println(set); // [f, l, o, w]
+	```
+
+1. An intermediate operation produces a stream as its result.
+
+	```java
+	// Stream<T> filter(Predicate<? super T> predicate)
+
+	Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
+	s.filter(x -> x.startsWith("m"))
+		.forEach(System.out::print); // monkey
+
+	// Stream<T> distinct()
+
+	Stream<String> s = Stream.of("duck", "duck", "duck", "goose");
+	s.distinct()
+		.forEach(System.out::print); // duckgoose
+
+	// Stream<T> limit(long maxSize)
+	// Stream<T> skip(long n)
+
+	Stream<Integer> s = Stream.iterate(1, n -> n + 1);
+	s.skip(5)
+		.limit(2)
+		.forEach(System.out::print); // 67
+
+	// <R> Stream<R> map(Function<? super T>, ? extends R> mapper)
+	Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
+	s.map(String::length)
+		.forEach(System.out::print); // 676
+
+	// <R> Stream<R> flatMap(
+		Function<? super T, ? extends Stream<? extends R>> mapper)
+
+	List<String> zero = List.of();
+	var one = List.of("Bonobo");
+	var two = List.of("Mama Gorilla", "Baby Gorilla");
+	Stream<List<String>> animals = Stream.of(zero, one, two);
+
+	animals.flatMap(m -> m.stream())
+		.forEach(System.out::println);
+
+	// Bonobo
+	// Mama Gorilla
+	// Baby Gorilla
+	
 	```
