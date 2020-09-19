@@ -21,13 +21,11 @@
 ### Creating a Simple Java Program
 
 1. A Java class is compiled using the **javac** program. Compilation results in one or more class files depending on the contents of the Java source file. An example is shown below:
-
     ```java
     javac TestClass.java
     ```
 
 1. A Java class is executed using the **java** program. An example is shown below:
-
     ```java
     java TestClass a b c
     ```
@@ -47,7 +45,6 @@
 1. Java has primitive and reference variables. The Java compiler and JVM inherently know what primitive types mean, while reference data types are built by combining primitive data types and other reference data types.
 
 1. Primitive data types below:
-
     | Date Type | Size    | Description                                                             | Sample                  |
     |-----------|---------|-------------------------------------------------------------------------|-------------------------|
     | byte      | 1 byte  | -128 to 127                                                             | -1, 0, 1                |
@@ -59,7 +56,7 @@
     | boolean   | 1 bit   | Stores true or false values                                             | true, false             |
     | char      | 2 bytes | Stores a single character                                               | '\u0000', 'a'           |
 
-    Wrapper classes exist for Byte, Short, Integer, Long, Float and Double.
+1. Wrapper classes exist for Byte, Short, Integer, Long, Float and Double.
 
 1. Reference types include:
     * Classes
@@ -157,7 +154,6 @@
 1. Arithmetic operators are used to perform standard mathematical operations on all primitive variables (and wrapper objects for numeric types) except boolean.
 
 1. Operators and their precedence shown below:
-
     | Operator Type | Category             | Precadence                              |
     |---------------|----------------------|-----------------------------------------|
     | Unary         | postfix              | expr++ expr--                           |
@@ -215,7 +211,6 @@
 ### Describing and Using Objects and Classes
 
 1. When an object is instantiated the JVM allocates the necessary heap space to contain the various fields defined in the class. An example of instantiation is shown below:
-
     ```java
     new java.lang.Object();
     ``` 
@@ -234,7 +229,6 @@
 1. Java has three **visibility scopes** for variables - class, method, and block. Java has five **lifespan scopes** for variables - class, instance, method, for loop, and block.
 
 1. From Java 10 you can use a **var declaration** to infer types in a local method. An example is shown below:
-
     ```java
     var str = "Java 11";
     ```
@@ -244,7 +238,6 @@
 ### Creating and Using Methods
 
 1. The basic structure of a method is shown below:
-
     ```java
     returnType methodName(parameters){
         methodBody
@@ -275,7 +268,6 @@
     * Gives the instance an opportunity to set the values of the instance variables as per the instance initialisers and constructors.
 
 1. An instance initialiser is shown below:
-
     ```java
     class TestClass{
         {
@@ -360,7 +352,6 @@
     * A static method can be final but can never be abstract.
 
 1. The conventional sequence of modifiers in a method declaration are shown below:
-
     ```java
     <access modifier> <static> <final or abstract> <return type> methodName(<parameter list>)
 
@@ -383,7 +374,6 @@
 1. The purpose of casting is to provide the compiler with the type information of the actual object to which a variable will be pointing at run time. When you cast a reference to another type, you are basically saying that the program does something that is not evident from the code itself. Ideally, you should never need to use casting.
 
 1. The instanceof operator can be used to check if an object is an instance of a particular reference type. An example is shown below:
-
     ```java
     if(f instanceof Mango){
     }
@@ -392,7 +382,6 @@
 ### Programming Abstractly Through Interfaces
 
 1. An **interface** is used to describe behaviour as captured by a group of objects. An example is shown below:
-
     ```java
     interface Movable{
         void move(int x);
@@ -408,7 +397,6 @@
 
 1. Methods that interfaces can contain are shown below:
     * Abstract methods. Contain only declarations. An example is shown below:
-
         ```java
         interface Movable{
             void move(int x); // implicitly abstract
@@ -417,7 +405,6 @@
         ```
 
     * Default methods. The opposite of abstract, a method cannot be both default and abstract. An example is shown below:
-
         ```java
         interface Movable{
             default move(int x){
@@ -427,7 +414,6 @@
         ```
 
     * Static methods. Can be public or private but not protected or default. This is because static methods are not inherited or overridden in any meaningful way, and because protected methods can be seen by classes in the same package and which extend the class containing the method. However, a static method cannot be inherited so the package-private access modifier should be used instead of protected, as the only remaining intention is for it to be accessible within the same package. If no access modifier is specified, they are implicitly public. An example is shown below:
- 
         ```java
         interface Movable{
             static void sayHello(){
@@ -437,7 +423,6 @@
         ```
 
     * Private methods. Helpful when methods get too big and need to be refactored into smaller internal methods. An example is shown below:
-    
         ```java
         interface Movable{
             private void moveInternal(){
@@ -452,7 +437,6 @@
 1. An empty interface is known as a **marker interface**. The most common marker interface used in Java is java.io.Serializable. It signifies to the JVM that objects of classes implementing this interface can be serialised and deserialised.
 
 1. A class can implement any number of interfaces. Once a class declares that it implements an interface, it must have an implementation for all of the abstract methods declared in that interface. Implementation could be inherited from an ancestor class. If the class does not have implementation for even one of the methods, the class must be declared abstract. An example is shown below:
-
     ```java
     interface Movable{
         void Move();
@@ -481,7 +465,6 @@
 1. An ArrayList is a class that implements java.util.List, which in turn extends java.util.Collection.
 
 1. A **parametrised** class uses a type parameter instead of the data type. An example is shown below:
-
     ```java
     public class DataHolder<E>{
         E data;
@@ -541,7 +524,6 @@
 1. Advantages of ArrayList over an array include dynamic sizing, type safety, and readymade features. Disadvantages of ArrayList over an array include higher memory usage, no type safety, and no support for primitive values.
 
 1. The java.util.HashMap class implements the java.util.Map interface. Map does not extend the Collection interface. Useful Map methods are shown below:
-
     ```java
     V get(Object key);
     V put(K key, V value);
@@ -554,7 +536,6 @@
     ```
 
 1. A lambda expression is a shortcut for the compiler that defines a class with a method and instantiates that class. The below is an example of a class that implements a car shop:
-
     ```java
     class Car {
       String company;
@@ -600,7 +581,6 @@
     }
     ```
 1. The showCars method returns a list of cars based on any given criteria. By accepting an interface as an argument, the showCars method lets the caller decide the criteria for the search. TestClass below represents a third party class that uses CarMall: 
-
     ```java
     public class TestClass {
         public static void main(String[] args) {
@@ -625,7 +605,6 @@
     ```
 
 1. Observe that the above implementation can be replaced with the below:
-
     ```java
     public class TestClass {
         public static void main(String[] args) {
@@ -636,7 +615,6 @@
     }
     ```
 1. The compiler knows that the showCars method must pass an object of a class that implements CarFilter. As a result it is easy to generate the below:
-
     ```java
     class XYZ implements CarFilter{
         public boolean showCar(Car <<parameterName>>){
@@ -651,7 +629,6 @@
 1. The syntax for a lambda expression is the variable declarations on the left side of the arrow operator and the right side for the code that you want execution.
 
 1. Multiple lines of code must be written within curly braces. Parameter options are shown below:
-
     ```java
     () -> true // no parameter
     a -> a*a // 1 parameter
@@ -662,7 +639,6 @@
     ```
 
 1. Filtering a list of objects is so common that Java provides a generic interface java.util.function.Predicate for this purpose. This is shown below:
-
     ```java
     interface Predicate<T>{
         boolean test(T t);
@@ -670,7 +646,6 @@
     ```
 
 1. This allows us to remove the CarFilter interface in the above example:
-
     ```java
     List<Car> showCars(Predicate<Car> cp) {
       ArrayList<Car> carsToShow = new ArrayList<>();
@@ -683,7 +658,6 @@
     }
     ```
 1. Other methods for the Predicate interface are shown below:
-
     ```java
     default Predicate<T> and(Predicate<? super T> other);
     default Predicate<T> negate();
@@ -695,7 +669,6 @@
 ### Handling Exceptions
 
 1. Java exceptions are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situtaions and unknown exceptional situations. This is shown below:
-
     ```java
     try{    
         // code for normal course of action
@@ -711,7 +684,6 @@
     ```
 
 1. When developing code there is always the provider and the client. Exceptions are a means for the provider to let the client know about any exceptional events, and allow the client to determine how they want to deal with them. The mechanism to let the client know is to **throw** an exception. An example is shown below:
-
     ```java
     public void copyFile(String inputPath, String outputPath) throws IOException {
         // code to copy file
@@ -721,7 +693,6 @@
 1. If the client can resolve the situation a **catch** statement can be used. If the client cannot handle the exceptional situation either, the exception can be propogated to the client's client. An exception is considered handled when it is caught in a catch block.
 
 1. The throw statement is used to explicitly throw an exception. Throwing an exception implies that the code has encountered an unexpected situation with which it does not want to deal. Java requires that you list the exceptions that a method might throw in the throws clause of that method. This is shown below:
-
     ```java
     public double computeSimpleInterest (double p, double r, double t) throws Exception{
         if(t<0) {
@@ -732,7 +703,6 @@
     ```
 
 1. A **try statement** provides an opportunity to recover from an exceptional situation that arises while executing a block of code.
-
     ```java
     try {
         // code that might throw exceptions
@@ -751,7 +721,6 @@
 1. The java.lang.Throwable class is the root of all exceptions.   A Throwable object includes the chain of the method calls that led to the exception (known as the "stack trace") and any informational message specified by the programmer.
 
 1. The Throwable heirarchy is shown below:
-
     ![heirarchy](https://i.ibb.co/58YTzkb/heirarchy.png)
 
 1. Generally **checked exceptions** are those that extend java.lang.Throwable but do not extend java.lang.RuntimeException or java.lang.Error. The remaining exceptionsare **checked exceptions**. Checked exceptions must be declared in the throws clause of the method.
@@ -763,18 +732,15 @@
 1. In Java 9 the Java Module System was introduced to assist with these problems. The idea of Modules is that classes are mixed and matched at run time to form an application. 
 
 1. A module is declared using the module-info.java file. By convention, this file is placed in a folder with the same name as the module name. An example of the contents of this file is shown below:
-
     ```java
     module simpleinterest{
     }
     ```
 
 1. An example of the file structure for a module shown below:
-
     ![moduleinfo](res/moduleinfo.jpg)
 
 1. The module is compiled using the below:
-
     ```java
     javac -d out --module-source-path src --module simpleinterest
     ```
@@ -782,11 +748,9 @@
 1. The above command used 3 switches. The -d switch directed the output to a particular directory, the --module-source-path switch provided the location of the source module definition, and the --module switch specified the name of the module to compile.
 
 1. The file structure after compilation is shown below:
-
     ![moduleinfofull](res/moduleinfofull.jpg)
 
 1. The module can be run using the below: 
-
     ```java
     java --module-path out --module simpleinterest/simpleinterest.SimpleInterestCalculator
     ```
@@ -794,7 +758,6 @@
 1. Note that the format of the --module switch argument is \<module name>/\<main class name>.
 
 1. The module is compiled into a jar using the below:
-
     ```java
     jar --create --file simpleinterest.jar --main-class simpleinterest.SimpleInterestCalculator -C out\simpleinterest
     ```
@@ -802,13 +765,11 @@
 1. The above command used 4 switches. The --create switch tells the jar tool to create, the --file switch specifies the name of the file, the --main-class switch adds a Main-Class entry in the jar file manifest, and the -C switch makes the jar tool change working directories so that the structure inside the jar file is the same as the structure inside out\simpleinterest. 
 
 1. The module can now be run using the below:
-
     ```java
     java --module-path . --module simpleinterest
     ```
 
 1. It is a good design practise to define functionality in the form of an interface and let the actual implementation implement that interface. Seperating the interface and the implementation into separate modules allows us to build an application by mixing and matching modules without the need to bundle classes that are not required for the application. An interface is added as shown below:
-
     ```java
     package calculators;
 	public interface InterestCalculator{
@@ -817,7 +778,6 @@
     ```
 
 1. The exports clause allows the public types within a package be eligible to be accessible by other modules. A module can only export packages, and not individual types. The contents of module-info.java for the calculators module is shown below:
-
     ```java
     module calculators{
 		exports calculators;
@@ -825,7 +785,6 @@
     ```
 
 1. The requires clause is the counterpart of the exports clause. The purpose of having a requires class is to make the dependencies of a module explicitly clear to the users. The contents of module-info.java for the simpleinterest module is shown below:
-
     ```java
     module simpleinterest{
 		requires calculators;
@@ -833,7 +792,6 @@
     ```
 
 1. A simplified SimpleInterestCalculator.java is shown below:
-
     ```java
     package simpleinterest;
 	import calculators.InterestCalculator;
@@ -849,11 +807,9 @@
     ```
 
 1. The directory structure after compilation is shown below:
-
 	![moduleexport](res/moduleexport.jpg)
 
 1. The exports clause allows any other module to require it. The Java module systems allows you to fine tune access to a module only to specific modules using a variation of the exports clause. This is shown below:
-
     ```java
     module <modulename>{
 		exports <packagename> to <modulename(s)>;
@@ -861,7 +817,6 @@
     ```
 
 1. If a module A reads another module B, and module B reads another module C, module A does not read module C. That is to say that dependencies are not transitive. An example is shown below:
-
     ```java
     module ui{
 		requires hr;
@@ -880,7 +835,6 @@
 1. In this case the ui module does not have a requires valueobjects, so the ui module cannot access the Employee class from the valueobjects module. This code will fail to compile. A requires valueobjects could be added to the ui module, but there could be many requires clauses in the hr module. Only multiple compilation failures can make this information known to the ui module.
 
 1. A **requires transitive** clause allows you to specify that if a module depends on another module, any module that depends on it should also depend on the other module. An example is shown below
-
     ```java
     module hr{
 		requires transitive valueobjects;
@@ -931,7 +885,6 @@
 1. A final class cannot be extended. A class cannot be both abstract and final.
 
 1. An enum can be used to specify a fixed set of constants. Using an enum is better than using constants because it provides type-safe checking. Another advantage of an enum is the enum value can be used in a switch statement. An enum can contain methods but the first line must be the list of values. Note that if an enum has a body (e.g. default value) then the semicolon becomes mandatory.
-
     ```java
     public enum Season{
 		WINTER, SPRING, SUMMER, FALL
@@ -953,19 +906,15 @@
 1. An anonymous class is a special form of a local class that does not have a name. It is declared and instantiated in one statement using the new keyword, a type name with parentheses, and a set of braces. Anonymous classes are required to extend an existing class or implement an existing interface.
 
 1. The rules for modifiers in nested classes are summarised below:
-
 	![table1.1](res/table1.1.jpg)
 
 1. The rules for members in nested classes are summarised below:
-
 	![table1.2](res/table1.2.jpg)
 
 1. The rules for access in nested classes are summarised below:
-
 	![table1.3](res/table1.3.jpg)
 
 1. When Java was first released, there were only two types of members an interface declaration could include: abstract methods and static final variables. Since Java 8 and 9, new method types have been added. The interface member types are summarised below:
-
 	![table1.4](res/table1.4.jpg)
 
 1. A default method may be declared within an interface to provide a default implementation. The default method is assumed to be public and cannot be marked abstract, final or static. It may also be overridden by a class that implements the interface. If a class inherits two or more default methods with the same method signature, then the class must override the method.
@@ -982,13 +931,11 @@
 1. A private static method is used to avoid code duplication in static methods. It must be marked private and static and may only be called by other methods within the interface definition.
 
 1. The rules for interface member access are summarised below:
-
     ![table1.5](res/table1.5.JPG)
 
 1. A functional interface is an interface that contains a single abstract method. A lambda expression is like an anonymous class that defines one method. Any functional interface can be implemented as a lambda expression.
 
 1. Note that if a functional method includes an abstract method with the same signature as a public method found in Object, then those methods do not count towards the single abstract method test. This includes:
-
     ```java
     String toString()
     boolean equals(Object)
@@ -996,7 +943,6 @@
     ```
 
 1. A lambda expression contains a parameter name, arrow and body. The parameters list the variables, which must be compatible with the type and number of input parameters of the functional interface's single abstract method. The body must also be compatible with the return type of the functional interface's abstract method. Example lamba expressions are shown below:
-
     ```java
     a -> a.canHop()
     (Animal a) -> {return a.canHop();}
@@ -1007,7 +953,6 @@
 ### Annotations
 
 1. Annotations are all about metadata. They let you assign metadata attributes to classes, methods, variables and other Java types. An example is shown below:
-
     ```java
     public class Mammal{}
     public class Bird{}
@@ -1017,7 +962,6 @@
     ```
 
 1. The above could have been achieved by extending a ZooAnimal class but that would require the class hierarchy to be changed. Annotations are similar to interfaces. While interface can be applied to classes, annotations can be applied to classes, methods, expressions, and even other annotations. Annotations also allow a set of values to be passed. An example is shown below:
-
     ```java
     public class Veterinarian{
         @ZooAnimal(habitat="Infirmary") private Lion sickLion;
@@ -1029,14 +973,12 @@
 1. The values are part of the type declaration and not of the variable. Without annotations, a new Lion type for each habitat value would need to be defined. This would become difficult in large applications.
 
 1. To declare an an annotation the @interface annotation is used. An example is shown below:
-
     ```java
     public @interface Exercise{}
     }
     ```
 
 1. To apply the annotation to other code we simply use the @Exercise annotation. A parenthesis is required if there are elements specified, and optional otherwise. Examples are shown below:
-
     ```java
     @Exercise() public class Cheetah{}
     @Exercise public class Sloth{}
@@ -1045,7 +987,6 @@
     ```
 
 1. To declare an annotation with elements the elements need to be available in the annotation declaration. An example is shown below:
-
     ```java
     public @interface Exercise{}
         int hoursPerDay();
@@ -1053,13 +994,11 @@
     ```
 
 1. This changes how the annotation is used. An example is shown below:
-
     ```java
     @Exercise(hoursPerDay=3) public class Cheetah{}
     ```
 
 1. When declaring an annotation, any element without a default value is considered required. A default value must be a non-null constant expression. An example including a default value is shown below:
-
     ```java
     public @interface Exercise{}
         int hoursPerDay();
@@ -1074,7 +1013,6 @@
 1. Like interface variables, annotation variables are implicitly public, static and final. A constant variable can be declared in an annotation but are not considered elements.
 
 1. A shorthand format exists for using annotations. This can occur if the annotation declaration contains an element named value(), the usage of the annotation provides no values for other elements, and the declaration does not contain any elements that are required. An example is shown below:
-
     ```java
     public @interface Injured{
         String veterinarian() default "unassigned";
@@ -1086,7 +1024,6 @@
     ```
 
 1. A shorthand format also exists for providing an array that contains a single element. An example is shown below:
-
     ```java
     public @interface Music{
         String[] genres();
@@ -1099,7 +1036,6 @@
     ```
 
 1. An annotation can be applied to an annotation to specify what types the annotation can be applied to. This is done by specifying the ElementType using @Target. An example is shown below:
-
     ```java
     @Target({ElementType.METHOD,ElementType.CONSTRUCTOR})
     public @interface ZooAttraction{}
@@ -1110,11 +1046,9 @@
 1. The TYPE_USE value covers nearly all other values. One exception is that it can only be used on a method that returns a value, a void method would still need METHOD defined in the annotation. TYPE_USE is typically used for cast operations, object creation with new and inside type declarations.
 
 1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
-
     ![table2.1](res/table2.2.jpg)
 
 1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
-
     ```java
     // Hunter.java
     import java.lang.annotation.Documented;
@@ -1127,7 +1061,6 @@
 1. In the above example @Hunter would be published with the Lion Javadoc information because it's marked with @Documented.
 
 1. The @Inherited annotation is used to allow subclasses to inherit the annotation information found in the parent class.
-
     ```java
     // Vertebrate.java
     import java.lang.annotation.Inherited;
@@ -1143,7 +1076,6 @@
 1. In the above example the @Vertebrate annotation will be applied to both Mammal and Dolphin.
 
 1. The @Repeatable annotation can be used to apply an annotation more than once. To declare a @Repeatable annotation, a containing annotation with type value must be defined.
-
     ```java
     // Containing annotation type
     public @interface Risks{
@@ -1175,7 +1107,6 @@
 ### Generics and Collections
 
 1. Method references can make code more easy to read. An example is shown below:
-
     ```java
     @FunctionalInterface
     public interface LearnToSpeak{
@@ -1206,7 +1137,6 @@
     ```
 
 1. There are four formats for method references. Examples are shown below:
-
     ```java
     // Static Methods
     Consumer<List<Integer>> methodRef = Collections::sort;
@@ -1233,7 +1163,6 @@
 1. Each Java primitive has a corresponding wrapper class. A null value can be assigned to a wrapper class as a null value can be assiged to any reference variable. Attempting to unbox a wrapper class with a null value will cause a NullPointerException.
 
 1. The Diamond Operator is a shorthand notation that allows you to omit the gneric type from the right side of a statement when the type can be inferred. An example is shown below:
-
     ```java
     List<Integer> list = new ArrayList<Integer>();
 	List<Integer> list = new ArrayList<>();
@@ -1246,11 +1175,9 @@
 	* **Map:** A collection that maps keys to values, with no duplciate keys allowed. The elements are key/value pairs.
 
 1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
-
     ![figure3.1](res/table3.1.jpg)
 
 1. The Collection interface contains useful convenience methods. These are shown below:
-
     ```java
     boolean add(E element);
 	boolean remove(Object object);
@@ -1263,7 +1190,6 @@
 	```
 
 1. The Collections.sort() method is commonly used when working with collections. To sort objects that you create yourself, Java provides an interface called Comparable. This is shown below:
-
     ```java
     public interface Comparable<T>{
         int compareTo(T o);
@@ -1276,7 +1202,6 @@
     * A positive number when the current object is larger than the argument to compareTo().
 
 1. An example is shown below:
-
     ```java
     public class MissingDuck implements Comparable<MissingDuck>{
         private String name;
@@ -1293,7 +1218,6 @@
 	```
 
 1. Note that only one compareTo() method can be implemented for a class. If we want to sort by something else, a Comparator can be used. Comparator is a functional interface. An example is shown below:
-
     ```java
     public static void main(String[] args){
         Comparator<Duck> byWeight = new Comparator<Duck>(){
@@ -1313,11 +1237,9 @@
 	```
 
 1. A summary of the differences between Comparable and Comparator are shown below:
-
     ![figure3.1](res/table3.1.JPG)
 
 1. When building a comparator there are several helper methods that can be used. These are shown below:
-
     ```java
     reversed();
     thenComparing(function);
@@ -1329,7 +1251,6 @@
 1. Generics allow you to write and use parametrised types. This allows the compiler to detect issues rather than a ClassCastException exception being thrown.
 
 1. Generics can be introduced into classes using angle brackets. An example is shown below:
-
     ```java
     public class Crate<T>{
         private T contents;
@@ -1351,7 +1272,6 @@
     * S, U, V etc. for multiple generic types
 
 1. Generics can also be introduced into methods using angle brackets. An example is shown below:
-
     ```java
     public class Handler{
         public statc <T> Crate<T> ship(T t){
@@ -1364,7 +1284,6 @@
 1. A bounded parameter type is a generic type that specifies a bound for the generic. A wildcard generic type is an unknown generic type represented with a question mark.  
 
 1. An unbounded wildcard is used when any type is okay.
-
     ```java
     public static void printList(List<?> list){
         for (Object x:list)
@@ -1373,13 +1292,11 @@
     ```
 
 1. Note that a generic type can't use a subclass. An example that will not compile is shown below:
-
     ```java
     ArrayList<Number> list = new ArrayList<Integer>();
     ```
 
 1. An upper-bounded wildcard can be used to say that any class that extends a class or that class itself can be the parameter type. An example is shown below:
-
     ```java
     public static long total(List<? extends Number> list){
         long count = 0;
@@ -1390,7 +1307,6 @@
     ```
 
 1. Note that due to type erasure the above code is converted to something like:
-
     ```java
     public static long total(List list){
         long count = 0;
@@ -1405,7 +1321,6 @@
 1. When upper bounds or unbounded wildcards are used in such a way the list becomes immutable and cannot be modified.
 
 1. A lower-bounded wildcard can be used to say that any instance of a class or an instance of a superclass can be the parameter type. An example is shown below:
-
     ```java
     public static void addSound(List<? super String> list){
         list.add("quack");
@@ -1422,7 +1337,6 @@
 1. A useful mnemonic is PECS: Producer Extends, Consumer Super. If you need a List to produce T values (you want to read Ts from the list), you need to declare it using extends. If you need a list to consume T values (you want to write Ts into the list), you need to declare it using super. If you need to both read and write to a list you need to declare it exactly with no wildcards.
 
 1. In the below example, if you want to write elements into the list, you can't add a Number, Integer or a Double because each one is not compatable with all types. A Number can be read because any of the lists will contain a Number or a subclass of Number. When using extends like this you can only read, and not write.
-
     ```java
     List<? extends Number> foo = new ArrayList<>();
 
@@ -1433,7 +1347,6 @@
     ```
 
 1. In the below example, if you want to write elements into the list, you can add an IOException or a FileNotFoundException but not an Exception.  This is because an Exception can't be added to a a list of a more specific subclass. An Object can be read from this list but you won't know which type.
-
     ```java
     List<? super IOException> foo = new ArrayList<>();
 
@@ -1446,11 +1359,9 @@
 ### Functional Programming
 
 1. The functional interfaces shown below are provided as built-in functional interfaces in the java.util.function package.
-
     ![table4.1](res/table4.1.JPG)
 
 1. A Supplier is used when you want to generate or supply values without taking any input. A supplier is often used to construct new objects. The definition is shown below:
-
 	```java
     @FunctionalInterface
 	public interface Supplier<T>{
@@ -1459,7 +1370,6 @@
     ```
 
 1. An example is shown below:
-
 	```java
     Supplier<LocalDate> s1 = LocalDate::now;
 	Supplier<LocalDate> s2 = () -> LocalDate.now();
@@ -1469,7 +1379,6 @@
     ```
 
 1. A Consumer is used when you want to do something with a parameter but not return anything. A BiConsumer is the same but takes two parameters. The definitions are shown below:
-
 	```java
     @FunctionalInterface
 	public interface Consumer<T>{
@@ -1485,7 +1394,6 @@
     ```
 
 1. An example for Consumer is shown below:
-
 	```java
 	Consumer<String> c1 = System.out::println;
 	Consumer<String> c2 = x-> System.out.println(x);
@@ -1495,7 +1403,6 @@
 	```
 
 1. An example for BiConsumer is shown below:
-
 	```java
     var map = new HashMap<String, Integer>();
 	BiConsumer<String, Integer> b1 = map::put;
@@ -1506,7 +1413,6 @@
     ```
 
 1. A Predicate is often used when filtering or matching. A BiPredicate is the same but takes two parameters. The definitions are shown below:
-
 	```java
     @FunctionalInterface
 	public interface Predicate<T>{
@@ -1522,7 +1428,6 @@
     ```
 
 1. An example for Predicate is shown below:
-
 	```java
 	Predicate<String> p1 = String::isEmpty;
 	Predicate<String> p2 = x -> x.isEmpty();
@@ -1531,7 +1436,6 @@
 	```
 
 1. An example for BiPredicate is shown below:
-
 	```java
 	BiPredicate<String, String> b1 = String::startsWith;
 	BiPredicate<String, String> b2 = (string, suffix) -> string.startsWith(prefix);
@@ -1541,7 +1445,6 @@
 	```
 
 1. A Function turns one parameter into a value of a potentially different type and returns it. A BiFunction turns two parameters into a value and returns it. The definitions are shown below:
-
 	```java
     @FunctionalInterface
 	public interface Function<T, R>{
@@ -1557,7 +1460,6 @@
     ```
 
 1. An example for Function is shown below:
-
 	```java
 	Function<String, Integer> f1 = String::length;
 	Function<String, Integer> f2 = x -> x.length();
@@ -1567,7 +1469,6 @@
 	```
 
 1. An example for BiFunction is shown below:
-
 	```java
 	BiFunction<String, <String, String> b1 = String::concat;
 	BiFunction<String, <String, String> b2 = (string, toAdd) -> string.concat(toAdd);
@@ -1577,7 +1478,6 @@
 	```
 
 1. A UnaryOperator is a special case of a Function where all the type parameters are the same type. A BinaryOperator merges two values into one of the same type. The definitions are shown below:
-
 	```java
 	@FunctionalInterface
 	public interface UnaryOperator<T> extends Function<T, T>{}
@@ -1589,7 +1489,6 @@
 	```
 
 1. An example for UnaryOperator is shown below:
-
 	```java
 	UnaryOperator<String> u1 = String::toUpperCase;
 	UnaryOperator<String> u2 = x -> x.toUpperCase();
@@ -1599,7 +1498,6 @@
 	```
 
 1. An example for BinaryOperator is shown below:
-
 	```java
 	BinaryOperator<String> b1 = String::concat;
 	BinaryOperator<String> b2 = (string, toAdd) -> string.concat(toAdd);
@@ -1611,14 +1509,12 @@
 1. The built-in functional interfaces contain various helpful default methods.
 
 1. An example for the Predicate helper methods is shown below with the two statements being equivalent:
-
 	```java
 	Predicate<String> combination = s -> s.contains("cat") && ! s.contains("brown");
 	Predicate<String> combination = cat.and(brown.negate());
 	```
 
 1. An example for the Consumer helper methods is shown below:
-
 	```java
 	Consumer<String> c1 = x -> System.out.print("1:" + x);
 	Consumer<String> c2 = x -> System.out.print(",2:" + x);
@@ -1628,7 +1524,6 @@
 	```
 
 1. An example for the Function helper methods is shown below:
-
 	```java
 	Function<Integer, Integer> before = x -> x + 1;
 	Function<INteger, Integer> after = x -> x * 2;
@@ -1638,11 +1533,9 @@
 	```
 
 1. An Optional type is used to express a result that could be "not applicable" without using null references. The Optional instance methods are summarised below:
-
 	![table4.3](res/table4.3.JPG)
 
 5. An example using the isPresent() and get() methods is shown below:
-
 	```java
 	public static Optional<Double> average(int... scores){
         if(scores.length == 0) return Optional.empty();
@@ -1657,21 +1550,18 @@
 	```
 
 1. The ofNullable() method can be used to return an empty Optional if the value is null:
-
 	```java
 	Optional o (value == null) ? Optional.empty() : Optional.of(value);
     Optional o = Optional.ofNullable(value);
 	```
 
 1. The ifPresent() method can be used to specify a Consumer to be run when there is a value inside of an Optional:
-
 	```java
 	Optional<Double> opt = average(90, 100);
     opt.ifPresent(System.out::println);
 	```
 
 1. There are multiple methods that can be used to handle an empty Optional. Note that if the value does exist then the value will just be printed. Examples are shown below:
-
 	```java
 	Optional<Double> opt = average();
     System.out.println(opt.orElse(Double.NaN)); // NaN
@@ -1776,8 +1666,7 @@
 	System.out.println(set); // [f, l, o, w]
 	```
 
-1. An intermediate operation produces a stream as its result.
-
+1. An intermediate operation produces a stream as its result. Intermediate operation method signatures and examples are shown below:
 	```java
 	// Stream<T> filter(Predicate<? super T> predicate)
 
@@ -1818,5 +1707,119 @@
 	// Bonobo
 	// Mama Gorilla
 	// Baby Gorilla
+
+	// Stream<T> sorted()
+	// Stream<T> sorted(Comparator<? super T> comparator>
+
+	Stream<String> s = Stream.of("brown-", "bear-"):
+	s.sorted()
+		.forEach(System.out:print); // bear-brown-
+
+	Stream<String> s = Stream.of("brown bear-", "grizzly-");
+	s.sorted(Comparator.reerseOrder())
+		.forEach(System.out::print); // grizzly-brown bear-
+
+	// Stream<T> peek(Consumer<? super T> action)
 	
+	var stream = Stream.of("black bear", "brown bear", "grizzly");
+	long count = stream.filter(s -> s.startsWith("g"))
+		.peek(System.out::println).count() // grizzly
+	System.out.println(count); // 1
 	```
+
+1. Intermediate and a terminal operation can be chained in a pipeline. An example is shown below:
+	```java
+	var list = List.of("Toby", "Anna", "Leroy", "Alex");
+	list.stream()
+		.filter(n -> n.length() == 4)
+		.sorted()
+		.limit(2)
+		.forEach(System.out::println); // AnnaAlex
+	```
+
+1. Primitive Streams allow you to work with the int, double and long primitives. They include specialised methods for workig with numeric data. The primitive streams are intStream, longStream and doubleStream.
+
+1. Primitive streams can be created from other streams. An example is shown below:
+	```java
+	Stream<String> objStream = Stream.of("penguin", "fish");
+	IntStream intStream = objStream.mapToInt(s -> s.length());
+	```
+
+1. To create a primitive stream from another stream the below methods are used:
+	![table4.8](res/table4.8.JPG)
+
+1. The function parameters used when mapping streams are shown below:
+	![table4.9](res/table4.9.JPG)
+
+1. Methods can return OptionalDouble, OptionalInt and OptionalLong types when dealing with streams of primitives. A summary of the Optional types for primitives is shown below:
+	![table4.10](res/table4.10.JPG)
+
+1. To use multiple terminal operations to produce a result from a stream summary statistics can be used. Summary statistics includes the *getMin()*, *getMax()*, *getAverage()*, *getSum()* and *getCount()* methods. An example is shown below:
+	```java
+	private static int range(intStream ints){
+		IntSummaryStatistics stats = ints.summaryStatistics();
+		if(stats.getCount() == 0) throw new RuntimeException();
+		return stats.getMax()-stats.getMin();
+	}
+	```
+
+1. There are special functional interfaces for primitives. The BooleanSupplier functioanl interface is shown below:
+	```java
+	// boolean getAsBoolean()
+
+	BooleanSupplier b1 = () -> true;
+	BooleanSupplier b2 = () -> Math.random() > 0.5;
+	System.out.println(b1.getAsBoolean()); // true
+	System.out.println(b2.getAsBoolean()); // true or false
+	```
+
+1. Common functional interfaces for other primitives ares shown below:
+	![table4.11](res/table4.11.JPG)
+
+1. Common functional interfaces for other primitives ares shown below:
+	![table4.12](res/table4.12.JPG)
+
+1. Predefined collectors are available via static methods on the Collectors interface. These are shown below:
+	![table4.13](res/table4.13.JPG)
+
+1. Examples for using collectors are shown below:
+	```java
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	String result = ohMy.collect(Collectors.joining(", "));
+	System.out.println(result); // lions, tigers, bears
+
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	String result = ohMy.collect(Collectors.averagingInt(String::length));
+	System.out.println(result); // 5.333333333333
+
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	TreeSet<String> result = ohMy
+		.filter(s -> s.startsWith("t))
+		.collect(Collectors.toCollection(TreeSet::new));
+	System.out.println(result); // [tigers]
+
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	Map<String, Integer> map = ohMy.collect(
+		Collectors.toMap(s -> s, String::length));
+	Systemout.println(map); // {lions=5, bears=5, tigers=6}
+
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	Map<Integer, String> map = ohMy.collect(Collectors.toMap(
+		String::length,
+		k -> k,
+		(s1, s2) -> s1 + "," + s2));
+	System.out.println(map); // {5=lions,bears, 6=tigers}
+	System.out.println(map.getClass()); // class java.util.HashMap
+
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	Map<Integer, List<String>> map = ohMy.collect(
+		Collectors.groupingBy(String::length));
+	System.out.println(map); // {5=[lions, bears], 6=[tigers]}
+
+	var ohMy= Stream.of("lions", "tigers", "bears");
+	Map<Boolean, List<String> map = ohMy.collect(
+		Collectors.partitioningBy(s -> s.length() <= 5));
+	System.out.println(map); // {false=[tigers], true=[lions, bears]}
+	```
+
+### Exceptions, Assertions, and Localization
