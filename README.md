@@ -723,7 +723,7 @@
 1. The Throwable heirarchy is shown below:
     ![heirarchy](https://i.ibb.co/58YTzkb/heirarchy.png)
 
-1. Generally **checked exceptions** are those that extend java.lang.Throwable but do not extend java.lang.RuntimeException or java.lang.Error. The remaining exceptionsare **checked exceptions**. Checked exceptions must be declared in the throws clause of the method.
+1. Generally **checked exceptions** are those that extend java.lang.Throwable but do not extend java.lang.RuntimeException or java.lang.Error. The remaining exceptions are **checked exceptions**. Checked exceptions must be declared in the throws clause of the method, or caught in a catch block within the method.
 
 ### Understanding Modules
 
@@ -1784,26 +1784,26 @@
 
 1. Examples for using collectors are shown below:
 	```java
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	String result = ohMy.collect(Collectors.joining(", "));
 	System.out.println(result); // lions, tigers, bears
 
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	String result = ohMy.collect(Collectors.averagingInt(String::length));
 	System.out.println(result); // 5.333333333333
 
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	TreeSet<String> result = ohMy
 		.filter(s -> s.startsWith("t))
 		.collect(Collectors.toCollection(TreeSet::new));
 	System.out.println(result); // [tigers]
 
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	Map<String, Integer> map = ohMy.collect(
 		Collectors.toMap(s -> s, String::length));
 	Systemout.println(map); // {lions=5, bears=5, tigers=6}
 
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	Map<Integer, String> map = ohMy.collect(Collectors.toMap(
 		String::length,
 		k -> k,
@@ -1811,15 +1811,122 @@
 	System.out.println(map); // {5=lions,bears, 6=tigers}
 	System.out.println(map.getClass()); // class java.util.HashMap
 
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	Map<Integer, List<String>> map = ohMy.collect(
 		Collectors.groupingBy(String::length));
 	System.out.println(map); // {5=[lions, bears], 6=[tigers]}
 
-	var ohMy= Stream.of("lions", "tigers", "bears");
+	var ohMy = Stream.of("lions", "tigers", "bears");
 	Map<Boolean, List<String> map = ohMy.collect(
 		Collectors.partitioningBy(s -> s.length() <= 5));
 	System.out.println(map); // {false=[tigers], true=[lions, bears]}
 	```
 
 ### Exceptions, Assertions, and Localization
+
+1. A custom exception class can be created by extending Exception (for a checked exception), or RuntimeException (for an unchecked exception).
+
+1. A try-with-resources statement ensures that any resources declared in the try block are automatically closed at the conclusion of the try block. A resource is typically a file or a database that requires some kind of stream or connection to read or write data. 
+
+1. To be used in a try-with-resources statement the resource is required to implement the AutoClosable interface. Inheriting AutoClosable requires implementing a close() method. If multiple resources are included in a try-with-resources statement they are closed in the reverse order in which they are declared.
+
+1. It is possible to use resources declared prior to a try-with-resources statement, provided they are marked final or are effectively final. The syntax is to use the resource name in place of the resource declaration, seperated by a semicolon.
+
+1. An assertion is a boolean expression that you place where you expect something to be true. An assert statement contains this statement along with an optional message. An assertion allows for detecting defects in the code. You can turn on assertions for testing and debugging while leaving them off when your program is in production. Unit tests are most frequently used to verify behaviour, whereas assertions are commonly used to verify the internal state of a program.
+
+1. Assertions should never alter outcomes. Assertions should be trned off in a production environment.
+
+1. The syntax for an assertion is shown below:
+	```java
+	assert test_value;
+	assert test_value: messsage;
+	```
+
+1. An assertion evaluating to false will result in an AssertionError being thrown at runtime if assertions are enabled. To enable assertions a flag can be passed as per the below:
+	```java
+	java -enableassertions Rectangle
+	java -ea Rectangle
+	```
+
+1. Assertions can be enabled or disabled for specific classes or packages.
+	```java
+	java -ea:com.demos... my.programs.Main // enable for classes in the com.demos package and any subpackages
+	java -ea:com.demos... -da:com.demos.TestColors my.programs.Main // enable for com.demos but disables in TestColors class
+	```
+
+1. Java includes numerous classes for dates and times:
+	![table5.4](res/table5.4.JPG)
+
+1. Each of these types contains a now() method to get the current date or time and an of() method to instantiate an object. Various get methods are also provided.
+
+1. The format() method can take a DateTimeFormatter to display standard or custom formats. Note that enclosing values in single quotes escapes the values. Examples are shown below:
+	```java
+	LocalTime time = LocalTime.of(11, 12, 34);
+	LocalDate date = LocalDate.of(2020, Month.OCTOBER, 20);
+	System.out.println(time.format(DateTimeFormatter.ISO_LOCAL_TIME)); // standard format example
+	var f = DateTimeFormatter.ofPattern("MMMM dd, yyyy 'at' hh:mm");
+	System.out.println(dt.format(f)); // October 20, 2020 at 11:12
+	```
+
+1. Supported symbols for each date and time class are shown below:
+	![table5.6](res/table5.6.JPG)
+
+1. Internationalisation is the process of designing a program so that it can be adapted. Localisation means supporting multiple locales or geographic regions. Examples for working with locales are shown below:
+	```java
+	Locale locale = Locate.getDefault();
+	System.out.println(locale); // en_US
+	System.out.println(Locate.GERMAN); // de
+	System.out.println(Locale.GERMANY); // de_DE
+	```
+
+1. Formatting or parsing currency and number values can change depending on the locale. Methods to get a number format based on a locale are shown below:
+	![table5.7](res/table5.7.JPG)
+
+1. An example of their usage is shown below:
+	```java
+	int attendeesPerYear = 3_200_000;
+	int attendeesPerMonth = attendeesPerYear / 12; 
+	var us = NumberFormat.getInstance(Locale.US);
+	System.out.println(us.format(attendeesPerMonth)); // 266,666
+	var gr = NumberFormat.getInstance(Locale.GERMANY);
+	System.out.println(gr.format(attendeesPerMonth)); /// 266.666
+	```
+
+1. The DecimalFormat class can be used to express currency. A # is used to omit the position if no digit exists, and a 0 is used to place a 0 in the position if no digit exists. Examples are shown below:
+	```java
+	double d = 1234567.467;
+	NumberFormat f1 = new DecimalFormat("###,###,###.0");
+	System.out.println(f1.format(d)); // 1,234,567.5
+	```
+
+1. Date formats can also vary by locale. Methods used to retrieve an instance of DateTimeFormatter using the default locale are shown below:
+	![table5.9](res/table5.9.JPG)
+
+1. A resource bundle contains locale-specific objects used by a program. It is commonly stored in a properties file. A properties file is a text file in a specific format with key/value pairs.
+
+1. An example using 2 property files is shown below:
+	```java
+	Zoo_en.properties // name of file
+	hello=Hello
+	open=The zoo is open
+
+	Zoo_fr.properties // name of file
+	hello=Bonjour
+	open=Le zoo est ouvert
+
+	public static void printWelcomeMessage(Locale locale){
+		var rb = ResourceBundle.getBundle("Zoo", locale);
+		System.out.println(rb.getString("hello") + "," + rb.getString("open"));
+	}
+
+	public static void main(String[] args){
+		var us = new Locale("en", "US");
+		var france = new Locale("fr", "FR");
+		printWelcomeMessage(us);
+		printWelcomeMessage(france);
+	}
+	```
+
+1. To find a resource bundle to use Java looks for the language/country in the filename, followed by just the language. The default resource bundle is used if no matching locale can be found.
+
+### Modular Applications
