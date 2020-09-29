@@ -15,7 +15,7 @@
 - [Reusing Implementations Through Inheritance](#Reusing-Implementations-Through-Inheritance) 
 - [Programming Abstractly Through Interfaces](#Programming-Abstractly-Through-Interfaces) 
 - [Handling Exception](#Handling-Exception) 
-- [Understanding Modules](#Creating-and-Using-Methods)
+- [Understanding Modules](#Understanding-Modules)
 - [Understanding Java Technology and environment](#Understanding-Java-Technology-and-environment)
 
 ### Creating a Simple Java Program
@@ -727,7 +727,9 @@
 
 ### Understanding Modules
 
-1. Jar files are used to package multiple classes into a file and deliver the file as an application to users. However, packaging classes into a jar file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. Jar files also make it difficult to use part of an application without having the whole set of jar files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
+1. JAR files are used to package multiple classes into a file and deliver the file as an application to users. A JAR file is a zip file with a special directory named META-INF. This directory contains one or more files with MAINIFEST.MF always being one of them. The manifest contains extra information about the JAR file such as the version of Java used to build the file, and hte class with the *main()* method. Each line in hte manifest is a key/value pair seperated by a colon.
+
+1. Packaging classes into a JAR file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. JAR files also make it difficult to use part of an application without having the whole set of JAR files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
 
 1. In Java 9 the Java Module System was introduced to assist with these problems. The idea of Modules is that classes are mixed and matched at run time to form an application. 
 
@@ -757,12 +759,12 @@
 
 1. Note that the format of the --module switch argument is \<module name>/\<main class name>.
 
-1. The module is compiled into a jar using the below:
+1. The module is compiled into a JAR using the below:
     ```java
     jar --create --file simpleinterest.jar --main-class simpleinterest.SimpleInterestCalculator -C out\simpleinterest
     ```
 
-1. The above command used 4 switches. The --create switch tells the jar tool to create, the --file switch specifies the name of the file, the --main-class switch adds a Main-Class entry in the jar file manifest, and the -C switch makes the jar tool change working directories so that the structure inside the jar file is the same as the structure inside out\simpleinterest. 
+1. The above command used 4 switches. The --create switch tells the JAR tool to create, the --file switch specifies the name of the file, the --main-class switch adds a Main-Class entry in the JAR file manifest, and the -C switch makes the JAR tool change working directories so that the structure inside the JAR file is the same as the structure inside out\simpleinterest. 
 
 1. The module can now be run using the below:
     ```java
@@ -844,13 +846,13 @@
 
 1. This has the added advantage of not requiring a requires valueobjects clause in the ui module. The requires hr clause in the ui module automatically makes all of the modules transitively required by the hr module, readable to the ui module. This is called implied readability.
 
-1. A modular jar file can be ran using the -classpath or -jar options, however the JVM will not enforce the access rules specified in the module descriptor.
+1. A modular JAR file can be ran using the -classpath or -jar options, however the JVM will not enforce the access rules specified in the module descriptor.
 
-1. A common use case is wanting to develop a module that depends on a third party non-modular jar. If you put a non-modular jar on the module-path, Java will consider the non-modular jar to be a module. Such a module is known as an **automatic module** or a **named module** and the name of the module is created automatically using the name of the jar file.
+1. A common use case is wanting to develop a module that depends on a third party non-modular JAR. If you put a non-modular JAR on the module-path, Java will consider the non-modular JAR to be a module. Such a module is known as an **automatic module** or a **named module** and the name of the module is created automatically using the name of the JAR file.
 
-1. As there is no module-info.class in a non-modular jar, an automatic module exports all its packages and is allowed to read all exported packages of modules on the module-path and classes vailable on the classpath.
+1. As there is no module-info.class in a non-modular JAR, an automatic module exports all its packages and is allowed to read all exported packages of modules on the module-path and classes vailable on the classpath.
 
-1. If a module depends on a non-modular third party jar, you need to add a requires clause in module-info and put the third party jar in the --module-path. If additionally the automatic module requires a class from another non-modular jar, that jar needs to be included on the classpath.
+1. If a module depends on a non-modular third party JAR, you need to add a requires clause in module-info and put the third party JAR in the --module-path. If additionally the automatic module requires a class from another non-modular JAR, that JAR needs to be included on the classpath.
 
 1. The specification of Standard modules are governed by the Java Community Process (JCP). Standard modules have names starting with "java". All other modules are part of the JDK and have names starting with "jdk". A standard module may contain both standard and non-standard API packages, however if the standard module exports a non-standard package then the export must be qualified. A standard module must not grant implied readability to any non-standard module. A non-standard module must not export any standard API packages.
 
@@ -1100,9 +1102,9 @@
 
 1. Commonly used built-in annotations and how they are applied are shown below:
 
-![table2.5](res/table2.5.jpg)
-
-![table2.6](res/table2.6.jpg)
+    ![table2.5](res/table2.5.jpg)
+    
+    ![table2.6](res/table2.6.jpg)
 
 ### Generics and Collections
 
@@ -1603,7 +1605,6 @@
 	```
 
 1. A terminal operation can be performed without an interediate operations. Reductions are a special type of terminal operation where the contents of the stream are combined into a single primitive or Object. Terminal stream operation method signatures and examples are shown below:
-
 	```java
 	// long count()
 	Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
@@ -1892,7 +1893,7 @@
 	System.out.println(gr.format(attendeesPerMonth)); /// 266.666
 	```
 
-1. The DecimalFormat class can be used to express currency. A # is used to omit the position if no digit exists, and a 0 is used to place a 0 in the position if no digit exists. Examples are shown below:
+1. The DecimalFormat class can be used to express currency. A *#* is used to omit the position if no digit exists, and a 0 is used to place a *0* in the position if no digit exists. Examples are shown below:
 	```java
 	double d = 1234567.467;
 	NumberFormat f1 = new DecimalFormat("###,###,###.0");
@@ -1904,7 +1905,7 @@
 
 1. A resource bundle contains locale-specific objects used by a program. It is commonly stored in a properties file. A properties file is a text file in a specific format with key/value pairs.
 
-1. An example using 2 property files is shown below:
+1. An example using two property files is shown below:
 	```java
 	Zoo_en.properties // name of file
 	hello=Hello
@@ -1930,3 +1931,16 @@
 1. To find a resource bundle to use Java looks for the language/country in the filename, followed by just the language. The default resource bundle is used if no matching locale can be found.
 
 ### Modular Applications
+
+1. There are three types of modules:
+	* **Named Modules:** Contains a module-info file which appears in the root of the JAR alongside one or more packages. Unless otherwise specified, a module is a named module. Named modules appear on the module path rather than the classpath.
+	* **Automatic Module:** Appears on the module path but does not contain a module-info file. It is a regular JAR file that is placed on the module path and gets treated as a module. The code referencing an automatic module treats it as if there is a module-info present, and automatically exports all packages. If an Automatic-Module-Name is specified in the manifest then that name is used. Otherwise, a module name is automatically determined based on the JAR filename. To determine the name the file extension is removed, then the version number, and then special characters are replaced with a period. If a period is the first or last character it is also removed.
+	* **Unnamed Module:** Like an automatic module, it is a regular JAR file. An unnamed module is on the classpath rather than the module path. An unnamed module does not usually contain a module-info file, and if it does, it is ignored since it is on the classpath. Unnamed modules do not export any packages to named or automatic modules, and an unnamed module can read from any JARs on the classpath or module path.
+
+1. Modules prefixed with *java* are shown below:
+    ![table6.5](res/table6.5.JPG)
+
+1. Modules prefixed with *jdk* are shown below:
+    ![table6.6](res/table6.6.JPG)
+
+1. The *jdeps* command provides information about dependencies. 
