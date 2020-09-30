@@ -14,9 +14,9 @@
 - [Applying Encapsulation](#Applying-Encapsulation) 
 - [Reusing Implementations Through Inheritance](#Reusing-Implementations-Through-Inheritance) 
 - [Programming Abstractly Through Interfaces](#Programming-Abstractly-Through-Interfaces) 
-- [Handling Exception](#Handling-Exception) 
+- [Handling Exceptions](#Handling-Exceptions) 
 - [Understanding Modules](#Understanding-Modules)
-- [Understanding Java Technology and environment](#Understanding-Java-Technology-and-environment)
+- [Understanding Java Technology and Environment](#Understanding-Java-Technology-and-Environment)
 
 ### Creating a Simple Java Program
 
@@ -32,11 +32,11 @@
 
 1. The **Java Virtual Machine (JVM)** is an executable. When the JVM runs, it loads the given class and looks for the main method of that class to run. The executable for the JVM is named java.
 
-1. Every Java class belongs a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referrred to without using hte Fully Qualified Class Name (FQCN). 
+1. Every Java class belongs to a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referrred to without using the **Fully Qualified Class Name (FQCN)**. 
 
 1. Java code is made up of expressions, statements and blocks. An expression is made up of variables, operators, and method invocations. An expression evaluates to a single value. An expression is something which evaluates a value, while a statement is a line of code that does something. Some expressions can be made into a statement by terminating it with a semicolon, such as assignment expressions, usage of ++ or --, method invocation and object creation expressions. A block is a group of zero or more statements between balanced brances and can be used wherever a single statement is allowed. 
 
-1. The stack is used for storing local variables, functional calls, and references to objects. The heap is used for storing objects.
+1. The stack is used for storing local variables, function calls, and references to objects. The heap is used for storing objects.
 
 ### Working With Java Primitive Data Types and String APIs
 
@@ -44,7 +44,7 @@
 
 1. Java has primitive and reference variables. The Java compiler and JVM inherently know what primitive types mean, while reference data types are built by combining primitive data types and other reference data types.
 
-1. Primitive data types below:
+1. Primitive data types are shown below:
     | Date Type | Size    | Description                                                             | Sample                  |
     |-----------|---------|-------------------------------------------------------------------------|-------------------------|
     | byte      | 1 byte  | -128 to 127                                                             | -1, 0, 1                |
@@ -69,9 +69,9 @@
 
 1. Assigning a smaller type to a larger type is known as **implicit widening conversion** as no cast is required. To assign a larger type to a smaller type, for a compile time constant (i.e. final) the compiler will automatically narrow the value. If the source variable is not a constant then a cast is required, this is known as **explicit narrowing**. Determining the value that will actually be assigned when doing an explicit can be complicated.
 
-1. A string is an object of class java.lang.String. String is a final class and implements java.lang.CharSequence. String is immutable so the value cannot be changed after instatiation.
+1. A String is an object of class java.lang.String. String is a final class and implements java.lang.CharSequence. String is immutable so the value cannot be changed after instantiation.
 
-1. A string can be instantiated using:
+1. A String can be instantiated using:
     ```java
     String myString = new String();
     String myString = new String("example");
@@ -146,8 +146,7 @@
     String substring(int start, int end);
     String toString();
     ```
-1. The value to append is typically determined by String.valueOf().
-
+1. The value to append is typically determined by *String.valueOf()*.
 
 ### Using Operators and Decision Constructs
 
@@ -180,7 +179,7 @@
     * enum type.
     * A String.
 
-1. In a switch statement case labels are optional, but if provided they must be compile time constants. If an enum is used the unqualifed enum constant must be used.
+1. In a switch statement case labels are optional, but if provided they must be compile time constants. If an enum is used the unqualifed enum constant (e.g. VALUE_A and not Class.MyEnum.VALUE_A) must be used.
 
 1. In a switch statement the default block is optional, but if provided there can only be 1.
 
@@ -201,8 +200,8 @@
     * clone
 
 1. Arrays have two interesting runtime properties:
-    * They are reified meaning that type checking is done at runtime by the JVM and not the compiler.
-    * They are covariant meaning that a subclass object can be stored in  an array that is declared to be the type of its superclass (i.e. you can store an integer in a number array).
+    * They are **reified** meaning that type checking is done at runtime by the JVM and not the compiler.
+    * They are **covariant** meaning that a subclass object can be stored in  an array that is declared to be the type of its superclass (i.e. you can store an integer in a number array).
 
 1. The compare method compares 2 int arrays and returns 0 if they are equal, a value less than 0 if the first array is lexicographically less than the second array, and a value greater than 0 if the first array is lexicographically greather than the second array.
 
@@ -222,7 +221,7 @@
     * Zero or more import statements.
     * One or more reference type (i.e. class, interface, or enum) definitions.
 
-1. Members of a class definition incldue field declarations, methods, constructors, and initialisers. Members can be static or non-static.
+1. Members of a class definition include field declarations, methods, constructors, and initialisers. Members can be static or non-static.
 
 1. The code for a top level public reference type must be written inside a Java file with the same name. 
 
@@ -267,7 +266,7 @@
     * Initialises the instance variables to their default values.
     * Gives the instance an opportunity to set the values of the instance variables as per the instance initialisers and constructors.
 
-1. An instance initialiser is shown below:
+1. An **instance initialiser** is shown below:
     ```java
     class TestClass{
         {
@@ -299,7 +298,7 @@
 
 1. Encapsulation, Inheritance and Polymorphism are the three pillars of Object-Orientated Programming.
 
-1. Encapsulation is about restricting direct access to an objects data fields. This is achieved through the use of access modifiers. Access modifiers and their impact on accessibility are shown below:
+1. **Encapsulation** is about restricting direct access to an objects data fields. This is achieved through the use of **access modifiers**. Access modifiers and their impact on accessibility are shown below:
 
     | Modifier    | Class | Package | Subclass | World |
     |-------------|-------|---------|----------|-------|
@@ -320,15 +319,15 @@
 
 ### Reusing Implementations Through Inheritance
 
-1. A class defines a type, and contains a state (the instance fields) and the implementation (the methods). Thus, inheritance could be of state, implementation or type.
+1. A class defines a type, and contains a state (the instance fields) and the implementation (the methods). Thus, inheritance could be of state, implementation, or type.
 
 1. Java restricts a class from extending more than one class, so it is said that Java does not support multiple inheritance of state. A class can inherit implementation by extending a class and/or by implementating interfaces. As a class can implement multiple interfaces, Java supports multiple implementation inheritance. Java also supports multiple inheritance of type as an object can have multiple types: the type of its own class and the types of all the interfaces that the class implements. 
 
-1. To inherit features from another class, that class is extended using the extends keyword. Constructors, static and instance initialisers of a class are not considered members of a class so are not inherited by a subclass. Only class members that are visible to another class as per the rules of access modifiers are inherited in a subclass.
+1. To inherit features from another class, that class is extended using the **extends** keyword. Constructors, static and instance initialisers of a class are not considered members of a class so are not inherited by a subclass. Only class members that are visible to another class as per the rules of access modifiers are inherited in a subclass.
 
 1. Note that when the JVM initialises a class, memory is allocated for all instance variables irrespective of whether they will be accessible.
 
-1. A subclass cannot be initialised before its parent. A call to super() is automatically inserted by the compiler in the first line of the constructor if no other call is provided.
+1. A subclass cannot be initialised before its parent. A call to *super()* is automatically inserted by the compiler in the first line of the constructor if no other call is provided.
 
 1. The order of initialisation for loading a class is summarised below:
     * If there is a super class, initialise static fields and execute static initialisers of the super class in the order of their appearance.
@@ -338,23 +337,22 @@
     * Initialise the instance fields and execute instance initialisers of the class in the order of their appearance.
     * Execute class constructor.
 
-1. An abstract class is used to capture common features of multiple related object types while knowing that no object that exhibits only the feature captured in the abstract class can actually exist.
+1. An **abstract class** is used to capture common features of multiple related object types while knowing that no object that exhibits only the feature captured in the abstract class can actually exist.
 
-1. An abstract method allows you to capture declaration without providing implementation.
+1. An **abstract method** allows you to capture declaration without providing implementation.
 
 1. A summary of the application of access modifiers, final, abstract and static keywords is shown below:
     * An abstract class doesn't have to have an abstract method but if a class has an abstract method, it must be declared abstract. In other words, a concrete class cannot have an abstract method.
     * An abstract class cannot be instantiated irrespective of whether it has an abstract method or not.
     * A final class or a final method cannot be abstract.
     * A final class cannot contain an abstract method but an abstract class may contain a final method.
-    * A private method is always final.
+    * A private method is implicitly final.
     * A private method can never be abstract.
     * A static method can be final but can never be abstract.
 
-1. The conventional sequence of modifiers in a method declaration are shown below:
+1. The conventional sequence of modifiers in a method declaration is shown below:
     ```java
     <access modifier> <static> <final or abstract> <return type> methodName(<parameter list>)
-
     ```
 
 1. **Polymorphism** refers to the ability of an object to exhibit behaviour associated with different types. The objective of polymorphism is to enable classes to become standardised components that can be easily exchanged without any impact on other components.
@@ -396,7 +394,7 @@
     * All variables are implicitly public, static and final. Static methods are assumed to be public if not otherwise marked. Non-static methods must be explicitly marked private or default.
 
 1. Methods that interfaces can contain are shown below:
-    * Abstract methods. Contain only declarations. An example is shown below:
+    * **Abstract methods:** Contain only declarations. An example is shown below:
         ```java
         interface Movable{
             void move(int x); // implicitly abstract
@@ -404,7 +402,7 @@
         }
         ```
 
-    * Default methods. The opposite of abstract, a method cannot be both default and abstract. An example is shown below:
+    * **Default methods:** The opposite of abstract, a method cannot be both default and abstract. An example is shown below:
         ```java
         interface Movable{
             default move(int x){
@@ -413,7 +411,7 @@
         }
         ```
 
-    * Static methods. Can be public or private but not protected or default. This is because static methods are not inherited or overridden in any meaningful way, and because protected methods can be seen by classes in the same package and which extend the class containing the method. However, a static method cannot be inherited so the package-private access modifier should be used instead of protected, as the only remaining intention is for it to be accessible within the same package. If no access modifier is specified, they are implicitly public. An example is shown below:
+    * **Static methods:** Can be public or private but not protected or default. This is because static methods are not inherited or overridden in any meaningful way, and because protected methods can be seen by classes in the same package and which extend the class containing the method. However, a static method cannot be inherited so the package-private access modifier should be used instead of protected, as the only remaining intention is for it to be accessible within the same package. If no access modifier is specified, they are implicitly public. An example is shown below:
         ```java
         interface Movable{
             static void sayHello(){
@@ -422,7 +420,7 @@
         }
         ```
 
-    * Private methods. Helpful when methods get too big and need to be refactored into smaller internal methods. An example is shown below:
+    * **Private methods:** Helpful when methods get too big and need to be refactored into smaller internal methods. An example is shown below:
         ```java
         interface Movable{
             private void moveInternal(){
@@ -485,7 +483,7 @@
 
 1. All generic information is stripped at run time, this is known as **type erasure**. This means that the presence of generics can throw up complicated situations with respect to Overloading and Overriding.
 
-1. The java.util.Collection interface is the root interface in the collection heirarchy. java.util.List defines the behaviour of collections that keep objects in an order. The functionality is implemented by classes such as ArrayList and LinkedList.
+1. The java.util.Collection interface is the root interface in the collection heirarchy. The java.util.List interface defines the behaviour of collections that keep objects in an order. The functionality is implemented by classes such as ArrayList and LinkedList.
 
 1. Useful List methods are shown below:
     ```java
@@ -535,7 +533,7 @@
     default void forEach(BiConsumer<? super K, ? super V> action);
     ```
 
-1. A lambda expression is a shortcut for the compiler that defines a class with a method and instantiates that class. The below is an example of a class that implements a car shop:
+1. A **lambda expression** is a shortcut for the compiler that defines a class with a method and instantiates that class. The below is an example of a class that implements a car shop:
     ```java
     class Car {
       String company;
@@ -604,7 +602,7 @@
     }
     ```
 
-1. Observe that the above implementation can be replaced with the below:
+1. Observe that the above implementation of CarFilter can be replaced with the below:
     ```java
     public class TestClass {
         public static void main(String[] args) {
@@ -614,6 +612,7 @@
         }
     }
     ```
+
 1. The compiler knows that the showCars method must pass an object of a class that implements CarFilter. As a result it is easy to generate the below:
     ```java
     class XYZ implements CarFilter{
@@ -635,7 +634,7 @@
     (a) -> a*a // 1 parameter
     (int a) -> a*a // 1 parameter
     (a, b, c) -> a + b + c // multiple parameters
-    (var a) -> a*a // var also allowed
+    (var a) -> a*a // var is also allowed
     ```
 
 1. Filtering a list of objects is so common that Java provides a generic interface java.util.function.Predicate for this purpose. This is shown below:
@@ -668,7 +667,7 @@
 
 ### Handling Exceptions
 
-1. Java exceptions are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situtaions and unknown exceptional situations. This is shown below:
+1. Java **exceptions** are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situations and unknown exceptional situations. This is shown below:
     ```java
     try{    
         // code for normal course of action
@@ -714,7 +713,6 @@
         // code to execute if code in try throws exception N
     } finally{
         // code to execute after try and catch blocks finish execution
- 
     }
     ```
 
@@ -727,7 +725,7 @@
 
 ### Understanding Modules
 
-1. JAR files are used to package multiple classes into a file and deliver the file as an application to users. A JAR file is a zip file with a special directory named META-INF. This directory contains one or more files with MAINIFEST.MF always being one of them. The manifest contains extra information about the JAR file such as the version of Java used to build the file, and hte class with the *main()* method. Each line in hte manifest is a key/value pair seperated by a colon.
+1. JAR files are used to package multiple classes into a file and deliver the file as an application to users. A JAR file is a zip file with a special directory named META-INF. This directory contains one or more files with MAINIFEST.MF always being one of them. The manifest contains extra information about the JAR file such as the version of Java used to build the file, and the class with the *main()* method. Each line in the manifest is a key/value pair seperated by a colon.
 
 1. Packaging classes into a JAR file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. JAR files also make it difficult to use part of an application without having the whole set of JAR files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
 
@@ -844,7 +842,7 @@
 	}
     ```
 
-1. This has the added advantage of not requiring a requires valueobjects clause in the ui module. The requires hr clause in the ui module automatically makes all of the modules transitively required by the hr module, readable to the ui module. This is called implied readability.
+1. This has the added advantage of not requiring a requires valueobjects clause in the ui module. The requires hr clause in the ui module automatically makes all of the modules transitively required by the hr module, readable to the ui module. This is called **implied readability**.
 
 1. A modular JAR file can be ran using the -classpath or -jar options, however the JVM will not enforce the access rules specified in the module descriptor.
 
@@ -856,7 +854,7 @@
 
 1. The specification of Standard modules are governed by the Java Community Process (JCP). Standard modules have names starting with "java". All other modules are part of the JDK and have names starting with "jdk". A standard module may contain both standard and non-standard API packages, however if the standard module exports a non-standard package then the export must be qualified. A standard module must not grant implied readability to any non-standard module. A non-standard module must not export any standard API packages.
 
-### Understanding Java Technology and environment
+### Understanding Java Technology and Environment
 
 1. Java code is compiled into **Java bytecode**, which is interpreted by the JVM. A class file produced on one platform will run on any platform that has a JVM.
 
@@ -870,7 +868,7 @@
 - [Annotations](#Annotations)
 - [Generics and Collections](#Generics-and-Collections)
 - [Functional Programming](#Functional-Programming)
-- [Exceptions, Assertions, and Localization](#Exceptions,-Assertions,-and-Localization)
+- [Exceptions, Assertions, and Localization](#Exceptions-Assertions-and-Localization)
 - [Modular Applications](#Modular-Applications) 
 - [Concurrency](#Concurrency) 
 - [I/O](#I/O) 
@@ -1764,7 +1762,7 @@
 	}
 	```
 
-1. There are special functional interfaces for primitives. The BooleanSupplier functioanl interface is shown below:
+1. There are special functional interfaces for primitives. The BooleanSupplier functioan interface is shown below:
 	```java
 	// boolean getAsBoolean()
 
@@ -1774,10 +1772,10 @@
 	System.out.println(b2.getAsBoolean()); // true or false
 	```
 
-1. Common functional interfaces for other primitives ares shown below:
+1. Common functional interfaces for other primitives are shown below:
 	![table4.11](res/table4.11.JPG)
 
-1. Common functional interfaces for other primitives ares shown below:
+1. Common functional interfaces for other primitives are shown below:
 	![table4.12](res/table4.12.JPG)
 
 1. Predefined collectors are available via static methods on the Collectors interface. These are shown below:
@@ -1938,9 +1936,9 @@
 	* **Unnamed Module:** Like an automatic module, it is a regular JAR file. An unnamed module is on the classpath rather than the module path. An unnamed module does not usually contain a module-info file, and if it does, it is ignored since it is on the classpath. Unnamed modules do not export any packages to named or automatic modules, and an unnamed module can read from any JARs on the classpath or module path.
 
 1. Modules prefixed with *java* are shown below:
-    ![table6.5](res/table6.5.JPG)
+	![table6.5](res/table6.5.JPG)
 
 1. Modules prefixed with *jdk* are shown below:
-    ![table6.6](res/table6.6.JPG)
+	![table6.6](res/table6.6.JPG)
 
 1. The *jdeps* command provides information about dependencies. 
