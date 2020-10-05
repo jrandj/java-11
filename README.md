@@ -901,21 +901,21 @@
 
 1. A static nested class can be instantiated without an instance of the enclosing class. However, it can't access the instance variables or methods in the outer class directly. It requires an explicit reference to the outer class variable. The nesting creates a namespace because the enclosing class name must be used to refer to it.
 
-1. A local class is declared in a method, constructor or initialiser. A local class does not have any access modifiers and cannot be declared static, or declare static fields unless they are static final. When defined in an instance method, they have access to all fields and methods of the enclosing class. They can access local variables only if the variables are final or effectively final. An effictively final variable is one whose value does not change after it is set.
+1. A local class is declared in a method, constructor or initialiser. A local class does not have any access modifiers and cannot be declared static, or declare static fields unless they are static final. When defined in an instance method, they have access to all fields and methods of the enclosing class. They can access local variables only if the variables are final or effectively final. An effectively final variable is one whose value does not change after it is set.
 
 1. An anonymous class is a special form of a local class that does not have a name. It is declared and instantiated in one statement using the new keyword, a type name with parentheses, and a set of braces. Anonymous classes are required to extend an existing class or implement an existing interface.
 
 1. The rules for modifiers in nested classes are summarised below:
-	![table1.1](res/table1.1.jpg)
+	![table1.1](res/table1.1.JPG)
 
 1. The rules for members in nested classes are summarised below:
-	![table1.2](res/table1.2.jpg)
+	![table1.2](res/table1.2.JPG)
 
 1. The rules for access in nested classes are summarised below:
-	![table1.3](res/table1.3.jpg)
+	![table1.3](res/table1.3.JPG)
 
 1. When Java was first released, there were only two types of members an interface declaration could include: abstract methods and static final variables. Since Java 8 and 9, new method types have been added. The interface member types are summarised below:
-	![table1.4](res/table1.4.jpg)
+	![table1.4](res/table1.4.JPG)
 
 1. A default method may be declared within an interface to provide a default implementation. The default method is assumed to be public and cannot be marked abstract, final or static. It may also be overridden by a class that implements the interface. If a class inherits two or more default methods with the same method signature, then the class must override the method.
 
@@ -1012,7 +1012,7 @@
 
 1. Like interface variables, annotation variables are implicitly public, static and final. A constant variable can be declared in an annotation but are not considered elements.
 
-1. A shorthand format exists for using annotations. This can occur if the annotation declaration contains an element named value(), the usage of the annotation provides no values for other elements, and the declaration does not contain any elements that are required. An example is shown below:
+1. A shorthand format exists for using annotations. This can occur if the annotation declaration contains an element named *value()*, the usage of the annotation provides no values for other elements, and the declaration does not contain any elements that are required. An example is shown below:
     ```java
     public @interface Injured{
         String veterinarian() default "unassigned";
@@ -1042,11 +1042,12 @@
     ```
 
 1. The options for ElementType are shown below: 
+	![table2.1](res/table2.1.JPG)
 
 1. The TYPE_USE value covers nearly all other values. One exception is that it can only be used on a method that returns a value, a void method would still need METHOD defined in the annotation. TYPE_USE is typically used for cast operations, object creation with new and inside type declarations.
 
 1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
-    ![table2.1](res/table2.2.jpg)
+    ![table2.2](res/table2.2.JPG)
 
 1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
     ```java
@@ -1098,11 +1099,11 @@
     }
     ```
 
-1. Commonly used built-in annotations and how they are applied are shown below:
+1. Commonly used built-in annotations are shown below:
+    ![table2.5](res/table2.5.JPG)
 
-    ![table2.5](res/table2.5.jpg)
-    
-    ![table2.6](res/table2.6.jpg)
+1. Example applications of commonly used annotations are shown below:
+    ![table2.6](res/table2.6.JPG)
 
 ### Generics and Collections
 
@@ -1162,20 +1163,20 @@
 
 1. Each Java primitive has a corresponding wrapper class. A null value can be assigned to a wrapper class as a null value can be assiged to any reference variable. Attempting to unbox a wrapper class with a null value will cause a NullPointerException.
 
-1. The Diamond Operator is a shorthand notation that allows you to omit the gneric type from the right side of a statement when the type can be inferred. An example is shown below:
+1. The Diamond Operator is a shorthand notation that allows you to omit the generic type from the right side of a statement when the type can be inferred. An example is shown below:
     ```java
     List<Integer> list = new ArrayList<Integer>();
 	List<Integer> list = new ArrayList<>();
     ```
 
-1. A collection is a group of objects contained in a single object. The Java Collection Framework is a set of classes in java.uil for storing collections. The common
+1. A collection is a group of objects contained in a single object. The Java Collection Framework is a set of classes in java.util for storing collections. The common
 	* **List:** Ordered collection of elements that can contain duplicates. Accessed by an int index.
 	* **Set:** A collection that does not allow duplicate entries.
-	* **Queue:** A collcetion that orders its elements in a specific order. A typical queue is FIFO.
-	* **Map:** A collection that maps keys to values, with no duplciate keys allowed. The elements are key/value pairs.
+	* **Queue:** A collection that orders its elements in a specific order. A typical queue is FIFO.
+	* **Map:** A collection that maps keys to values, with no duplicate keys allowed. The elements are key/value pairs.
 
 1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
-    ![figure3.1](res/table3.1.jpg)
+    ![figure3.1](res/table3.1.JPG)
 
 1. The Collection interface contains useful convenience methods. These are shown below:
     ```java
@@ -1185,21 +1186,21 @@
 	int size();
 	void clear();
 	boolean contains(Object object);
-	boolean removeIf(PRedicate<? super E> filter);
+	boolean removeIf(Predicate<? super E> filter);
 	void forEach(Consumer<? super T> action);
 	```
 
-1. The Collections.sort() method is commonly used when working with collections. To sort objects that you create yourself, Java provides an interface called Comparable. This is shown below:
+1. The *Collections.sort()* method is commonly used when working with collections. To sort objects that you create yourself, Java provides an interface called Comparable. This is shown below:
     ```java
     public interface Comparable<T>{
         int compareTo(T o);
     }
 	```
 
-1. The compareTo() method returns:
-    * The number 0 when the current object is equivalent to the argument to compareTo().
-    * A negative number when the current object is smaller than the argument to compareTo().
-    * A positive number when the current object is larger than the argument to compareTo().
+1. The *compareTo()* method returns:
+    * The number 0 when the current object is equivalent to the argument to *compareTo()*.
+    * A negative number when the current object is smaller than the argument to *compareTo()*.
+    * A positive number when the current object is larger than the argument to *compareTo()*.
 
 1. An example is shown below:
     ```java
@@ -1217,7 +1218,7 @@
     }
 	```
 
-1. Note that only one compareTo() method can be implemented for a class. If we want to sort by something else, a Comparator can be used. Comparator is a functional interface. An example is shown below:
+1. Note that only one *compareTo()* method can be implemented for a class. If we want to sort by something else, a Comparator can be used. Comparator is a functional interface. An example is shown below:
     ```java
     public static void main(String[] args){
         Comparator<Duck> byWeight = new Comparator<Duck>(){
@@ -1274,7 +1275,7 @@
 1. Generics can also be introduced into methods using angle brackets. An example is shown below:
     ```java
     public class Handler{
-        public statc <T> Crate<T> ship(T t){
+        public static <T> Crate<T> ship(T t){
             System.out.println("Shipping " + t);
             return new Crate<T>();
         }
@@ -1283,7 +1284,7 @@
 
 1. A bounded parameter type is a generic type that specifies a bound for the generic. A wildcard generic type is an unknown generic type represented with a question mark.  
 
-1. An unbounded wildcard is used when any type is okay.
+1. An unbounded wildcard is used when any type is okay. An example is shown below:
     ```java
     public static void printList(List<?> list){
         for (Object x:list)
@@ -1336,7 +1337,7 @@
 
 1. A useful mnemonic is PECS: Producer Extends, Consumer Super. If you need a List to produce T values (you want to read Ts from the list), you need to declare it using extends. If you need a list to consume T values (you want to write Ts into the list), you need to declare it using super. If you need to both read and write to a list you need to declare it exactly with no wildcards.
 
-1. In the below example, if you want to write elements into the list, you can't add a Number, Integer or a Double because each one is not compatable with all types. A Number can be read because any of the lists will contain a Number or a subclass of Number. When using extends like this you can only read, and not write.
+1. In the below example, if you want to write elements into the list, you can't add a Number, Integer or a Double because each one is not compatible with all types. A Number can be read because any of the lists will contain a Number or a subclass of Number. When using extends like this you can only read, and not write.
     ```java
     List<? extends Number> foo = new ArrayList<>();
 
@@ -1369,7 +1370,7 @@
 	}
     ```
 
-1. An example is shown below:
+1. An example for Supplier is shown below:
 	```java
     Supplier<LocalDate> s1 = LocalDate::now;
 	Supplier<LocalDate> s2 = () -> LocalDate.now();
@@ -1431,8 +1432,8 @@
 	```java
 	Predicate<String> p1 = String::isEmpty;
 	Predicate<String> p2 = x -> x.isEmpty();
-	System.out.println(p1,test("");; // true
-	System.out.println(p2,test("");; // true
+	System.out.println(p1,test(""); // true
+	System.out.println(p2,test(""); // true
 	```
 
 1. An example for BiPredicate is shown below:
@@ -1506,9 +1507,7 @@
 	System.out.println(u2.apply("hi ", "there")); // hi there
 	```
 
-1. The built-in functional interfaces contain various helpful default methods.
-
-1. An example for the Predicate helper methods is shown below with the two statements being equivalent:
+1. The built-in functional interfaces contain various helpful default methods. An example for the Predicate helper methods is shown below with the two statements being equivalent:
 	```java
 	Predicate<String> combination = s -> s.contains("cat") && ! s.contains("brown");
 	Predicate<String> combination = cat.and(brown.negate());
@@ -1526,16 +1525,16 @@
 1. An example for the Function helper methods is shown below:
 	```java
 	Function<Integer, Integer> before = x -> x + 1;
-	Function<INteger, Integer> after = x -> x * 2;
+	Function<Integer, Integer> after = x -> x * 2;
 	
 	Function<Integer, Integer> combined = after.compose(before);
-	System.out.println(combined.apply(3)); // 
+	System.out.println(combined.apply(3)); // 8
 	```
 
 1. An Optional type is used to express a result that could be "not applicable" without using null references. The Optional instance methods are summarised below:
 	![table4.3](res/table4.3.JPG)
 
-5. An example using the isPresent() and get() methods is shown below:
+5. An example using the *isPresent()* and *get()* methods is shown below:
 	```java
 	public static Optional<Double> average(int... scores){
         if(scores.length == 0) return Optional.empty();
@@ -1549,13 +1548,13 @@
         System.out.println(opt.get()); // 95.0
 	```
 
-1. The ofNullable() method can be used to return an empty Optional if the value is null:
+1. The *ofNullable()* method can be used to return an empty Optional if the value is null:
 	```java
 	Optional o (value == null) ? Optional.empty() : Optional.of(value);
     Optional o = Optional.ofNullable(value);
 	```
 
-1. The ifPresent() method can be used to specify a Consumer to be run when there is a value inside of an Optional:
+1. The *ifPresent()* method can be used to specify a Consumer to be run when there is a value inside of an Optional:
 	```java
 	Optional<Double> opt = average(90, 100);
     opt.ifPresent(System.out::println);
@@ -1571,16 +1570,16 @@
         () -> new IllegalStateException())); // Can throw something else
 	```
 
-1. A stream in Java is a sequence of data. A stream pipeline consists of the operations that run on a stream to produce a result. A stream can be finite or infinite.
+1. A **stream** in Java is a sequence of data. A stream pipeline consists of the operations that run on a stream to produce a result. A stream can be finite or infinite.
 
 1. A stream pipeline consists of:
 	* **Source:** Where the stream comes from.
 	* **Intermediate operations:** Transforms the stream into another one. There can be many intermediate operations. They do not run until the terminal operation runs.
-	* **Terminal operations: ** Produces a result. A stream can only be used once, the stream is no longer valid after a terminal operation completes.
+	* **Terminal operations:** Produces a result. A stream can only be used once, the stream is no longer valid after a terminal operation completes.
 
 1. The Stream<T> interface is defined in the java.util.stream package.
 
-1. To create a finite stream:
+1. Examples for creating a finite stream are shown below:
 	```java
 	Stream<String> empty = Stream.empty(); // 0
 	Stream<Integer> singleElement = Stream.of(1); // 1
@@ -1591,7 +1590,7 @@
 	Stream<String> fromListParallel = list.parallelStream();
 	```
 
-1. To create an infinite stream:
+1. Examples for creating an infinite stream are shown below:
 	```java
 	Stream<Double> randoms = Stream.generate(Math::random);
 	Stream<Integer> oddNumbers = Stream.iterate(1, n -> n + 2);
@@ -1626,7 +1625,7 @@
 
 	// boolean anyMatch(Predicate<? super T> predicate)
 	// boolean allMatch(Predicate<? super T> predicate)
-	// boolean noneMatch(Predicae<? super T> predicate)
+	// boolean noneMatch(Predicate<? super T> predicate)
 
 	var list = List.of("monkey", "2", "chimp");
 	Stream<String> infinite = Stream.generate(() -> "chimp");
@@ -1649,11 +1648,11 @@
 	// BinaryOperator<U> combiner)
 
 	Stream<String> stream = Stream.of{"w", "o", "l", "f"};
-	String word = stream.reduce("", (s,c) -> s + c;
+	String word = stream.reduce("", (s,c) -> s + c);
 	System.out.println(word); // wolf;
 
 	// <R> R collect(Supplier<R> supplier,
-	// BiConsumer(R, ? super T> accumulator,
+	// BiConsumer(<R, ? super T> accumulator,
 	// BiConsumer<R, R> combiner)
 	// <R, A> R collect(Collector<? super T, A, R> collector)
 
@@ -1715,7 +1714,7 @@
 		.forEach(System.out:print); // bear-brown-
 
 	Stream<String> s = Stream.of("brown bear-", "grizzly-");
-	s.sorted(Comparator.reerseOrder())
+	s.sorted(Comparator.reverseOrder())
 		.forEach(System.out::print); // grizzly-brown bear-
 
 	// Stream<T> peek(Consumer<? super T> action)
@@ -1776,10 +1775,10 @@
 	![table4.11](res/table4.11.JPG)
 
 1. Common functional interfaces for other primitives are shown below:
-	![table4.12](res/table4.12.JPG)
+	![table4.12](res/table4.12.jpg)
 
 1. Predefined collectors are available via static methods on the Collectors interface. These are shown below:
-	![table4.13](res/table4.13.JPG)
+	![table4.13](res/table4.13.jpg)
 
 1. Examples for using collectors are shown below:
 	```java
@@ -1827,18 +1826,18 @@
 
 1. A try-with-resources statement ensures that any resources declared in the try block are automatically closed at the conclusion of the try block. A resource is typically a file or a database that requires some kind of stream or connection to read or write data. 
 
-1. To be used in a try-with-resources statement the resource is required to implement the AutoClosable interface. Inheriting AutoClosable requires implementing a close() method. If multiple resources are included in a try-with-resources statement they are closed in the reverse order in which they are declared.
+1. To be used in a try-with-resources statement the resource is required to implement the AutoClosable interface. Inheriting AutoClosable requires implementing a *close()* method. If multiple resources are included in a try-with-resources statement they are closed in the reverse order in which they are declared.
 
 1. It is possible to use resources declared prior to a try-with-resources statement, provided they are marked final or are effectively final. The syntax is to use the resource name in place of the resource declaration, seperated by a semicolon.
 
 1. An assertion is a boolean expression that you place where you expect something to be true. An assert statement contains this statement along with an optional message. An assertion allows for detecting defects in the code. You can turn on assertions for testing and debugging while leaving them off when your program is in production. Unit tests are most frequently used to verify behaviour, whereas assertions are commonly used to verify the internal state of a program.
 
-1. Assertions should never alter outcomes. Assertions should be trned off in a production environment.
+1. Assertions should never alter outcomes. Assertions should be turned off in a production environment.
 
 1. The syntax for an assertion is shown below:
 	```java
 	assert test_value;
-	assert test_value: messsage;
+	assert test_value: message;
 	```
 
 1. An assertion evaluating to false will result in an AssertionError being thrown at runtime if assertions are enabled. To enable assertions a flag can be passed as per the below:
@@ -1856,9 +1855,9 @@
 1. Java includes numerous classes for dates and times:
 	![table5.4](res/table5.4.JPG)
 
-1. Each of these types contains a now() method to get the current date or time and an of() method to instantiate an object. Various get methods are also provided.
+1. Each of these types contains a *now()* method to get the current date or time and an *of()* method to instantiate an object. Various get methods are also provided.
 
-1. The format() method can take a DateTimeFormatter to display standard or custom formats. Note that enclosing values in single quotes escapes the values. Examples are shown below:
+1. The *format()* method can take a DateTimeFormatter to display standard or custom formats. Note that enclosing values in single quotes escapes the values. Examples are shown below:
 	```java
 	LocalTime time = LocalTime.of(11, 12, 34);
 	LocalDate date = LocalDate.of(2020, Month.OCTOBER, 20);
@@ -1891,7 +1890,7 @@
 	System.out.println(gr.format(attendeesPerMonth)); /// 266.666
 	```
 
-1. The DecimalFormat class can be used to express currency. A *#* is used to omit the position if no digit exists, and a 0 is used to place a *0* in the position if no digit exists. Examples are shown below:
+1. The DecimalFormat class can be used to express currency. A *#* is used to omit the position if no digit exists, and a 0 is used to place a 0 in the position if no digit exists. Examples are shown below:
 	```java
 	double d = 1234567.467;
 	NumberFormat f1 = new DecimalFormat("###,###,###.0");
@@ -1935,10 +1934,56 @@
 	* **Automatic Module:** Appears on the module path but does not contain a module-info file. It is a regular JAR file that is placed on the module path and gets treated as a module. The code referencing an automatic module treats it as if there is a module-info present, and automatically exports all packages. If an Automatic-Module-Name is specified in the manifest then that name is used. Otherwise, a module name is automatically determined based on the JAR filename. To determine the name the file extension is removed, then the version number, and then special characters are replaced with a period. If a period is the first or last character it is also removed.
 	* **Unnamed Module:** Like an automatic module, it is a regular JAR file. An unnamed module is on the classpath rather than the module path. An unnamed module does not usually contain a module-info file, and if it does, it is ignored since it is on the classpath. Unnamed modules do not export any packages to named or automatic modules, and an unnamed module can read from any JARs on the classpath or module path.
 
-1. Modules prefixed with *java* are shown below:
+1. Modules prefixed with *java* (standard modules) are shown below:
 	![table6.5](res/table6.5.JPG)
 
-1. Modules prefixed with *jdk* are shown below:
+1. Modules prefixed with *jdk* (part of the JDK) are shown below:
 	![table6.6](res/table6.6.JPG)
 
-1. The *jdeps* command provides information about dependencies. 
+1. The *jdeps* command provides information about dependencies. An example is shown below:
+	```java
+	// Animatronic.java
+
+	import java.time.*;
+	import java.util.*;
+	import sun.misc.Unsafe;
+
+	public class Animatronic {
+		private List<String> names;
+		private LocalDate visitDate;
+
+		public Animatronic(List<String> names, LocalDate visitDate){
+			this.names = names;
+			this.visitDate = visitDate;
+		}
+	
+		public void unsafeMethod(){
+			Unsafe unsafe = Unsafe.getUnsafe();
+		}
+	}
+	```
+
+	```shell
+	javac *.java
+	jar -cvf zoo.dino.jar .
+	jdeps zoo.dino.jar
+	```
+
+1. Before older applications can be migrated to use modules, the structure of the packages and libraries in the existing application need to be determined. In the below diagram style the arrows point from the project that will require the dependency to the one that makes it available. Projects that do not have any dependencies are at the bottom.
+	![figure6.4](res/figure6.4.JPG)
+
+1. A bottom-up migration is the easiest migration approach. It works when you have the power to convert any JAR files that aren't already modules. The approach is:
+    * Pick the lowest-level project that has not yet been migrated.
+	* Add a module-info.java file to that project. Be sure to add any exports to expose any package used by higher level JAR files. Also, add the requires directive for any modules it depends on.
+	* Move this newly migrated named module from the classpath to the module path.
+	* Ensure any projects that have not yet been migrated stay as unnamed modules on the classpath.
+	* Repeat wtih the next-lowest-level project until you are done.
+
+1. A top-down migration is most useful when you don't have control of every JAR file used by your application. The approach is:
+	* Place all projects on the module path.
+	* Pick the highest-level project that has not yet been migrated.
+	* Add a module-info file to that project to convert the automatic module into a named module. Remember to add any exports or requires directives. Automatic module names can be used when writing the requires directive since most of the projects on the module path do not have names yet.
+	* Repeat wtih the next-highest-level project until you are done.
+
+1. An example of the bottom-up migration approach (left) and top-down migration approach (right) is shown below:
+	![figure6.7](res/figure6.7.JPG)
