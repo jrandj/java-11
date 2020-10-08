@@ -1977,7 +1977,7 @@
 	* Add a module-info.java file to that project. Be sure to add any exports to expose any package used by higher level JAR files. Also, add the requires directive for any modules it depends on.
 	* Move this newly migrated named module from the classpath to the module path.
 	* Ensure any projects that have not yet been migrated stay as unnamed modules on the classpath.
-	* Repeat wtih the next-lowest-level project until you are done.
+	* Repeat with the next-lowest-level project until you are done.
 
 1. A top-down migration is most useful when you don't have control of every JAR file used by your application. The approach is:
 	* Place all projects on the module path.
@@ -1987,3 +1987,138 @@
 
 1. An example of the bottom-up migration approach (left) and top-down migration approach (right) is shown below:
 	![figure6.7](res/figure6.7.JPG)
+
+1. When splitting up a project into modules, a problem with **cyclic dependencies** may arise. A cyclic dependency occurs when 2 or more things have dependencies on each other. Modules that have cyclic dependenencies will not compile. A common technique to resolve this issue is to introduce another module containing all the code that the modules share. Note that a cyclic dependency can still exists between packages with a module.
+
+1. A **service** is composed of an interface, classes referenced by the interface references, and a way to look up the implementations of the interface. An example is shown below:
+	```java
+	// Souvenir.java
+
+	package zoo.tours.api;
+
+	public class Souvenir{
+		private String description;
+
+		public String getDescription(){
+			return description;
+		}
+
+		public void setDescription(String description){
+			this.description = description;
+		}
+	}
+
+	// Tour.java
+	package zoo.tours.api;
+	
+	public interface Tour {
+		String name();
+		int length();
+		Souvenir getSouvenir();	
+	}
+
+	// module-info.java
+	module zoo.tours.api{
+		exports zoo.tours.api;
+	}
+	```
+
+1. A **service locator** is able to find any classes that implement a service provider interface. An example is shown below:
+	```java
+	// TourFinder.java
+
+	package zoo.tours.reservations;
+
+	import java.util.*;
+	import zoo.tours.api.*;
+
+	public class TourFinder{
+		
+		public static Tour findSingleTour(){
+			ServiceLoader<Tour> loader = ServiceLoader.load(Tour.class);
+			for(Tour tour : loader)
+				return tour;
+			return null;
+		}
+
+		public static List<Tour> findAllTours(){
+			List<Tour> tours = new ArrayList<>();
+			ServiceLoader<Tour> loader = ServiceLoader.load(Tour.class);
+			for(Tour tour : loader)
+				tours.add(tour);
+			return tours;
+		}
+	}
+
+	// module-info.java
+	module zoo.tours.reservations {
+		exports zoo.tours.reservations;
+		requires zoo.tours.api;
+		uses zoo.tours.api.Tour;
+	}
+	```
+
+1. A **consumer** refers to a module that contains and uses a service. Once the consumer has acquired a service via the service locator, it is able to invoke the methods provided by the service provider interface. An example is shown below:
+	```java
+	// Tourist.java
+
+	package zoo.visitor;
+	
+	import java.util.*;
+	import zoo.tours.api.*;
+	import zoo.tours.reservations.*;
+
+	public class Tourist{
+		public static void main(String[] args){
+			Tour tour = TourFinder.findSingleTour();
+			System.out.println("Single tour: " + tour);
+		
+			List<Tour> tours = TourFinder.findAllTours();
+			System.out.println("# tours: " + tours.size());
+		}
+	}
+
+	// module-info.java
+	module zoo.visitor{
+		requires zoo.tours.api;
+		requires zoo.tours.reservations;
+	}
+	```
+
+1. A **service provider** is the implementation of a service provider interface. Note that the provides directive is used instead of the export directive as we don't want callers referring to the service provider interface directly. An example is shown below:
+	```java
+	// TourImpl.java
+
+	package zoo.tours.agency;
+	
+	import zoo.tours.api.*;
+
+	public class TourImpl implements Tour{
+		public String name(){
+			return "Behind the Scenes";
+		}
+
+		public int length(){
+			return 120;
+		}
+
+		public Souvenir get Souvenir(){
+			Souvenir gift = new Souvenir();
+			gift.setDescription("stuffed animal");
+			return gift;
+		}
+	}
+
+	// module-info.java
+	module zoo.visitor{
+		requires zoo.tours.api;
+		provides zoo.tours.api.Tour with zoo.tours.agency.TourImpl;
+	}
+	```
+
+1. A summary of the directives required fo reach service artefact is shown below: 
+	![table6.8](res/table6.8.JPG)
+
+### Concurrency
+
+1. Disk and network operations are extremely slow compared to CPU operations. Multithreaded processing is used by modern operating systems to allow applications to execute multiple tasks at the same time, which allows tasks waiting for resources to give way to other processing requests. Java has traditionally supported multithreaded programming using the **Thread** class. The **Concurrency** API has grown over time to provide numerous classes for performing complex thread-based tasks.
