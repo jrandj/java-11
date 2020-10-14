@@ -1983,17 +1983,21 @@
 	* Place all projects on the module path.
 	* Pick the highest-level project that has not yet been migrated.
 	* Add a module-info file to that project to convert the automatic module into a named module. Remember to add any exports or requires directives. Automatic module names can be used when writing the requires directive since most of the projects on the module path do not have names yet.
-	* Repeat wtih the next-highest-level project until you are done.
+	* Repeat with the next-highest-level project until you are done.
 
 1. An example of the bottom-up migration approach (left) and top-down migration approach (right) is shown below:
 	![figure6.7](res/figure6.7.JPG)
 
 1. When splitting up a project into modules, a problem with **cyclic dependencies** may arise. A cyclic dependency occurs when 2 or more things have dependencies on each other. Modules that have cyclic dependenencies will not compile. A common technique to resolve this issue is to introduce another module containing all the code that the modules share. Note that a cyclic dependency can still exists between packages with a module.
 
-1. A **service** is composed of an interface, classes referenced by the interface references, and a way to look up the implementations of the interface. An example is shown below:
+1. The previous section discussed modules in terms of dependencies, with one module exporting its public types and another module requiring them.  This is a very tight coupling. A looser coupling can be if one module requires an implementation of an interface from another module, and the other module provides that implementation.
+
+1. A **service** is composed of an interface, classes referenced by the interface references, and a way to look up the implementations of the interface. A sample tours application will be used to introduce this concept. The 4 modules within this application are shown below:
+	![figure6.10](res/figure6.10.JPG)
+
+1. A **service provider interface** specifies the behaviour that the service will have. The service provider interface is exported for other modules to use. For the tours application this is shown below:
 	```java
 	// Souvenir.java
-
 	package zoo.tours.api;
 
 	public class Souvenir{
@@ -2023,10 +2027,9 @@
 	}
 	```
 
-1. A **service locator** is able to find any classes that implement a service provider interface. An example is shown below:
+1. A **service locator** is able to find any classes that implement a service provider interface. At runtime, there may be many service providers (or none) that are found by the service locator. The service locator requires the service provider interface package,  uses the Tour class to lookup classes that implement a service provider interface, and exports the package with the lookup for other modules to use. For the tours application this is shown below:
 	```java
 	// TourFinder.java
-
 	package zoo.tours.reservations;
 
 	import java.util.*;
@@ -2058,10 +2061,9 @@
 	}
 	```
 
-1. A **consumer** refers to a module that contains and uses a service. Once the consumer has acquired a service via the service locator, it is able to invoke the methods provided by the service provider interface. An example is shown below:
+1. A **consumer** refers to a module that obtains and uses a service. Once the consumer has acquired a service via the service locator, it is able to invoke the methods provided by the service provider interface.  The consumer requires service provider interface and the service locator. For the tours application this is shown below:
 	```java
 	// Tourist.java
-
 	package zoo.visitor;
 	
 	import java.util.*;
@@ -2085,10 +2087,9 @@
 	}
 	```
 
-1. A **service provider** is the implementation of a service provider interface. Note that the provides directive is used instead of the export directive as we don't want callers referring to the service provider interface directly. An example is shown below:
+1. A **service provider** is the implementation of a service provider interface. The service provider requires the service provider interface, and also provides an implementation of the behaviour specified in the service provider interface. Note that the export directive is not used as we don't want consumers referring to the service provider directly. For the tours application this is shown below:
 	```java
 	// TourImpl.java
-
 	package zoo.tours.agency;
 	
 	import zoo.tours.api.*;
@@ -2102,7 +2103,7 @@
 			return 120;
 		}
 
-		public Souvenir get Souvenir(){
+		public Souvenir getSouvenir(){
 			Souvenir gift = new Souvenir();
 			gift.setDescription("stuffed animal");
 			return gift;
@@ -2116,9 +2117,35 @@
 	}
 	```
 
-1. A summary of the directives required fo reach service artefact is shown below: 
+1. If a service provider declares a provider method, then the service loader invokes that method to obtain an instance of the service provider. A provider method is a public static method named "provider" with no formal parameters and a return type that is assignable to the service's interface or class. In this case, the service provider **need not** be assignable to the service's interface or class.
+
+1. If a service provider does not declare a provider method, then the service provider is instantiated directly, via its constructor. There must be a service provider constructor that takes no arguments and is assignable to the service's interface or class. The provides directive in a service provider cannot specify the same service more than once.
+
+1. If the used directive occurs in a class, the *ServiceLoader.load()* method returns a ServiceLoader object that can provide instances of the service type. The module system automatically discovers provider modules at startup by scanning modules in the Java runtime image and modular jars in the module path. As there can be multiple implementations of the service, multiple instances of the service type can be returned. The service type should offer enough descriptor methods for a consumer to select the best implementation.
+
+1. The requires directive takes an object name, the exports directive takes a package name, the uses directive takes a type name, and the provides directive takes a service type and provider class. A consumer module will contain requires/uses, while a provider module will contain requires/provides.
+
+1. A summary of the directives required for reach service artefact is shown below: 
 	![table6.8](res/table6.8.JPG)
 
 ### Concurrency
 
 1. Disk and network operations are extremely slow compared to CPU operations. Multithreaded processing is used by modern operating systems to allow applications to execute multiple tasks at the same time, which allows tasks waiting for resources to give way to other processing requests. Java has traditionally supported multithreaded programming using the **Thread** class. The **Concurrency** API has grown over time to provide numerous classes for performing complex thread-based tasks.
+
+1. A thread is the smallest unit of execution that can be scheduled by the operating system. A process is a group of associated threads that execute in the same, shared environment. A **task** is a single unit of work performed by a thread. 
+
+1. A process model is shown below:
+	![figure7.1](res/figure7.1.JPG)
+
+1. Thread types include **system threads** threads created by the JVM, and **user-defined** threads which are created by the application developer. Operating systems use a **thread scheduler** to determine which threads should be executing. A **context switch** is the process of storing a thread's current state and later restoring the state of the thread to continue executing. A thread can interrupt or supersede another thread if it has a higher **thread priority**.
+
+1. The java.lang.Runnable interface is a functional interface that takes no arguments and returns no data. It is commonly used to define the task or work that a thread wll execute, seperate from the main application thread. The definition of runnable is shown below:
+	```java
+	@FunctionalInterface public interface Runnable{
+		void run();
+	}
+	```
+
+1. To execute a thread first you define an instance of java.lang.Thread, and then you start the task using the *Thread.start()* method.
+
+3. An example of defining the Thread:
