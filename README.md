@@ -745,7 +745,9 @@
     javac -d out --module-source-path src --module simpleinterest
     ```
 
-1. The above command used 3 switches. The -d switch directed the output to a particular directory, the --module-source-path switch provided the location of the source module definition, and the --module switch specified the name of the module to compile.
+1. The above command used 3 switches. The -d switch directed the output to a particular directory, the --module-source-path switch provided the location of the source module definition, and the --module switch specified the name of the module to compile. Although not used here, the --module-path (or -p for short) switch would be used to specify the location of modules required by the module that is being compiled. The -m switch specifies a name of the nodule.
+
+1. A valid module name consists of Java identifiers seperated by ".". A Java identifier cannot start with a number, or contain a dash (-).
 
 1. The file structure after compilation is shown below:
     ![moduleinfofull](res/moduleinfofull.jpg)
@@ -1990,6 +1992,15 @@
 
 1. When splitting up a project into modules, a problem with **cyclic dependencies** may arise. A cyclic dependency occurs when 2 or more things have dependencies on each other. Modules that have cyclic dependenencies will not compile. A common technique to resolve this issue is to introduce another module containing all the code that the modules share. Note that a cyclic dependency can still exists between packages with a module.
 
+1. Although not recommended, is possible to customise what packages a module exports from the command line.
+	```java
+	javac --add-reads moduleA=moduleB --add-exports moduleB/com.modB.package1=moduleA ...
+	java --add-reads moduleA=moduleB --add-exports moduleB/com.modB.package1=moduleA ...
+	// --add-reads moduleA=moduleB implies that moduleA wants to read all exported packages of moduleB
+	// add-exports moduleB/com.modB.package1=moduleA implies that moduleB exports package com.modB.package1 to moduleA
+	// add-open is used ot provide access to privat members of classes through reflection (not required for exam)
+	```
+
 1. The previous section discussed modules in terms of dependencies, with one module exporting its public types and another module requiring them.  This is a very tight coupling. A looser coupling can be if one module requires an implementation of an interface from another module, and the other module provides that implementation.
 
 1. A **service** is composed of an interface, classes referenced by the interface references, and a way to look up the implementations of the interface. A sample tours application will be used to introduce this concept. The 4 modules within this application are shown below:
@@ -2146,6 +2157,56 @@
 	}
 	```
 
-1. To execute a thread first you define an instance of java.lang.Thread, and then you start the task using the *Thread.start()* method.
+1. To execute a thread first you define an instance of java.lang.Thread, and then you start the task using the *Thread.start()* method. Examples of defining a thread are shown below:
+	```java
+	// Providing a Runnable object to the Thread constructor
+	public class PrintData implements Runnable{
+		@Override public void run() {
+			for(int i = 0; i < 3; i++)
+				System.out.println("Printing record: "+i);
+		}
 
-3. An example of defining the Thread:
+		public static void main(String[] args){
+			(new Thread(new PrintData())).start();
+	}
+
+	// Creating a class that extends Thread and overrides the run() method
+	public class ReadInventoryThread extends Thread{
+		@Override public void run() {
+			System.out.println("Printing zoo inventory");
+		}
+
+		public static void main(String[] args){
+			(new ReadInventoryThread()).start();
+		}
+	}
+	```
+
+1. While threads operate asynchronously, one thread may need to wait for the results of another thread. In such a case the *Thread.sleep()* method can be used to make a thread pause until results are ready. To assist with creating and managing threads, the ExecutorService interface in the Concurrency API can be used.
+
+1. An example of using *newSingleThreadExecutor()* is shown below:
+	```java
+	import java.util.concurrent.*;
+	public class ZooInfo{
+		public static void main(String[] args){
+			ExecutorService service = null;
+			Runnable task1 = () ->
+				System.out.println("Printing zoo inventory");
+			Runnable task2 = () -> {for(int i = 0; i < 3; i++)
+				System.out.println("Printing record: "+i);};
+
+			try{
+				service = Executors.newSingleThreadExecutor();
+				System.out.println("begin");
+				service.execute(task1);
+				service.execute(task2);
+				service.execute(task1);
+				System.out.println("end");
+			} finally {
+				if(service != null) service.shutdown();
+			}
+		}
+	}
+	```
+
+1. If the *shutdown()* method is not called then the application will never terminate. As part of shutdown the thread executor rejects any new tasks submitted to the thread executor while continuing to execute any previously submitted tasks. The *isShutdown()* and *isTerminated()* methods can be used to check the status of the thread. The *shutdownNow()* method attempts to stop all running tasks immediately.
