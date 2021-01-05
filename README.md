@@ -2150,14 +2150,15 @@
 
 1. Thread types include **system threads** threads created by the JVM, and **user-defined** threads which are created by the application developer. Operating systems use a **thread scheduler** to determine which threads should be executing. A **context switch** is the process of storing a thread's current state and later restoring the state of the thread to continue executing. A thread can interrupt or supersede another thread if it has a higher **thread priority**.
 
-1. The java.lang.Runnable interface is a functional interface that takes no arguments and returns no data. It is commonly used to define the task or work that a thread wll execute, seperate from the main application thread. The definition of runnable is shown below:
+1. The *java.lang.Runnable* interface is a functional interface that takes no arguments and returns no data. It is commonly used to define the task or work that a thread will execute, separate from the main application thread. The definition of runnable is shown below:
 	```java
-	@FunctionalInterface public interface Runnable{
+	@FunctionalInterface 
+	public interface Runnable {
 		void run();
 	}
 	```
 
-1. To execute a thread first you define an instance of java.lang.Thread, and then you start the task using the *Thread.start()* method. Examples of defining a thread are shown below:
+1. To execute a thread first you define an instance of *java.lang.Thread*, and then you start the task using the *Thread.start()* method. Examples of defining a thread are shown below:
 	```java
 	// Providing a Runnable object to the Thread constructor
 	public class PrintData implements Runnable{
@@ -2182,14 +2183,34 @@
 	}
 	```
 
-1. While threads operate asynchronously, one thread may need to wait for the results of another thread. In such a case the *Thread.sleep()* method can be used to make a thread pause until results are ready. To assist with creating and managing threads, the ExecutorService interface in the Concurrency API can be used.
+1. While threads operate asynchronously, one thread may need to wait for the results of another thread. In such a case the *Thread.sleep()* method can be used to make a thread pause until results are ready. An example is shown below:
+	```java
+	class CheckResults {
+	    private static int counter = 0;
+	
+	    public static void main(String[] a) throws InterruptedException {
+		new Thread(() -> {
+		    for (int i = 0; i < 500; i++) {
+			CheckResults.counter++;
+		    }
+		}).start();
+		while (CheckResults.counter < 100) {
+		    System.out.println("Not reached yet");
+		    Thread.sleep(1000); // 1 SECOND
+		}
+		System.out.println("Reached!");
+	    }
+	}
+	```
+
+1. To improve on the above and to assist with creating and managing threads, the *ExecutorService* interface in the Concurrency API can be used.
 
 1. An example of using *newSingleThreadExecutor()* is shown below:
 	```java
 	import java.util.concurrent.*;
 	public class ZooInfo{
 		public static void main(String[] args){
-			ExecutorService service = null;
+		    ExecutorService service = null;
 			Runnable task1 = () ->
 				System.out.println("Printing zoo inventory");
 			Runnable task2 = () -> {for(int i = 0; i < 3; i++)
@@ -2210,3 +2231,73 @@
 	```
 
 1. If the *shutdown()* method is not called then the application will never terminate. As part of shutdown the thread executor rejects any new tasks submitted to the thread executor while continuing to execute any previously submitted tasks. The *isShutdown()* and *isTerminated()* methods can be used to check the status of the thread. The *shutdownNow()* method attempts to stop all running tasks immediately.
+
+1. Tasks can be submitted to an *ExecutorService* in multiple ways. The *execute()* method is inherited from the *Executor* interface, which the *ExecutorService* interface extends. It is considered a "fire-and-forget" method as once it is submitted the result is not directly available to the calling thread. The *submit()* method returns a *Future* instance that can be used to determine whether the task is complete.
+
+1. Useful *ExecutorService* methods are shown below:
+	```java
+	void execute(Runnable command);
+	Future<?> submit(Runnable task);
+	<T> Future<T> submit(Callable<T> task);
+	<T> List<Future<T>> invokeAll(Collections<? extends Callable<T>> tasks) throws InterruptedException;
+	<T> T invokeAny(Collection<? extends Callable<T>> tasks) throws InterruptedException, ExecutionException;
+	```
+
+1. To improve on the previous CheckResults implementation and avoid managing threads directly, the below implementation using *submit()* to return a *Future* object can be used: 
+	```java
+	public class CheckResults {
+	    private static int counter = 0;
+	
+	    public static void main(String[] unused) throws Exception {
+		ExecutorService service = null;
+		try {
+		    service = Executors.newSingleThreadExecutor();
+		    Future<?> result = service.submit(() -> {
+			for (int i = 0; i < 500; i++) {
+			    CheckResults.counter++;
+			}
+		    });
+		    result.get(10, TimeUnit.SECONDS);
+		    System.out.println("Reached!");
+		} catch (TimeoutException e) {
+		    System.out.println("Not reached in time");
+		} finally {
+		    if (service != null) {
+			service.shutdown();
+		    }
+		}
+	    }
+	}
+	```
+
+1. The *java.util.concurrent.Callable* functional interface is similar to *Runnable* except that its *call()* method returns a value and can throw a checked exception. The definition of the *Callable* interface is shown below:
+	```java
+	@FunctionalInterface
+	public interface Callable<V> {
+		V call() throws Exception;
+	}
+	```
+
+1. The *Callable* interface is often preferable over *Runnable* since it allows more details to be retrieved easily from the task after it is completed.
+
+1. After submitting tasks to a thread executor, it is common to wait for the results. An example is shown below for a  simple generic pattern where the result from the thread executor doesn't need to be retained: 
+	```java
+	ExecutorService service = null;
+	try {
+	    service = Executors.newSingleThreadExecutor();
+	    // Add tasks to the thread executor
+	} finally {
+	    if (service != null) {
+		service.shutdown();
+	    }
+	}
+	if (service != null) {
+	    service.awaitTermination(1, TimeUnit.MINUTES);
+	    // Check whether all tasks are finished
+	    if (service.isTerminated()) {
+		System.out.println("Finished!");
+	    } else {
+		System.out.println("At least one task is still running");
+	    }
+	}
+	```
