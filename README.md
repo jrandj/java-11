@@ -2301,3 +2301,114 @@
 	    }
 	}
 	```
+
+1. The *invokeAll()* and *invokeAny()* methods can be used to execute task collections synchronously.  The *invokeAll()* method will wait indefinitely until all tasks are complete, while the *invokeAny()* method will wait indefinitely until at least one task completes.
+
+1. The *ScheduledExecutorService* can be used to schedule a task to happen at some future time. Useful *ScheduledExecutorService* methods are shown below:
+	```java
+	schedule(Callable<V> callable, long delay, TimeUnit unit);
+	schedule(Runnable command, long delay, TimeUnit unit);
+	scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit);
+	scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit);
+	```
+
+1. An example usage of *ScheduledExecutorService* is shown below:
+	```java
+	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+	Runnable task1 = () -> System.out.println("Hello zoo");
+	Callable<String> task2 = () -> "Monkey";
+	ScheduledFuture<?> r1 = service.schedule(task1, 10, TimeUnit.SECONDS);
+	ScheduledFuture<?> r2 = service.schedule(task2, 8, TimeUnit.MINUTES);
+	```
+
+1. Additional factory methods in the *Executors* class are available that use a pool of threads. A *thread pool* is a group of pre-instantiated reusable threads that are available to perform a set of tasks. Useful *ScheduledExecutorService* factory methods are shown below:
+	```java
+	ExecutorService.newSingleThreadExecutor();
+	ScheduledExecutorService.newSingleThreadScheduledExecutor();
+	ExecutorService.newCachedThreadPool();
+	ExecutorService.newFixedThreadPool(int);
+	ScheduledExecutorService.newScheduledThreadPool(int);
+	```
+
+1. An instance of a pooled-thread executor will execute concurrently if the number of tasks is less than the number of available threads. Calling *newFixedThreadPool()* with a value of 1 is equivalent to calling *newSingleThreadExecutor()*. The number of threads in the pool is often set to equal the number of available CPUs.
+
+1. Thread-safety is the property of an object that guarantees safe execution by multiple threads at the same time. As threads run in a shared environment and memory space, data must be organised so that we don't end up with unexpected results.
+
+1. An example of non-thread safe code is shown below:
+	```java
+	public class SheepManager {
+	    private int sheepCount = 0;
+	
+	    private void incrementAndReport() {
+	        System.out.print((++sheepCount) + " ");
+	    }
+	
+	    public static void main(String[] args) {
+	        ExecutorService service = null;
+	        try {
+	            service = Executors.newFixedThreadPool(20);
+	            SheepManager manager = new SheepManager();
+	            for (int i = 0; i < 10; i++) {
+	                service.submit(() -> manager.incrementAndReport());
+	            }
+	        } finally {
+	            if (service != null) {
+	                service.shutdown();
+	            }
+	        }
+	    }
+	}
+	```
+
+1. Multiple threads read and write the sheepCount variable, with one of the threads overwriting the results of the others. When 2 or more threads execute the right side of the expression, only the result of one of the increment operations is stored. This is known as a **race condition** and means the output will be different each time.
+
+1. *Atomic* is the property of an operation to be carried out as a single unit of execution without any interference by another thread. The *java.util.concurrent.atomic* package contains the following useful Atomic classes:
+	```java
+	AtomicBoolean
+	AtomicInteger
+	AtomicLong
+	```
+
+1. Each class contains numerous methods that equivalent to many of the primitive built-in operators. Common atomic methods are shown below:
+	```java
+	get()
+	set()
+	getAndSet()
+	incrementAndGet()
+	getAndIncrement()
+	decrementAndGet()
+	getAndDecrement()
+	```
+
+1. Replacing *++sheepCount* with *sheepCount.incrementAndGet()* results in the above code results in all of the numbers being printed, but the order is still not guaranteed. No increment operation is lost but we do not know which thread will return first.
+
+1. A monitor (or lock) is a structure that supports *mutual exclusion*, which is the property that at most one thread is executing a particular segment of code at a given time. As each thread arrives at a lock it checks if any threads are already in the block, and only a single thread can hold the lock. Adding the synchronized block as per the below will ensure the output of the above is sequential: 
+	```java
+    private void incrementAndReport() {
+	    synchronized(this) {
+	        System.out.print((++sheepCount) + " ");
+	    }
+    }
+	```
+
+1. The synchronized modifier can also be added to a method to achieve the same effect. A static synchronized block can also be used if thread access needs to be ordered across all instances, and not just a single instance.
+
+1. Correctly using the synchronised keyword can be challenging and has performance implication. Other classes within the Concurrency API that are easier to use are recommended.
+
+1. The Concurrency API includes the *lock* interface that is conceptually similar to using the synchronized keyword, but that has a lot more features. The below blocks are equivalent:
+	```java
+	// Implementation #1 with a synchronized block
+    Object object = new Object();
+    synchronized (object) {
+        // protected code
+    }
+
+	// Implementation #2 with a Lock
+    Lock lock = new ReentrantLock();
+    try {
+        lock.lock();
+        // protected code
+    } finally {
+        lock.unlock();
+    }
+	```
