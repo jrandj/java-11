@@ -2369,18 +2369,18 @@
 	AtomicLong
 	```
 
-1. Each class contains numerous methods that equivalent to many of the primitive built-in operators. Common atomic methods are shown below:
+1. Each class contains numerous methods that equivalent to many of the primitive built-in operators. Common atomic methods (e.g. for AtomicInteger) are shown below:
 	```java
-	get()
-	set()
-	getAndSet()
-	incrementAndGet()
-	getAndIncrement()
-	decrementAndGet()
-	getAndDecrement()
+	int get();
+	void set(int);
+	int getAndSet(int);
+	int incrementAndGet();
+	int getAndIncrement();
+	int decrementAndGet();
+	int getAndDecrement()
 	```
 
-1. Replacing *++sheepCount* with *sheepCount.incrementAndGet()* results in the above code results in all of the numbers being printed, but the order is still not guaranteed. No increment operation is lost but we do not know which thread will return first.
+1. Replacing *++sheepCount* and the int declaration with  *sheepCount.incrementAndGet()* and an AtomicInteger declaration results in all of the numbers being printed, but the order is still not guaranteed. No increment operation is lost but we do not know which thread will return first.
 
 1. A monitor (or lock) is a structure that supports *mutual exclusion*, which is the property that at most one thread is executing a particular segment of code at a given time. As each thread arrives at a lock it checks if any threads are already in the block, and only a single thread can hold the lock. Adding the synchronized block as per the below will ensure the output of the above is sequential: 
 	```java
@@ -2395,7 +2395,7 @@
 
 1. Correctly using the synchronised keyword can be challenging and has performance implication. Other classes within the Concurrency API that are easier to use are recommended.
 
-1. The Concurrency API includes the *lock* interface that is conceptually similar to using the synchronized keyword, but that has a lot more features. The below blocks are equivalent:
+1. The Concurrency API includes the *lock* interface that is conceptually like using the synchronized keyword, but that has a lot more features. The below blocks are equivalent:
 	```java
 	// Implementation #1 with a synchronized block
     Object object = new Object();
@@ -2411,4 +2411,103 @@
     } finally {
         lock.unlock();
     }
+	```
+
+1. Useful lock interface methods include:
+	```java
+    void lock();
+	void unlock();
+	boolean tryLock();
+	boolean tryLock(long, TimeUnit);
+	```
+
+1. The *tryLock()* method attemps to acquire a lock and immediately returns a *boolean* result. It does not wait if another thread already holds the lock, it returns immediately whether or not a lock is available. The *tryLock(long, TimeUnit)* method is similar but will wait for a period of time to acquire the lock. An example for *tryLock()* is shown below:
+	```java
+    Lock lock = new ReentrantLock();
+    new Thread(() -> printMessage(lock)).start();
+    if (lock.tryLock()) {
+        try {
+            System.out.println("Lock obtained, entering protected code");
+        } finally {
+            lock.unlock();
+        }
+    } else {
+        System.out.println("Unable to acquire lock, doing something else");
+    }
+	```
+
+1. The *CyclicBarrier* class can be used to allow a set of threads to wait for each other to reach a common execution point, known as a barrier. This allows multiple threads to still run. An example is shown below:
+	```java
+	   public class LionPenManager {
+	    private void removeLions() {
+	        System.out.println("Removing lions");
+	    }
+	
+	    private void cleanPen() {
+	        System.out.println("Cleaning the pen");
+	    }
+	
+	    private void addLions() {
+	        System.out.println("Adding lions");
+	    }
+	
+	    public void performTask(CyclicBarrier c1, CyclicBarrier c2) {
+	        try {
+	            removeLions();
+	            c1.await();
+	            cleanPen();
+	            c2.await();
+	            addLions();
+	        } catch (InterruptedException | BrokenBarrierException e) {
+	            // handle
+	        }
+	    }
+	
+	    public static void main(String[] args) {
+	        ExecutorService service = null;
+	        try {
+	            service = Executors.newFixedThreadPool(4);
+	            var manager = new LionPenManager();
+	            var c1 = new CyclicBarrier(4);
+	            var c2 = new CyclicBarrier(4, () -> System.out.println("*** Pen Cleaned!"));
+	            for (int i = 0; i < 4; i++) {
+	                service.submit(() -> manager.performTask(c1, c2));
+	            }
+	        } finally {
+	            if (service != null) {
+	                service.shutdown();
+	            }
+	        }
+	    }
+	}
+	```
+
+1. The Concurrency API also includes interfaces and classes to help solve common memory consistency errors. A *memory consistency* error occurs when two threads have inconsistent views of what should be the same data. The JVM may throw a *ConcurrentModificationException* in such a scenario. An example is shown below:
+	```java
+	// ConcurrentModificationException thrown
+    var foodData = new HashMap<String, Integer>();
+    foodData.put("penguin", 1);
+    foodData.put("flamingo", 2);
+    for(String key: foodData.keySet()) {
+        foodData.remove(key);
+    }
+
+	// No exception thrown
+    var foodData = new ConcurrentHashMap<String, Integer>();
+    foodData.put("penguin", 1);
+    foodData.put("flamingo", 2);
+    for(String key: foodData.keySet()) {
+        foodData.remove(key);
+    }
+	```
+
+1. In the above example the iterator on *keySet()* is not properly updated after the first element is removed, so an exception is thrown. Concurrent collection classes should be used any time multiple threads are going to modify a collections object outside of a *synchronized* block. Concurrent collection classes are shown below:
+	```java
+	ConcurrentHashMap
+	ConcurrentLinkedQueue
+	ConcurrentSkipListMap
+	ConcurrentSkipListSet
+	CopyOnWriteArrayList
+	CopyOnWriteArraySet
+	LinkedBlockingQueue
 	```
