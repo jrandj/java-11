@@ -6,7 +6,7 @@
 ## Java SE 11 Programmer I
 
 - [Creating a Simple Java Program](#Creating-a-Simple-Java-Program)
-- [Working With Java Primitive Data Types and String APIs](#Working-With-Java-Primitive-Data-Types-and-String-APIs)
+- [Working with Java Primitive Data Types and String APIs](#Working-with-Java-Primitive-Data-Types-and-String-APIs)
 - [Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
 - [Working with Java Arrays](#Working-with-Java-Arrays)
 - [Describing and Using Objects and Classes](#Describing-and-Using-Objects-and-Classes)
@@ -32,13 +32,13 @@
 
 1. The **Java Virtual Machine (JVM)** is an executable. When the JVM runs, it loads the given class and looks for the main method of that class to run. The executable for the JVM is named java.
 
-1. Every Java class belongs to a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referrred to without using the **Fully Qualified Class Name (FQCN)**. 
+1. Every Java class belongs to a package. There can be at most one package statement in the source file, and it must be the first statement in the file. If there is no package statement, then the classes defined in that file belong to an unnamed package which is known as the default package. Classes from other packages can be imported so that they can be referred to without using the **Fully Qualified Class Name (FQCN)**. 
 
-1. Java code is made up of expressions, statements and blocks. An expression is made up of variables, operators, and method invocations. An expression evaluates to a single value. An expression is something which evaluates a value, while a statement is a line of code that does something. Some expressions can be made into a statement by terminating it with a semicolon, such as assignment expressions, usage of ++ or --, method invocation and object creation expressions. A block is a group of zero or more statements between balanced brances and can be used wherever a single statement is allowed. 
+1. Java code is made up of expressions, statements, and blocks. An expression is made up of variables, operators, and method invocations. An expression evaluates to a single value. An expression is something which evaluates a value, while a statement is a line of code that does something. Some expressions can be made into a statement by terminating it with a semicolon, such as assignment expressions, usage of ++ or --, method invocation and object creation expressions. A block is a group of zero or more statements between balanced branches and can be used wherever a single statement is allowed. 
 
 1. The stack is used for storing local variables, function calls, and references to objects. The heap is used for storing objects.
 
-### Working With Java Primitive Data Types and String APIs
+### Working with Java Primitive Data Types and String APIs
 
 1. Java is a statically typed language. This means that the data type of a variable is defined at compile time and cannot change during run time.
 
@@ -63,11 +63,11 @@
     * Interfaces
     * Enums
     
-1. A variable contains a raw number, and assigning one variable to another simply copies that number from one variable to another. Java uses **pass by value** semantics.
+1. A variable contains a raw number and assigning one variable to another simply copies that number from one variable to another. Java uses **pass by value** semantics.
 
-1. Java initialises all static and instance variables of a class automatically if you don't initialise them explicitly. You must initalise local variables explicitly before they are used.
+1. Java initialises all static and instance variables of a class automatically if you do not initialise them explicitly. You must initialise local variables explicitly before they are used.
 
-1. Assigning a smaller type to a larger type is known as **implicit widening conversion** as no cast is required. To assign a larger type to a smaller type, for a compile time constant (i.e. final) the compiler will automatically narrow the value. If the source variable is not a constant then a cast is required, this is known as **explicit narrowing**. Determining the value that will actually be assigned when doing an explicit can be complicated.
+1. Assigning a smaller type to a larger type is known as **implicit widening conversion** as no cast is required. To assign a larger type to a smaller type, for a compile time constant (i.e., final) the compiler will automatically narrow the value. If the source variable is not a constant then a cast is required, this is known as **explicit narrowing**. Determining the value that will be assigned when doing an explicit can be complicated.
 
 1. A String is an object of class java.lang.String. String is a final class and implements java.lang.CharSequence. String is immutable so the value cannot be changed after instantiation.
 
@@ -118,7 +118,7 @@
 
 1. java.lang.StringBuilder is the mutable twin of java.lang.String. StringBuilder is also a final class and implements java.lang.CharSequence. StringBuilder is better suited for creating temporary strings that have no use once a method ends.
 
-1. Stringbuilder provides several constructors:
+1. StringBuilder provides several constructors:
     ```java
     StringBuilder();
     StringBuilder(CharSequence seq);
@@ -150,10 +150,10 @@
 
 ### Using Operators and Decision Constructs
 
-1. Arithmetic operators are used to perform standard mathematical operations on all primitive variables (and wrapper objects for numeric types) except boolean.
+1. Arithmetic operators are used to perform standard mathematical operations on all primitive variables (and wrapper objects for numeric types) except Boolean.
 
 1. Operators and their precedence shown below:
-    | Operator Type | Category             | Precadence                              |
+    | Operator Type | Category             | Precedence                              |
     |---------------|----------------------|-----------------------------------------|
     | Unary         | postfix              | expr++ expr--                           |
     | Unary         | prefix               | ++expr --expr +expr -expr ~ !           |
@@ -170,7 +170,7 @@
     | Ternary       | ternary              | ? :                                     |
     | Assignment    | assignment           | = += -= *= /= %= &= ^= \|= <<= >>= >>>= |
 
-1. Java applies the rules of **numeric promotion** while working with operators that deal with numeric values. **Unary numeric promotion** occurs if an operand is smaller than int, and causes the operand to be automatically promoted to int. **Binary numeric promotion** occurs if one of the promoted operands is larger than int, and causes both operands to be promoted to the larger operand.
+1. Java applies the rules of **numeric promotion** while working with operators that deal with numeric values. **Unary numeric promotion** occurs if an operand is smaller than int and causes the operand to be automatically promoted to int. **Binary numeric promotion** occurs if one of the promoted operands is larger than int, and causes both operands to be promoted to the larger operand.
 
 1. In the case of a Dangling Else statement, the Else is associated to the nearest if statement.
 
@@ -179,7 +179,7 @@
     * enum type.
     * A String.
 
-1. In a switch statement case labels are optional, but if provided they must be compile time constants. If an enum is used the unqualifed enum constant (e.g. VALUE_A and not Class.MyEnum.VALUE_A) must be used.
+1. In a switch statement case labels are optional, but if provided they must be compile time constants. If an enum is used the unqualified enum constant (e.g., VALUE_A and not Class.MyEnum.VALUE_A) must be used.
 
 1. In a switch statement the default block is optional, but if provided there can only be 1.
 
@@ -201,9 +201,9 @@
 
 1. Arrays have two interesting runtime properties:
     * They are **reified** meaning that type checking is done at runtime by the JVM and not the compiler.
-    * They are **covariant** meaning that a subclass object can be stored in  an array that is declared to be the type of its superclass (i.e. you can store an integer in a number array).
+    * They are **covariant** meaning that a subclass object can be stored in an array that is declared to be the type of its superclass (i.e., you can store an integer in a number array).
 
-1. The compare method compares 2 int arrays and returns 0 if they are equal, a value less than 0 if the first array is lexicographically less than the second array, and a value greater than 0 if the first array is lexicographically greather than the second array.
+1. The compare method compares 2 int arrays and returns 0 if they are equal, a value less than 0 if the first array is lexicographically less than the second array, and a value greater than 0 if the first array is lexicographically greater than the second array.
 
 1. The mismatch method takes two int arrays and returns the index of the first mismatch, otherwise it returns -1 if no mismatch is found.
 
@@ -214,16 +214,16 @@
     new java.lang.Object();
     ``` 
 
-1. In Java if you don't specify any reference variable explicitly within any instance method, the JVM assumes that you mean to access the same object for which the method has been invoked. You can make this explicit with the **this** keyword.
+1. In Java if you do not specify any reference variable explicitly within any instance method, the JVM assumes that you mean to access the same object for which the method has been invoked. You can make this explicit with the **this** keyword.
 
 1. The structure of a Java source file is:
     * At most one package statement.
     * Zero or more import statements.
-    * One or more reference type (i.e. class, interface, or enum) definitions.
+    * One or more reference type (i.e., class, interface, or enum) definitions.
 
 1. Members of a class definition include field declarations, methods, constructors, and initialisers. Members can be static or non-static.
 
-1. The code for a top level public reference type must be written inside a Java file with the same name. 
+1. The code for a top-level public reference type must be written inside a Java file with the same name. 
 
 1. Java has three **visibility scopes** for variables - class, method, and block. Java has five **lifespan scopes** for variables - class, instance, method, for loop, and block.
 
@@ -244,7 +244,7 @@
 
 1. The method must return a value of the type specified, with the following exceptions:
     * If the type is numeric then the return value can be one of any other numeric type as long as the type of the return value is smaller than the declared type.
-    * Wrapper classes and primitives are interchangable.
+    * Wrapper classes and primitives are interchangeable.
     * A subtype of the declared type can be returned (referred to as **covariant return**).
 
 1. The method signature includes the method name and its ordered list of parameter types. Where multiple methods exist with the same name but different parameter types, it is said that the class has **overloaded** the method name.
@@ -275,9 +275,9 @@
     }
     ```
 
-1. An instance variable is not allowed to use the value of a variable if that variable is declared below the initialiser. It can assign a value to such a variable. An instance initialiser is not expected to throw any exceptions. Instance initialisers should generally be avoided, and a well designed class should not need to use them.
+1. An instance variable is not allowed to use the value of a variable if that variable is declared below the initialiser. It can assign a value to such a variable. An instance initialiser is not expected to throw any exceptions. Instance initialisers should generally be avoided, and a well-designed class should not need to use them.
 
-1. A constructor is a method that always has the same name as the class, and does not have a return type.
+1. A constructor is a method that always has the same name as the class and does not have a return type.
 
 1. A no argument constructor is defined by default only if no constructors are provided explicitly.
 
@@ -285,12 +285,12 @@
 
 1. Java forces the programmer to assign a value to a final variable explicitly. A static variable can be used by other classes only after the class is loaded made ready to use. You can assign a value to a final static variable at the time of declaration or in any one of the **static initialisers**.
 
-1. Access to static members is decided by the compiler at compile time by checking the declared type of the variable. This is referred to as **static binding**. Static binding uses type information to bind a method to a method call, as opposed to **dynamic binding** which takes into account the actual object.
+1. Access to static members is decided by the compiler at compile time by checking the declared type of the variable. This is referred to as **static binding**. Static binding uses type information to bind a method to a method call, as opposed to **dynamic binding** which considers the actual object.
 
 1. The first step in creating an instance of a class is to initialise the class itself. Whenever the JVM encounters the usage of a class for the first time, it allocates and initialises space for the static fields of that class. The rules for static blocks:
     * A class can have any number of static blocks. They are executed in the order that they appear in the class.
     * A static block can access all static variables and static methods of the class. However, if the declaration of a static variable appears after the static block, then only the value can be set.
-    * If the class has a superclass, and the superclass hasn't been initialised already, the JVM will initialise the superclass first.
+    * If the class has a superclass, and the superclass has not been initialised already, the JVM will initialise the superclass first.
     * There is no way to access or refer to a static block. It can only be invoked by the JVM, and only once.
 
 
@@ -298,7 +298,7 @@
 
 1. Encapsulation, Inheritance and Polymorphism are the three pillars of Object-Orientated Programming.
 
-1. **Encapsulation** is about restricting direct access to an objects data fields. This is achieved through the use of **access modifiers**. Access modifiers and their impact on accessibility are shown below:
+1. **Encapsulation** is about restricting direct access to an objects data fields. This is achieved using of **access modifiers**. Access modifiers and their impact on accessibility are shown below:
 
     | Modifier    | Class | Package | Subclass | World |
     |-------------|-------|---------|----------|-------|
@@ -307,21 +307,21 @@
     | no modifier | Y     | Y       | N        | N     |
     | private     | Y     | N       | N        | N     |
 
-1. A top level class, interface or enum can only have a public or default access modifier.
+1. A top-level class, interface or enum can only have a public or default access modifier.
 
 1. Members of an interface are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. From Java 9 an interface can have private methods.
 
 1. Enum constants are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. Enum constructors are always private.
 
 1. Encapsulation encourages loose coupling between classes. If the functionality of a class is exposed through methods, there are two advantages:
-    * The implementation can be modified without users being aware (i.e. the implementation details of the functionality are hidden from the users).
-    * The value of a variable can be ensured to be consistant with the business logic of the class. For example you could restrict setting the age of a Person class instance from being a negative number.
+    * The implementation can be modified without users being aware (i.e., the implementation details of the functionality are hidden from the users).
+    * The value of a variable can be ensured to be consistent with the business logic of the class. For example, you could restrict setting the age of a Person class instance from being a negative number.
 
 ### Reusing Implementations Through Inheritance
 
-1. A class defines a type, and contains a state (the instance fields) and the implementation (the methods). Thus, inheritance could be of state, implementation, or type.
+1. A class defines a type and contains a state (the instance fields) and the implementation (the methods). Thus, inheritance could be of state, implementation, or type.
 
-1. Java restricts a class from extending more than one class, so it is said that Java does not support multiple inheritance of state. A class can inherit implementation by extending a class and/or by implementating interfaces. As a class can implement multiple interfaces, Java supports multiple implementation inheritance. Java also supports multiple inheritance of type as an object can have multiple types: the type of its own class and the types of all the interfaces that the class implements. 
+1. Java restricts a class from extending more than one class, so it is said that Java does not support multiple inheritance of state. A class can inherit implementation by extending a class and/or by implementing interfaces. As a class can implement multiple interfaces, Java supports multiple implementation inheritance. Java also supports multiple inheritance of type as an object can have multiple types: the type of its own class and the types of all the interfaces that the class implements. 
 
 1. To inherit features from another class, that class is extended using the **extends** keyword. Constructors, static and instance initialisers of a class are not considered members of a class so are not inherited by a subclass. Only class members that are visible to another class as per the rules of access modifiers are inherited in a subclass.
 
@@ -337,11 +337,11 @@
     * Initialise the instance fields and execute instance initialisers of the class in the order of their appearance.
     * Execute class constructor.
 
-1. An **abstract class** is used to capture common features of multiple related object types while knowing that no object that exhibits only the feature captured in the abstract class can actually exist.
+1. An **abstract class** is used to capture common features of multiple related object types while knowing that no object that exhibits only the feature captured in the abstract class can exist.
 
 1. An **abstract method** allows you to capture declaration without providing implementation.
 
-1. A summary of the application of access modifiers, final, abstract and static keywords is shown below:
+1. A summary of the application of access modifiers, final, abstract, and static keywords is shown below:
     * An abstract class doesn't have to have an abstract method but if a class has an abstract method, it must be declared abstract. In other words, a concrete class cannot have an abstract method.
     * An abstract class cannot be instantiated irrespective of whether it has an abstract method or not.
     * A final class or a final method cannot be abstract.
@@ -361,13 +361,13 @@
 
 1. Static methods, static variables, and instance variables are accessed as per the declared type of the variable through which they are accessed and not according to the actual type of the object to which the variable refers. Contrast this with methods, where the actual type of the object determines which instance method is used.
 
-1. A class is allowed to completely replace the behaviour of an instance method that it inherited by providing its own implementation of that method. This is known as **overriding**. The rules for overriding a method are shown below:
-    * An overriding method must not be less accessible than the overriden method.
+1. A class can completely replace the behaviour of an instance method that it inherited by providing its own implementation of that method. This is known as **overriding**. The rules for overriding a method are shown below:
+    * An overriding method must not be less accessible than the overridden method.
     * The return type of the overriding method must be a covariant return of the overridden method.
-    * The types and order of the parameter list must be exactly the same.
-    * An overriding method cannot put a wider exception in its throws clause than the ones present in the throws clause of the overriden method.
+    * The types and order of the parameter list must be the same.
+    * An overriding method cannot put a wider exception in its throws clause than the ones present in the throws clause of the overridden method.
 
-1. A class can **hide** static methods and variables and instance variables. Basically, static methods are hidden, non-static methods are overriden.
+1. A class can **hide** static methods and variables and instance variables. Basically, static methods are hidden, non-static methods are overridden.
 
 1. The purpose of casting is to provide the compiler with the type information of the actual object to which a variable will be pointing at run time. When you cast a reference to another type, you are basically saying that the program does something that is not evident from the code itself. Ideally, you should never need to use casting.
 
@@ -386,7 +386,7 @@
     }
     ```
 
-1. From an OOP perspective an interface should not contain any implementation. It should only contain method declarations. However, Java allows interfaces to contain static fields as well as default, static and private methods.
+1. From an OOP perspective an interface should not contain any implementation. It should only contain method declarations. However, Java allows interfaces to contain static fields as well as default, static, and private methods.
 
 1. Key rules for interfaces are shown below:
     * Members of an interface are always public, even if not declared that way. The compiler will generate an error if you define them as private or protected. From Java 9 an interface can have private methods.
@@ -454,7 +454,7 @@
     }
     ```
 
-1. Unlike the static methods of a class, the static methods of an interface cannot be inherited. Multiple fields with the same name can be inherited as long as they are not used ambiguously.
+1. Unlike the static methods of a class, the static methods of an interface cannot be inherited. Multiple fields with the same name can be inherited if they are not used ambiguously.
 
 1. An interface can extend any number of interfaces. The extending interface inherits all members except static methods of each of the extended interfaces.
 
@@ -477,13 +477,13 @@
     }
     ```
 
-1. This allows a class to be written in a generic fashion, without hardcoding it to any particular type. This also allows that class to be typed to any type as per the requirement at the time of use.
+1. This allows a class to be written in a generic fashion, without hardcoding it to any type. This also allows that class to be typed to any type as per the requirement at the time of use.
 
-1. A parametrised method is similar to a parametrised class. The only difference is that the type parameter is valid only for that method instead of the whole class.
+1. A parametrised method is like a parametrised class. The only difference is that the type parameter is valid only for that method instead of the whole class.
 
 1. All generic information is stripped at run time, this is known as **type erasure**. This means that the presence of generics can throw up complicated situations with respect to Overloading and Overriding.
 
-1. The java.util.Collection interface is the root interface in the collection heirarchy. The java.util.List interface defines the behaviour of collections that keep objects in an order. The functionality is implemented by classes such as ArrayList and LinkedList.
+1. The java.util.Collection interface is the root interface in the collection hierarchy. The java.util.List interface defines the behaviour of collections that keep objects in an order. The functionality is implemented by classes such as ArrayList and LinkedList.
 
 1. Useful List methods are shown below:
     ```java
@@ -621,7 +621,7 @@
     }
     ```
 
-1. The parameterName and expression are contained wtihin the lambda expression.
+1. The parameterName and expression are contained within the lambda expression.
 
 1. A lambda expression can be written only where the target type is an interface with exactly one abstract method. Such an interface is known as a **functional interface**.
 
@@ -667,7 +667,7 @@
 
 ### Handling Exceptions
 
-1. Java **exceptions** are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situations and unknown exceptional situations. This is shown below:
+1. Java **exceptions** are designed to help you write code that covers all possible execution paths. This includes normal operations, exceptional situations, and unknown exceptional situations. This is shown below:
     ```java
     try{    
         // code for normal course of action
@@ -682,14 +682,14 @@
     }
     ```
 
-1. When developing code there is always the provider and the client. Exceptions are a means for the provider to let the client know about any exceptional events, and allow the client to determine how they want to deal with them. The mechanism to let the client know is to **throw** an exception. An example is shown below:
+1. When developing code there is always the provider and the client. Exceptions are a means for the provider to let the client know about any exceptional events and allow the client to determine how they want to deal with them. The mechanism to let the client know is to **throw** an exception. An example is shown below:
     ```java
     public void copyFile(String inputPath, String outputPath) throws IOException {
         // code to copy file
     }
     ```
 
-1. If the client can resolve the situation a **catch** statement can be used. If the client cannot handle the exceptional situation either, the exception can be propogated to the client's client. An exception is considered handled when it is caught in a catch block.
+1. If the client can resolve the situation a **catch** statement can be used. If the client cannot handle the exceptional situation either, the exception can be propagated to the client's client. An exception is considered handled when it is caught in a catch block.
 
 1. The throw statement is used to explicitly throw an exception. Throwing an exception implies that the code has encountered an unexpected situation with which it does not want to deal. Java requires that you list the exceptions that a method might throw in the throws clause of that method. This is shown below:
     ```java
@@ -718,14 +718,16 @@
 
 1. The java.lang.Throwable class is the root of all exceptions.   A Throwable object includes the chain of the method calls that led to the exception (known as the "stack trace") and any informational message specified by the programmer.
 
-1. The Throwable heirarchy is shown below:
-    ![heirarchy](https://i.ibb.co/58YTzkb/heirarchy.png)
+1. The Throwable hierarchy is shown below:
+	<p align="center">
+		<img src="https://i.ibb.co/58YTzkb/heirarchy.png">
+	</p>
 
 1. Generally **checked exceptions** are those that extend java.lang.Throwable but do not extend java.lang.RuntimeException or java.lang.Error. The remaining exceptions are **checked exceptions**. Checked exceptions must be declared in the throws clause of the method, or caught in a catch block within the method.
 
 ### Understanding Modules
 
-1. JAR files are used to package multiple classes into a file and deliver the file as an application to users. A JAR file is a zip file with a special directory named META-INF. This directory contains one or more files with MAINIFEST.MF always being one of them. The manifest contains extra information about the JAR file such as the version of Java used to build the file, and the class with the *main()* method. Each line in the manifest is a key/value pair seperated by a colon.
+1. JAR files are used to package multiple classes into a file and deliver the file as an application to users. A JAR file is a zip file with a special directory named META-INF. This directory contains one or more files with MAINIFEST.MF always being one of them. The manifest contains extra information about the JAR file such as the version of Java used to build the file, and the class with the *main()* method. Each line in the manifest is a key/value pair separated by a colon.
 
 1. Packaging classes into a JAR file without a well thought out plan can give rise to unwieldy applications that are difficult to update and/or reuse. JAR files also make it difficult to use part of an application without having the whole set of JAR files. Various Java community projects such as Ant, Maven, and Graven have attempted to provide a way of managing these issues.
 
@@ -738,7 +740,9 @@
     ```
 
 1. An example of the file structure for a module shown below:
-    ![moduleinfo](res/moduleinfo.jpg)
+	<p align="center">
+		<img src="res/moduleinfo.jpg">
+	</p>
 
 1. The module is compiled using the below:
     ```java
@@ -747,10 +751,12 @@
 
 1. The above command used 3 switches. The -d switch directed the output to a particular directory, the --module-source-path switch provided the location of the source module definition, and the --module switch specified the name of the module to compile. Although not used here, the --module-path (or -p for short) switch would be used to specify the location of modules required by the module that is being compiled. The -m switch specifies a name of the nodule.
 
-1. A valid module name consists of Java identifiers seperated by ".". A Java identifier cannot start with a number, or contain a dash (-).
+1. A valid module name consists of Java identifiers separated by ".". A Java identifier cannot start with a number or contain a dash (-).
 
 1. The file structure after compilation is shown below:
-    ![moduleinfofull](res/moduleinfofull.jpg)
+	<p align="center">
+		<img src="res/moduleinfofull.jpg">
+	</p>
 
 1. The module can be run using the below: 
     ```java
@@ -771,7 +777,7 @@
     java --module-path . --module simpleinterest
     ```
 
-1. It is a good design practise to define functionality in the form of an interface and let the actual implementation implement that interface. Seperating the interface and the implementation into separate modules allows us to build an application by mixing and matching modules without the need to bundle classes that are not required for the application. An interface is added as shown below:
+1. It is a good design practise to define functionality in the form of an interface and let the actual implementation implement that interface. Separating the interface and the implementation into separate modules allows us to build an application by mixing and matching modules without the need to bundle classes that are not required for the application. An interface is added as shown below:
     ```java
     package calculators;
 	public interface InterestCalculator{
@@ -809,7 +815,9 @@
     ```
 
 1. The directory structure after compilation is shown below:
-	![moduleexport](res/moduleexport.jpg)
+	<p align="center">
+		<img src="res/moduleexport.jpg">
+	</p>
 
 1. The exports clause allows any other module to require it. The Java module systems allows you to fine tune access to a module only to specific modules using a variation of the exports clause. This is shown below:
     ```java
@@ -844,23 +852,23 @@
 	}
     ```
 
-1. This has the added advantage of not requiring a requires valueobjects clause in the ui module. The requires hr clause in the ui module automatically makes all of the modules transitively required by the hr module, readable to the ui module. This is called **implied readability**.
+1. This has the added advantage of not requiring a requires valueobjects clause in the ui module. The requires hr clause in the ui module automatically makes all the modules transitively required by the hr module, readable to the ui module. This is called **implied readability**.
 
 1. A modular JAR file can be ran using the -classpath or -jar options, however the JVM will not enforce the access rules specified in the module descriptor.
 
-1. A common use case is wanting to develop a module that depends on a third party non-modular JAR. If you put a non-modular JAR on the module-path, Java will consider the non-modular JAR to be a module. Such a module is known as an **automatic module** or a **named module** and the name of the module is created automatically using the name of the JAR file.
+1. A common use case is wanting to develop a module that depends on a third-party non-modular JAR. If you put a non-modular JAR on the module-path, Java will consider the non-modular JAR to be a module. Such a module is known as an **automatic module** or a **named module** and the name of the module is created automatically using the name of the JAR file.
 
-1. As there is no module-info.class in a non-modular JAR, an automatic module exports all its packages and is allowed to read all exported packages of modules on the module-path and classes vailable on the classpath.
+1. As there is no module-info.class in a non-modular JAR, an automatic module exports all its packages and can read all exported packages of modules on the module-path and classes available on the classpath.
 
-1. If a module depends on a non-modular third party JAR, you need to add a requires clause in module-info and put the third party JAR in the --module-path. If additionally the automatic module requires a class from another non-modular JAR, that JAR needs to be included on the classpath.
+1. If a module depends on a non-modular third-party JAR, you need to add a requires clause in module-info and put the third-party JAR in the --module-path. If additionally, the automatic module requires a class from another non-modular JAR, that JAR needs to be included on the classpath.
 
-1. The specification of Standard modules are governed by the Java Community Process (JCP). Standard modules have names starting with "java". All other modules are part of the JDK and have names starting with "jdk". A standard module may contain both standard and non-standard API packages, however if the standard module exports a non-standard package then the export must be qualified. A standard module must not grant implied readability to any non-standard module. A non-standard module must not export any standard API packages.
+1. The specification of Standard modules is governed by the Java Community Process (JCP). Standard modules have names starting with "java". All other modules are part of the JDK and have names starting with "jdk". A standard module may contain both standard and non-standard API packages, however if the standard module exports a non-standard package then the export must be qualified. A standard module must not grant implied readability to any non-standard module. A non-standard module must not export any standard API packages.
 
 ### Understanding Java Technology and Environment
 
 1. Java code is compiled into **Java bytecode**, which is interpreted by the JVM. A class file produced on one platform will run on any platform that has a JVM.
 
-1. Java is a seperate application installed on top of an Operating System.
+1. Java is a separate application installed on top of an Operating System.
 
 1. The **Java Runtime Environment (JRE)** includes the class libraries and executables that are required to run a Java program while the **Java Development Kit (JDK)** includes tools such as the Java compiler and the Java debugger. 
 
@@ -880,9 +888,9 @@
 
 ### Java Fundamentals
 
-1. A final variable does not need to be assigned when it is declared, only before it is used. A variable reference being marked as final does not mean the associated object cannot be modified. If an instance variable is final, then it must be assigned a value when it is declared or when the object is instantiated. Similiarly, static variables must be assigned a value when declared or in a static initialiser.
+1. A final variable does not need to be assigned when it is declared, only before it is used. A variable reference being marked as final does not mean the associated object cannot be modified. If an instance variable is final, then it must be assigned a value when it is declared or when the object is instantiated. Similarly, static variables must be assigned a value when declared or in a static initialiser.
 
-1. Methods marked final cannot be overriden by a subclass. This essentially prevents any polymorphic behaviour on the method call and ensures that a specific version of the method is always called. The opposite of a final method is an abstract method as an abstract method must be implemented.
+1. Methods marked final cannot be overridden by a subclass. This essentially prevents any polymorphic behaviour on the method call and ensures that a specific version of the method is always called. The opposite of a final method is an abstract method as an abstract method must be implemented.
 
 1. A final class cannot be extended. A class cannot be both abstract and final.
 
@@ -899,27 +907,35 @@
     * **Local class:** A class defined within a method body.
     * **Anonymous class:** A special case of a local class that does not have a name.
 
-1. An inner class cannot declare static fields or methods, except for static final fields. It can also access members of the outer class including private methods. An inner classes will result in a Outer$Inner.class file being created by the compiler. As inner classes can have the same variable names as outer classes, a call to **this** is prefixed with the class name.
+1. An inner class cannot declare static fields or methods, except for static final fields. It can also access members of the outer class including private methods. An inner classes will result in an Outer$Inner.class file being created by the compiler. As inner class can have the same variable names as outer classes, a call to **this** is prefixed with the class name.
 
-1. A static nested class can be instantiated without an instance of the enclosing class. However, it can't access the instance variables or methods in the outer class directly. It requires an explicit reference to the outer class variable. The nesting creates a namespace because the enclosing class name must be used to refer to it.
+1. A static nested class can be instantiated without an instance of the enclosing class. However, it can not access the instance variables or methods in the outer class directly. It requires an explicit reference to the outer class variable. The nesting creates a namespace because the enclosing class name must be used to refer to it.
 
-1. A local class is declared in a method, constructor or initialiser. A local class does not have any access modifiers and cannot be declared static, or declare static fields unless they are static final. When defined in an instance method, they have access to all fields and methods of the enclosing class. They can access local variables only if the variables are final or effectively final. An effectively final variable is one whose value does not change after it is set.
+1. A local class is declared in a method, constructor or initialiser. A local class does not have any access modifiers and cannot be declared static or declare static fields unless they are static final. When defined in an instance method, they have access to all fields and methods of the enclosing class. They can access local variables only if the variables are final or effectively final. An effectively final variable is one whose value does not change after it is set.
 
 1. An anonymous class is a special form of a local class that does not have a name. It is declared and instantiated in one statement using the new keyword, a type name with parentheses, and a set of braces. Anonymous classes are required to extend an existing class or implement an existing interface.
 
 1. The rules for modifiers in nested classes are summarised below:
-	![table1.1](res/table1.1.JPG)
+	<p align="center">
+		<img src="res/table1.1.JPG">
+	</p>
 
 1. The rules for members in nested classes are summarised below:
-	![table1.2](res/table1.2.JPG)
+	<p align="center">
+		<img src="res/table1.2.JPG">
+	</p>
 
 1. The rules for access in nested classes are summarised below:
-	![table1.3](res/table1.3.JPG)
+	<p align="center">
+		<img src="res/table1.3.JPG">
+	</p>
 
 1. When Java was first released, there were only two types of members an interface declaration could include: abstract methods and static final variables. Since Java 8 and 9, new method types have been added. The interface member types are summarised below:
-	![table1.4](res/table1.4.JPG)
+	<p align="center">
+		<img src="res/table1.4.JPG">
+	</p>
 
-1. A default method may be declared within an interface to provide a default implementation. The default method is assumed to be public and cannot be marked abstract, final or static. It may also be overridden by a class that implements the interface. If a class inherits two or more default methods with the same method signature, then the class must override the method.
+1. A default method may be declared within an interface to provide a default implementation. The default method is assumed to be public and cannot be marked abstract, final, or static. It may also be overridden by a class that implements the interface. If a class inherits two or more default methods with the same method signature, then the class must override the method.
 
 1. To call a default method from a class which overrides the implementation:
     ```java
@@ -933,7 +949,9 @@
 1. A private static method is used to avoid code duplication in static methods. It must be marked private and static and may only be called by other methods within the interface definition.
 
 1. The rules for interface member access are summarised below:
-    ![table1.5](res/table1.5.JPG)
+	<p align="center">
+		<img src="res/table1.5.JPG">
+	</p>
 
 1. A functional interface is an interface that contains a single abstract method. A lambda expression is like an anonymous class that defines one method. Any functional interface can be implemented as a lambda expression.
 
@@ -944,17 +962,17 @@
     int hashCode()
     ```
 
-1. A lambda expression contains a parameter name, arrow and body. The parameters list the variables, which must be compatible with the type and number of input parameters of the functional interface's single abstract method. The body must also be compatible with the return type of the functional interface's abstract method. Example lamba expressions are shown below:
+1. A lambda expression contains a parameter name, arrow, and body. The parameters list the variables, which must be compatible with the type and number of input parameters of the functional interface's single abstract method. The body must also be compatible with the return type of the functional interface's abstract method. Example lambda expressions are shown below:
     ```java
     a -> a.canHop()
     (Animal a) -> {return a.canHop();}
     ```
 
-1. A var parameter can be used in the parameter list, but then all parameters must use var. If the type is specified for one parameter then it must be specified for all parameters. A semicolon is mandatory in the body if there is only a single expression. An expression-based lambda body isn't terminated with a semicolon as it is an expression not a statement. However, a statement-based lambda with multiple lines requires that each statement be terminated with a semicolon. 
+1. A var parameter can be used in the parameter list, but then all parameters must use var. If the type is specified for one parameter, then it must be specified for all parameters. A semicolon is mandatory in the body if there is only a single expression. An expression-based lambda body is not terminated with a semicolon as it is an expression not a statement. However, a statement-based lambda with multiple lines requires that each statement be terminated with a semicolon. 
 
 ### Annotations
 
-1. Annotations are all about metadata. They let you assign metadata attributes to classes, methods, variables and other Java types. An example is shown below:
+1. Annotations are all about metadata. They let you assign metadata attributes to classes, methods, variables, and other Java types. An example is shown below:
     ```java
     public class Mammal{}
     public class Bird{}
@@ -963,7 +981,7 @@
     @ZooAnimal public class Peacock extends Bird{}
     ```
 
-1. The above could have been achieved by extending a ZooAnimal class but that would require the class hierarchy to be changed. Annotations are similar to interfaces. While interface can be applied to classes, annotations can be applied to classes, methods, expressions, and even other annotations. Annotations also allow a set of values to be passed. An example is shown below:
+1. The above could have been achieved by extending a ZooAnimal class but that would require the class hierarchy to be changed. Annotations are like interfaces. While interface can be applied to classes, annotations can be applied to classes, methods, expressions, and even other annotations. Annotations also allow a set of values to be passed. An example is shown below:
     ```java
     public class Veterinarian{
         @ZooAnimal(habitat="Infirmary") private Lion sickLion;
@@ -1012,7 +1030,7 @@
 
 1. Like abstract interface methods, annotation elements are implicitly abstract and public. Declaring elements protected, private or final will result in a compilation failure.
 
-1. Like interface variables, annotation variables are implicitly public, static and final. A constant variable can be declared in an annotation but are not considered elements.
+1. Like interface variables, annotation variables are implicitly public, static, and final. A constant variable can be declared in an annotation but are not considered elements.
 
 1. A shorthand format exists for using annotations. This can occur if the annotation declaration contains an element named *value()*, the usage of the annotation provides no values for other elements, and the declaration does not contain any elements that are required. An example is shown below:
     ```java
@@ -1043,15 +1061,19 @@
     public @interface ZooAttraction{}
     ```
 
-1. The options for ElementType are shown below: 
-	![table2.1](res/table2.1.JPG)
+1. The options for ElementType are shown below:
+	<p align="center">
+		<img src="res/table2.1.JPG">
+	</p>
 
 1. The TYPE_USE value covers nearly all other values. One exception is that it can only be used on a method that returns a value, a void method would still need METHOD defined in the annotation. TYPE_USE is typically used for cast operations, object creation with new and inside type declarations.
 
 1. The compiler discards certain types of information when converting source code into a .class file. Annotations may be discarded by the compiler at runtime. The @Retention annotation can be used to specify. The options for @Retention are shown below:
-    ![table2.2](res/table2.2.JPG)
+	<p align="center">
+		<img src="res/table2.2.JPG">
+	</p>
 
-1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
+1. Javadoc is a built-in standard within Java that generates documentation for a class or API. If the @Documented annotation is present, then the generated Javadoc will include annotation information defined on Java types. An example is shown below: 
     ```java
     // Hunter.java
     import java.lang.annotation.Documented;
@@ -1061,7 +1083,7 @@
     @Hunter public class Lion{}
     ```
 
-1. In the above example @Hunter would be published with the Lion Javadoc information because it's marked with @Documented.
+1. In the above example @Hunter would be published with the Lion Javadoc information because it is marked with @Documented.
 
 1. The @Inherited annotation is used to allow subclasses to inherit the annotation information found in the parent class.
     ```java
@@ -1102,14 +1124,18 @@
     ```
 
 1. Commonly used built-in annotations are shown below:
-    ![table2.5](res/table2.5.JPG)
+	<p align="center">
+		<img src="res/table2.5.JPG">
+	</p>
 
 1. Example applications of commonly used annotations are shown below:
-    ![table2.6](res/table2.6.JPG)
+	<p align="center">
+		<img src="res/table2.6.JPG">
+	</p>
 
 ### Generics and Collections
 
-1. Method references can make code more easy to read. An example is shown below:
+1. Method references can make code easier to read. An example is shown below:
     ```java
     @FunctionalInterface
     public interface LearnToSpeak{
@@ -1163,7 +1189,7 @@
     Supplier<List<String>> lambda = () -> new ArrayList();
     ```
 
-1. Each Java primitive has a corresponding wrapper class. A null value can be assigned to a wrapper class as a null value can be assiged to any reference variable. Attempting to unbox a wrapper class with a null value will cause a NullPointerException.
+1. Each Java primitive has a corresponding wrapper class. A null value can be assigned to a wrapper class as a null value can be assigned to any reference variable. Attempting to unbox a wrapper class with a null value will cause a NullPointerException.
 
 1. The Diamond Operator is a shorthand notation that allows you to omit the generic type from the right side of a statement when the type can be inferred. An example is shown below:
     ```java
@@ -1177,8 +1203,10 @@
 	* **Queue:** A collection that orders its elements in a specific order. A typical queue is FIFO.
 	* **Map:** A collection that maps keys to values, with no duplicate keys allowed. The elements are key/value pairs.
 
-1. The Collection interface and its subinterfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
-    ![figure3.1](res/table3.1.JPG)
+1. The Collection interface and its sub interfaces as well as some implementing classes are shown below. Interfaces are shown in rectangles, with classes in rounded boxes:
+	<p align="center">
+		<img src="res/table3.1.JPG">
+	</p>
 
 1. The Collection interface contains useful convenience methods. These are shown below:
     ```java
@@ -1240,7 +1268,9 @@
 	```
 
 1. A summary of the differences between Comparable and Comparator are shown below:
-    ![figure3.1](res/table3.1.JPG)
+	<p align="center">
+		<img src="res/table3.1.JPG">
+	</p>
 
 1. When building a comparator there are several helper methods that can be used. These are shown below:
     ```java
@@ -1266,7 +1296,7 @@
     }
 	```
 
-1. A type parameter can have any name. By convention the below letters are used:
+1. A type parameter can have any name. By convention, the below letters are used:
     * E for an element
     * K for a map key
     * V for a map value
@@ -1294,7 +1324,7 @@
     }
     ```
 
-1. Note that a generic type can't use a subclass. An example that will not compile is shown below:
+1. Note that a generic type cannot use a subclass. An example that will not compile is shown below:
     ```java
     ArrayList<Number> list = new ArrayList<Integer>();
     ```
@@ -1337,9 +1367,9 @@
     addSound(objects);
     ```
 
-1. A useful mnemonic is PECS: Producer Extends, Consumer Super. If you need a List to produce T values (you want to read Ts from the list), you need to declare it using extends. If you need a list to consume T values (you want to write Ts into the list), you need to declare it using super. If you need to both read and write to a list you need to declare it exactly with no wildcards.
+1. A useful mnemonic is PECS: Producer Extends, Consumer Super. If you need a List to produce T values (you want to read Ts from the list), you need to declare it using extends. If you need a list to consume T values (you want to write Ts into the list), you need to declare it using super. If you need to both read and write to a list, you need to declare it exactly with no wildcards.
 
-1. In the below example, if you want to write elements into the list, you can't add a Number, Integer or a Double because each one is not compatible with all types. A Number can be read because any of the lists will contain a Number or a subclass of Number. When using extends like this you can only read, and not write.
+1. In the below example, if you want to write elements into the list, you cannot add a Number, Integer or a Double because each one is not compatible with all types. A Number can be read because any of the lists will contain a Number or a subclass of Number. When using extends like this you can only read, and not write.
     ```java
     List<? extends Number> foo = new ArrayList<>();
 
@@ -1349,7 +1379,7 @@
     List<? super IOException> foo = new ArrayList<Double();
     ```
 
-1. In the below example, if you want to write elements into the list, you can add an IOException or a FileNotFoundException but not an Exception.  This is because an Exception can't be added to a a list of a more specific subclass. An Object can be read from this list but you won't know which type.
+1. In the below example, if you want to write elements into the list, you can add an IOException or a FileNotFoundException but not an Exception.  This is because an Exception cannot be added to a list of a more specific subclass. An Object can be read from this list but you won't know which type.
     ```java
     List<? super IOException> foo = new ArrayList<>();
 
@@ -1361,8 +1391,10 @@
 
 ### Functional Programming
 
-1. The functional interfaces shown below are provided as built-in functional interfaces in the java.util.function package.
-    ![table4.1](res/table4.1.JPG)
+1. The functional interfaces shown below are provided as built-in functional interfaces in the java.util.function package:
+	<p align="center">
+		<img src="res/table4.1.JPG">
+	</p>
 
 1. A Supplier is used when you want to generate or supply values without taking any input. A supplier is often used to construct new objects. The definition is shown below:
 	```java
@@ -1534,7 +1566,9 @@
 	```
 
 1. An Optional type is used to express a result that could be "not applicable" without using null references. The Optional instance methods are summarised below:
-	![table4.3](res/table4.3.JPG)
+	<p align="center">
+		<img src="res/table4.3.JPG">
+	</p>
 
 5. An example using the *isPresent()* and *get()* methods is shown below:
 	```java
@@ -1603,7 +1637,7 @@
 	}
 	```
 
-1. A terminal operation can be performed without an interediate operations. Reductions are a special type of terminal operation where the contents of the stream are combined into a single primitive or Object. Terminal stream operation method signatures and examples are shown below:
+1. A terminal operation can be performed without an intermediate operation. Reductions are a special type of terminal operation where the contents of the stream are combined into a single primitive or Object. Terminal stream operation method signatures and examples are shown below:
 	```java
 	// long count()
 	Stream<String> s = Stream.of("monkey", "gorilla", "bonobo");
@@ -1737,7 +1771,7 @@
 		.forEach(System.out::println); // AnnaAlex
 	```
 
-1. Primitive Streams allow you to work with the int, double and long primitives. They include specialised methods for workig with numeric data. The primitive streams are intStream, longStream and doubleStream.
+1. Primitive Streams allow you to work with the int, double and long primitives. They include specialised methods for working with numeric data. The primitive streams are intStream, longStream and doubleStream.
 
 1. Primitive streams can be created from other streams. An example is shown below:
 	```java
@@ -1746,15 +1780,21 @@
 	```
 
 1. To create a primitive stream from another stream the below methods are used:
-	![table4.8](res/table4.8.JPG)
+	<p align="center">
+		<img src="res/table4.8.JPG">
+	</p>
 
 1. The function parameters used when mapping streams are shown below:
-	![table4.9](res/table4.9.JPG)
+	<p align="center">
+		<img src="res/table4.9.JPG">
+	</p>
 
 1. Methods can return OptionalDouble, OptionalInt and OptionalLong types when dealing with streams of primitives. A summary of the Optional types for primitives is shown below:
-	![table4.10](res/table4.10.JPG)
+	<p align="center">
+		<img src="res/table4.10.JPG">
+	</p>
 
-1. To use multiple terminal operations to produce a result from a stream summary statistics can be used. Summary statistics includes the *getMin()*, *getMax()*, *getAverage()*, *getSum()* and *getCount()* methods. An example is shown below:
+1. To use multiple terminal operations to produce a result from a stream summary statistic can be used. Summary statistics includes the *getMin()*, *getMax()*, *getAverage()*, *getSum()* and *getCount()* methods. An example is shown below:
 	```java
 	private static int range(intStream ints){
 		IntSummaryStatistics stats = ints.summaryStatistics();
@@ -1763,7 +1803,7 @@
 	}
 	```
 
-1. There are special functional interfaces for primitives. The BooleanSupplier functioan interface is shown below:
+1. There are special functional interfaces for primitives. The BooleanSupplier functional interface is shown below:
 	```java
 	// boolean getAsBoolean()
 
@@ -1774,13 +1814,19 @@
 	```
 
 1. Common functional interfaces for other primitives are shown below:
-	![table4.11](res/table4.11.JPG)
+	<p align="center">
+		<img src="res/table4.11.JPG">
+	</p>
 
 1. Common functional interfaces for other primitives are shown below:
-	![table4.12](res/table4.12.jpg)
+	<p align="center">
+		<img src="res/table4.12.jpg">
+	</p>
 
 1. Predefined collectors are available via static methods on the Collectors interface. These are shown below:
-	![table4.13](res/table4.13.jpg)
+	<p align="center">
+		<img src="res/table4.13.jpg">
+	</p>
 
 1. Examples for using collectors are shown below:
 	```java
@@ -1826,13 +1872,13 @@
 
 1. A custom exception class can be created by extending Exception (for a checked exception), or RuntimeException (for an unchecked exception).
 
-1. A try-with-resources statement ensures that any resources declared in the try block are automatically closed at the conclusion of the try block. A resource is typically a file or a database that requires some kind of stream or connection to read or write data. 
+1. A try-with-resources statement ensures that any resources declared in the try block are automatically closed at the conclusion of the try block. A resource is typically a file or a database that requires a stream or connection to read or write data. 
 
 1. To be used in a try-with-resources statement the resource is required to implement the AutoClosable interface. Inheriting AutoClosable requires implementing a *close()* method. If multiple resources are included in a try-with-resources statement they are closed in the reverse order in which they are declared.
 
-1. It is possible to use resources declared prior to a try-with-resources statement, provided they are marked final or are effectively final. The syntax is to use the resource name in place of the resource declaration, seperated by a semicolon.
+1. It is possible to use resources declared prior to a try-with-resources statement, provided they are marked final or are effectively final. The syntax is to use the resource name in place of the resource declaration, separated by a semicolon.
 
-1. An assertion is a boolean expression that you place where you expect something to be true. An assert statement contains this statement along with an optional message. An assertion allows for detecting defects in the code. You can turn on assertions for testing and debugging while leaving them off when your program is in production. Unit tests are most frequently used to verify behaviour, whereas assertions are commonly used to verify the internal state of a program.
+1. An assertion is a Boolean expression that you place where you expect something to be true. An assert statement contains this statement along with an optional message. An assertion allows for detecting defects in the code. You can turn on assertions for testing and debugging while leaving them off when your program is in production. Unit tests are most frequently used to verify behaviour, whereas assertions are commonly used to verify the internal state of a program.
 
 1. Assertions should never alter outcomes. Assertions should be turned off in a production environment.
 
@@ -1855,7 +1901,9 @@
 	```
 
 1. Java includes numerous classes for dates and times:
-	![table5.4](res/table5.4.JPG)
+	<p align="center">
+		<img src="res/table5.4.JPG">
+	</p>
 
 1. Each of these types contains a *now()* method to get the current date or time and an *of()* method to instantiate an object. Various get methods are also provided.
 
@@ -1869,7 +1917,9 @@
 	```
 
 1. Supported symbols for each date and time class are shown below:
-	![table5.6](res/table5.6.JPG)
+	<p align="center">
+		<img src="res/table5.6.JPG">
+	</p>
 
 1. Internationalisation is the process of designing a program so that it can be adapted. Localisation means supporting multiple locales or geographic regions. Examples for working with locales are shown below:
 	```java
@@ -1880,7 +1930,9 @@
 	```
 
 1. Formatting or parsing currency and number values can change depending on the locale. Methods to get a number format based on a locale are shown below:
-	![table5.7](res/table5.7.JPG)
+	<p align="center">
+		<img src="res/table5.7.JPG">
+	</p>
 
 1. An example of their usage is shown below:
 	```java
@@ -1900,7 +1952,9 @@
 	```
 
 1. Date formats can also vary by locale. Methods used to retrieve an instance of DateTimeFormatter using the default locale are shown below:
-	![table5.9](res/table5.9.JPG)
+	<p align="center">
+		<img src="res/table5.9.JPG">
+	</p>
 
 1. A resource bundle contains locale-specific objects used by a program. It is commonly stored in a properties file. A properties file is a text file in a specific format with key/value pairs.
 
@@ -1933,14 +1987,18 @@
 
 1. There are three types of modules:
 	* **Named Modules:** Contains a module-info file which appears in the root of the JAR alongside one or more packages. Unless otherwise specified, a module is a named module. Named modules appear on the module path rather than the classpath.
-	* **Automatic Module:** Appears on the module path but does not contain a module-info file. It is a regular JAR file that is placed on the module path and gets treated as a module. The code referencing an automatic module treats it as if there is a module-info present, and automatically exports all packages. If an Automatic-Module-Name is specified in the manifest then that name is used. Otherwise, a module name is automatically determined based on the JAR filename. To determine the name the file extension is removed, then the version number, and then special characters are replaced with a period. If a period is the first or last character it is also removed.
+	* **Automatic Module:** Appears on the module path but does not contain a module-info file. It is a regular JAR file that is placed on the module path and gets treated as a module. The code referencing an automatic module treats it as if there is a module-info present, and automatically exports all packages. If an Automatic-Module-Name is specified in the manifest, then that name is used. Otherwise, a module name is automatically determined based on the JAR filename. To determine the name the file extension is removed, then the version number, and then special characters are replaced with a period. If a period is the first or last character it is also removed.
 	* **Unnamed Module:** Like an automatic module, it is a regular JAR file. An unnamed module is on the classpath rather than the module path. An unnamed module does not usually contain a module-info file, and if it does, it is ignored since it is on the classpath. Unnamed modules do not export any packages to named or automatic modules, and an unnamed module can read from any JARs on the classpath or module path.
 
 1. Modules prefixed with *java* (standard modules) are shown below:
-	![table6.5](res/table6.5.JPG)
+	<p align="center">
+		<img src="res/table6.5.JPG">
+	</p>
 
 1. Modules prefixed with *jdk* (part of the JDK) are shown below:
-	![table6.6](res/table6.6.JPG)
+	<p align="center">
+		<img src="res/table6.6.JPG">
+	</p>
 
 1. The *jdeps* command provides information about dependencies. An example is shown below:
 	```java
@@ -1972,25 +2030,29 @@
 	```
 
 1. Before older applications can be migrated to use modules, the structure of the packages and libraries in the existing application need to be determined. In the below diagram style the arrows point from the project that will require the dependency to the one that makes it available. Projects that do not have any dependencies are at the bottom.
-	![figure6.4](res/figure6.4.JPG)
+	<p align="center">
+		<img src="res/figure6.4.JPG">
+	</p>
 
-1. A bottom-up migration is the easiest migration approach. It works when you have the power to convert any JAR files that aren't already modules. The approach is:
+1. A bottom-up migration is the easiest migration approach. It works when you have the power to convert any JAR files that are not already modules. The approach is:
     * Pick the lowest-level project that has not yet been migrated.
 	* Add a module-info.java file to that project. Be sure to add any exports to expose any package used by higher level JAR files. Also, add the requires directive for any modules it depends on.
 	* Move this newly migrated named module from the classpath to the module path.
 	* Ensure any projects that have not yet been migrated stay as unnamed modules on the classpath.
 	* Repeat with the next-lowest-level project until you are done.
 
-1. A top-down migration is most useful when you don't have control of every JAR file used by your application. The approach is:
+1. A top-down migration is most useful when you do not have control of every JAR file used by your application. The approach is:
 	* Place all projects on the module path.
 	* Pick the highest-level project that has not yet been migrated.
 	* Add a module-info file to that project to convert the automatic module into a named module. Remember to add any exports or requires directives. Automatic module names can be used when writing the requires directive since most of the projects on the module path do not have names yet.
 	* Repeat with the next-highest-level project until you are done.
 
 1. An example of the bottom-up migration approach (left) and top-down migration approach (right) is shown below:
-	![figure6.7](res/figure6.7.JPG)
+	<p align="center">
+		<img src="res/figure6.7.JPG">
+	</p>
 
-1. When splitting up a project into modules, a problem with **cyclic dependencies** may arise. A cyclic dependency occurs when 2 or more things have dependencies on each other. Modules that have cyclic dependenencies will not compile. A common technique to resolve this issue is to introduce another module containing all the code that the modules share. Note that a cyclic dependency can still exists between packages with a module.
+1. When splitting up a project into modules, a problem with **cyclic dependencies** may arise. A cyclic dependency occurs when 2 or more things have dependencies on each other. Modules that have cyclic dependencies will not compile. A common technique to resolve this issue is to introduce another module containing all the code that the modules share. Note that a cyclic dependency can still exists between packages with a module.
 
 1. Although not recommended, is possible to customise what packages a module exports from the command line.
 	```java
@@ -2004,7 +2066,9 @@
 1. The previous section discussed modules in terms of dependencies, with one module exporting its public types and another module requiring them.  This is a very tight coupling. A looser coupling can be if one module requires an implementation of an interface from another module, and the other module provides that implementation.
 
 1. A **service** is composed of an interface, classes referenced by the interface references, and a way to look up the implementations of the interface. A sample tours application will be used to introduce this concept. The 4 modules within this application are shown below:
-	![figure6.10](res/figure6.10.JPG)
+	<p align="center">
+		<img src="res/figure6.10.JPG">
+	</p>
 
 1. A **service provider interface** specifies the behaviour that the service will have. The service provider interface is exported for other modules to use. For the tours application this is shown below:
 	```java
@@ -2038,7 +2102,7 @@
 	}
 	```
 
-1. A **service locator** is able to find any classes that implement a service provider interface. At runtime, there may be many service providers (or none) that are found by the service locator. The service locator requires the service provider interface package,  uses the Tour class to lookup classes that implement a service provider interface, and exports the package with the lookup for other modules to use. For the tours application this is shown below:
+1. A **service locator** can find any classes that implement a service provider interface. At runtime, there may be many service providers (or none) that are found by the service locator. The service locator requires the service provider interface package, uses the Tour class to lookup classes that implement a service provider interface, and exports the package with the lookup for other modules to use. For the tours application this is shown below:
 	```java
 	// TourFinder.java
 	package zoo.tours.reservations;
@@ -2098,7 +2162,7 @@
 	}
 	```
 
-1. A **service provider** is the implementation of a service provider interface. The service provider requires the service provider interface, and also provides an implementation of the behaviour specified in the service provider interface. Note that the export directive is not used as we don't want consumers referring to the service provider directly. For the tours application this is shown below:
+1. A **service provider** is the implementation of a service provider interface. The service provider requires the service provider interface, and provides an implementation of the behaviour specified in the service provider interface. Note that the export directive is not used as we do not want consumers referring to the service provider directly. For the tours application this is shown below:
 	```java
 	// TourImpl.java
 	package zoo.tours.agency;
@@ -2132,12 +2196,14 @@
 
 1. If a service provider does not declare a provider method, then the service provider is instantiated directly, via its constructor. There must be a service provider constructor that takes no arguments and is assignable to the service's interface or class. The provides directive in a service provider cannot specify the same service more than once.
 
-1. If the used directive occurs in a class, the *ServiceLoader.load()* method returns a ServiceLoader object that can provide instances of the service type. The module system automatically discovers provider modules at startup by scanning modules in the Java runtime image and modular jars in the module path. As there can be multiple implementations of the service, multiple instances of the service type can be returned. The service type should offer enough descriptor methods for a consumer to select the best implementation.
+1. If the used directive occurs in a class, the *ServiceLoader.load()* method returns a ServiceLoader object that can provide instances of the service type. The module system automatically discovers provider modules at start up by scanning modules in the Java runtime image and modular jars in the module path. As there can be multiple implementations of the service, multiple instances of the service type can be returned. The service type should offer enough descriptor methods for a consumer to select the best implementation.
 
 1. The requires directive takes an object name, the exports directive takes a package name, the uses directive takes a type name, and the provides directive takes a service type and provider class. A consumer module will contain requires/uses, while a provider module will contain requires/provides.
 
-1. A summary of the directives required for reach service artefact is shown below: 
-	![table6.8](res/table6.8.JPG)
+1. A summary of the directives required for reach service artefact is shown below:
+	<p align="center">
+		<img src="res/table6.8.JPG">
+	</p>
 
 ### Concurrency
 
@@ -2146,7 +2212,9 @@
 1. A thread is the smallest unit of execution that can be scheduled by the operating system. A process is a group of associated threads that execute in the same, shared environment. A **task** is a single unit of work performed by a thread. 
 
 1. A process model is shown below:
-	![figure7.1](res/figure7.1.JPG)
+	<p align="center">
+		<img src="res/figure7.1.JPG">
+	</p>
 
 1. Thread types include **system threads** threads created by the JVM, and **user-defined** threads which are created by the application developer. Operating systems use a **thread scheduler** to determine which threads should be executing. A **context switch** is the process of storing a thread's current state and later restoring the state of the thread to continue executing. A thread can interrupt or supersede another thread if it has a higher **thread priority**.
 
@@ -2332,7 +2400,7 @@
 
 1. An instance of a pooled-thread executor will execute concurrently if the number of tasks is less than the number of available threads. Calling *newFixedThreadPool()* with a value of 1 is equivalent to calling *newSingleThreadExecutor()*. The number of threads in the pool is often set to equal the number of available CPUs.
 
-1. Thread-safety is the property of an object that guarantees safe execution by multiple threads at the same time. As threads run in a shared environment and memory space, data must be organised so that we don't end up with unexpected results.
+1. Thread-safety is the property of an object that guarantees safe execution by multiple threads at the same time. As threads run in a shared environment and memory space, data must be organised so that we do not end up with unexpected results.
 
 1. An example of non-thread safe code is shown below:
 	```java
@@ -2421,7 +2489,7 @@
 	boolean tryLock(long, TimeUnit);
 	```
 
-1. The *tryLock()* method attemps to acquire a lock and immediately returns a *boolean* result. It does not wait if another thread already holds the lock, it returns immediately whether or not a lock is available. The *tryLock(long, TimeUnit)* method is similar but will wait for a period of time to acquire the lock. An example for *tryLock()* is shown below:
+1. The *tryLock()* method attemps to acquire a lock and immediately returns a *boolean* result. It does not wait if another thread already holds the lock, it returns immediately whether a lock is available. The *tryLock(long, TimeUnit)* method is similar but will wait for a period of time to acquire the lock. An example for *tryLock()* is shown below:
 	```java
     Lock lock = new ReentrantLock();
     new Thread(() -> printMessage(lock)).start();
