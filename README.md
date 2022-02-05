@@ -2601,3 +2601,45 @@
     ```
 
 1. If you are given an existing collection that is not a concurrent class and need to access it among multiple threads, you can wrap it using the methods above.
+
+1. A threading problem can occur in multithreaded applications when two or more threads interact in an unexpected an undesirable way. For example, two threads may block each other from accessing a particular segment of code. As shown above, the Concurrency API creates threads and manages complex thread interactions for you. Although it reduces the potential for threading issues, it does not eliminate them.
+
+1. *Liveness* is the ability of an application to be able to execute in a timely manner. There are three types of liveness issues with which you should be familiar: deadlock, starvation, and livelock. Deadlock occurs when two or more threads are blocked forever, each waiting on each other. Livelock occurs when two or more threads are conceptually blocked forever, although they are each active and trying to complete their task. Starvation occurs when a single thread is perpetually denied access to a shared resource or lock. Livelock is a special case of resource starvation in which two or more threads actively try to acquire a set of locks, are unable to do so, and restart part of the process. In practise, livelock is often difficult to detect, as threads in this state appear active and able to respond to respond to requests.
+
+1. A *race condition* is an undesirable result that occurs when two tasks, which should be completed sequentially, are completed at the same time. Race conditions lead to invalid data if they are not properly handled. They tend to appear in highly concurrent applications.
+
+1. A *parallel stream* is a stream that is capable of processing results concurrently, using multiple threads. For example, you can use a parallel stream and the map() operation to operate concurrently on the elements in the stream, vastly improving performance over processing a single element at a time.
+
+1. A parallel stream can be created on an existing stream (note that a terminal operation on s2 makes s1 unavailable for further use):
+    ```java
+    Stream<Integer> s1 = List.of(1,2).stream();
+    Stream<Integer> s2 = s1.parallel();
+    ```
+
+1. A parallel stream can also be created directly:
+    ```java
+    Stream<Integer> s3 = List.of(1,2).parallelStream();
+    ```
+
+1. A *parallel decomposition* is the process of taking a task, breaking it up into smaller pieces that can be performed concurrently, and then reassembling the results. As an example:
+    ```java
+    private static int doWork(int input) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+        }
+        return input;
+    }
+
+    // serial outputs 1 2 3 4 5 25 seconds
+    long start = System.currentTimeMillis();
+    List.of(1, 2, 3, 4, 5).stream().map(w -> doWork(w))
+        .forEach(s -> System.out.print(s + " "));
+
+    // parallel outputs 3 2 1 5 4 5 seconds
+    long start = System.currentTimeMillis();
+    List.of(1, 2, 3, 4, 5).parallelstream().map(w -> doWork(w))
+        .forEach(s -> System.out.print(s + " "));
+    ```
+
+1. The results are no longer ordered or predictable. In this case, our system had enough CPUs for all the tasks to be run concurrently.
