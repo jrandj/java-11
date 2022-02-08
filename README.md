@@ -240,6 +240,7 @@
     ```java
     returnType methodName(parameters){
         methodBody
+	}
     ```
 
 1. The method must return a value of the type specified, with the following exceptions:
@@ -2643,3 +2644,99 @@
     ```
 
 1. The results are no longer ordered or predictable. In this case, our system had enough CPUs for all the tasks to be run concurrently.
+
+### I/O
+
+1. There are three primary *java.io.File* constructors:
+    ```java
+    public File(String pathname);
+    public file(File parent, String child);
+    public File(String parent, String child);
+    ```
+
+1. An instance of the *File* class only represents a path to the file. Unless operated upon, it is not connected to an actual file within the file system. Common methods of the *File* class include:
+    ```java
+    boolean delete();
+    boolean exists();
+    String getAbsolutePath();
+    String getName();
+    String getParent();
+    boolean isDirectory();
+    boolean isFile();
+    long lastModified();
+    long length();
+    File[] listFiles()
+    boolean mkdir();
+    boolean mkdirs();
+    boolean renameTo(File dest);
+    ```
+
+1. The contents of a file may be accessed or written via an I/O stream. The *java.io* API defines two sets of stream classes: byte streams and character streams. Byte streams read and write binary data and have class names that end in *InputStream* or *OutputStream*. Character streams read and write text data and have class names that end in *Reader* or *Writer*. The byte streams are primarily used to work with binary data, such as an image or executable file, while character streams are used to work with text files.
+
+1. Generally, most *InputStream* classes have a corresponding *OutputStream* class. Similiarly, *Reader* classes typically have a corresponding *Writer* class. Exceptions to this rule include *PrintWriter* (which has no accompanying *PrintReader* class), and *PrintStream* which has no corresponding *InputStream*.
+
+1. The *java.io* library defines four abstract classes that are the parents of all stream classes defined within the API: *InputStream*, *OutputStream*, *Reader*, and *Writer*. The *java.io* concrete stream classes are:
+    ```java
+    FileInputStream
+    FileOutputStream
+    FileReader
+    FileWriter
+    BufferedInputStream
+    BufferedOutputStream
+    BufferedReader
+    BufferedWriter
+    ObjectInputStream
+    ObjectOutputStream
+    PrintStream
+    PrintWriter
+    ```
+
+1. An example of reading and writing from a stream (note that the *int* value returned will be -1 at the end of the stream) is shown below:
+    ```java
+    // InputStream and Reader
+    public int read() throws IOException
+
+    // OutputStream and Writer
+    public void write(int b) throws IOException
+    ```
+
+1. Overloaded methods are also provided to read from an *offset* and based on a particular *length*:
+    ```java
+    // InputStream
+    public int read(byte[] b) throws IOException
+    public int read(byte[] b, int offset, int length) throws IOException
+
+    // OutputStream
+    public void write(byte[] b) throws IOException
+    public void write(byte[] b, int offset, int length) throws IOException
+
+    // Reader
+    public void write(char[] c) throws IOException
+    public void write(char[] c, int offset, int length) throws IOException
+
+    // Writer
+    public void write(char[] c) throws IOException
+    public void write(char[] c, int offset, int length) throws IOException
+    ```
+
+1. All I/O streams include a *close* method to release any resources within the stream when they are no longer needed. It is imperative that all I/O streams are closed lest they lead to resource leaks. Since all I/O streams implement *Closeable*, the best way to do this is with a try-with-resources statement. Note that when working with wrapped streams, you only need to close the topmost objects:
+    ```java
+    try (var fis = new FileInputStream("zoo-data.txt")) {
+        System.out.print(fis.read());
+    }
+    ```
+
+1. All input stream classes can be manipulated with the following methods:
+    ```java
+    // InputStream and Reader
+    public boolean markSupported()
+    public void mark(int readLimit)
+
+    public reset() throws IOException
+
+    public long skip(long n) throws IOException
+    ```
+
+1. The *mark()* and *reset()* methods return a stream to an earlier position. Make sure to call *markSupported()* on the stream to confirm the stream supports *mark()*. The *skip()* method reads data from the stream but discards the contents.
+
+1. When data is written to an output stream, the underlying operating system does not guarantee that the data will make it to the file system immediately. The data may be cached in memory, with a write only occurring after a temporary cache is filled or after some amount of time has passed. If the application terminates unexpectedly, the data would be lost, because it was never written to the file system. To address this, all output stream classes provide a *flush()* method to request that all accumulated data be written immediately to disk. Note that each time it is used, it may cause a noticeable delay in the application, so it should only be used intermittently.
