@@ -2677,46 +2677,46 @@
 
 1. The *java.io* library defines four abstract classes that are the parents of all stream classes defined within the API: *InputStream*, *OutputStream*, *Reader*, and *Writer*. The *java.io* concrete stream classes are:
     ```java
-    FileInputStream
-    FileOutputStream
-    FileReader
-    FileWriter
-    BufferedInputStream
-    BufferedOutputStream
-    BufferedReader
-    BufferedWriter
-    ObjectInputStream
-    ObjectOutputStream
-    PrintStream
-    PrintWriter
+    FileInputStream;
+    FileOutputStream;
+    FileReader;
+    FileWriter;
+    BufferedInputStream;
+    BufferedOutputStream;
+    BufferedReader;
+    BufferedWriter;
+    ObjectInputStream;
+    ObjectOutputStream;
+    PrintStream;
+    PrintWriter;
     ```
 
 1. An example of reading and writing from a stream (note that the *int* value returned will be -1 at the end of the stream) is shown below:
     ```java
     // InputStream and Reader
-    public int read() throws IOException
+    public int read() throws IOException;
 
     // OutputStream and Writer
-    public void write(int b) throws IOException
+    public void write(int b) throws IOException;
     ```
 
 1. Overloaded methods are also provided to read from an *offset* and based on a particular *length*:
     ```java
     // InputStream
-    public int read(byte[] b) throws IOException
-    public int read(byte[] b, int offset, int length) throws IOException
+    public int read(byte[] b) throws IOException;
+    public int read(byte[] b, int offset, int length) throws IOException;
 
     // OutputStream
-    public void write(byte[] b) throws IOException
-    public void write(byte[] b, int offset, int length) throws IOException
+    public void write(byte[] b) throws IOException;
+    public void write(byte[] b, int offset, int length) throws IOException;
 
     // Reader
-    public void write(char[] c) throws IOException
-    public void write(char[] c, int offset, int length) throws IOException
+    public void write(char[] c) throws IOException;
+    public void write(char[] c, int offset, int length) throws IOException;
 
     // Writer
-    public void write(char[] c) throws IOException
-    public void write(char[] c, int offset, int length) throws IOException
+    public void write(char[] c) throws IOException;
+    public void write(char[] c, int offset, int length) throws IOException;
     ```
 
 1. All I/O streams include a *close* method to release any resources within the stream when they are no longer needed. It is imperative that all I/O streams are closed lest they lead to resource leaks. Since all I/O streams implement *Closeable*, the best way to do this is with a try-with-resources statement. Note that when working with wrapped streams, you only need to close the topmost objects:
@@ -2729,14 +2729,73 @@
 1. All input stream classes can be manipulated with the following methods:
     ```java
     // InputStream and Reader
-    public boolean markSupported()
-    public void mark(int readLimit)
+    public boolean markSupported();
+    public void mark(int readLimit);
 
-    public reset() throws IOException
+    public reset() throws IOException;
 
-    public long skip(long n) throws IOException
+    public long skip(long n) throws IOException;
     ```
 
 1. The *mark()* and *reset()* methods return a stream to an earlier position. Make sure to call *markSupported()* on the stream to confirm the stream supports *mark()*. The *skip()* method reads data from the stream but discards the contents.
 
 1. When data is written to an output stream, the underlying operating system does not guarantee that the data will make it to the file system immediately. The data may be cached in memory, with a write only occurring after a temporary cache is filled or after some amount of time has passed. If the application terminates unexpectedly, the data would be lost, because it was never written to the file system. To address this, all output stream classes provide a *flush()* method to request that all accumulated data be written immediately to disk. Note that each time it is used, it may cause a noticeable delay in the application, so it should only be used intermittently.
+
+1. Some common, concrete I/O stream classes are shown below:
+    ```java
+	// byte streams
+    public FileInputStream(File file) throws FileNotFoundException;
+	public FileInputStream(String name) throws FileNotFoundException;
+	public FileOutputStream(File file) throws FileNotFoundException;
+	public FileOutputStream(String name) throws FileNotFoundException;
+
+	// character streams
+	public FileReader(File file) throws FileNotFoundException;
+	public FileReader(String name) throws FileNotFoundException;
+	public FileWriter(File file) throws FileNotFoundException;
+	public FileWriter(String name) throws FileNotFoundException;
+    ```
+
+1. Buffered streams contain a number of performance improvements for managing data in memory:
+    ```java
+	// byte streams
+    public BufferedInputStream(InputStream in);
+	public FileInputStream(String name) throws FileNotFoundException;
+	public FileOutputStream(File file) throws FileNotFoundException;
+	public FileOutputStream(String name) throws FileNotFoundException;
+
+	// character streams
+	public BufferedReader(Reader in);
+	public BufferedWriter(Writer out);
+    ```
+
+1. The following examples copies a file using these streams. In the first example, instead of reading one byte at a time, we read and write up to 1024 bytes at a time. In the second example, we use a String instead of a buffer array, and inserting a *newLine()* on every iteration of the loop:
+    ```java
+	// byte stream
+    void copyFileWithBuffer(File src, File dest) throws IOException {
+        try (var in = new BufferedInputStream(new FileInputStream(src));
+                var out = new BufferedOutputStream(
+                        new FileOutputStream(dest))) {
+            var buffer = new byte[1024];
+            int lengthRead;
+            while ((lengthRead = in.read(buffer)) > 0) {
+                out.write(buffer, 0, lengthRead);
+                out.flush();
+            }
+        }
+    }
+
+	// character stream
+	void copyTextFileWithBuffer(File src, File dest) throws IOException {
+        try (var reader = new BufferedReader(new FileReader(src));
+                var writer = new BufferedWriter(new FileWriter(dest))) {
+            String s;
+            while ((s = reader.readLine()) != null) {
+                writer.write(s);
+                writer.newLine();
+            }
+        }
+    }
+    ```
+
+1. *Serialization* is the process of converting an in-memory object to a byte stream. Likewise, *deserialization* is the process of converting from a byte stream into an object. Serialization often involves writing an object to a stored or transmittable format, while deserialization is the reciprocal process.
