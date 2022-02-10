@@ -2799,3 +2799,58 @@
     ```
 
 1. *Serialization* is the process of converting an in-memory object to a byte stream. Likewise, *deserialization* is the process of converting from a byte stream into an object. Serialization often involves writing an object to a stored or transmittable format, while deserialization is the reciprocal process.
+
+1. To serialize an object using the I/O API, the object must implement the *java.io.Serializable* interface. Since *Serializable* is a marker interface, it does not have any methods. Generally speaking, you should only mark data-orientated classes serializable. The purpose of using this interface is to inform any process attempting to serialize the object that you have taken the proper steps to make the object serializable.
+
+1. Oftentimes, the *transient* modifier is used for sensitive data of the class, such as a password. There are other objects it does not make sense to serialize, like the state of an in-memory thread. If the object is part of a serializable object, we just mark it *transient* to ignore these select instance members. When making a class serializable, every instance member of the class must be serializable, marked *transient*, or having a null value at the time of serialization.
+
+1. The following classes are high level streams that operate on existing streams:
+    ```java
+	// serialize an object to a stream
+	public ObjectOutputStram(OutputStream out) throws IO Exception;
+
+	// deserialize an object from a stream
+	public ObjectInputStream(InputStream in) throws IO Exception;
+    ```
+
+1. Two common methods using these methods and example usages are shown below:
+    ```java
+	// ObjectInputStream
+	public Object readObject() throws IOException, ClassNotFoundException
+
+	// ObjectOutputStream
+	public void writeObject(Object obj) throws IOException;
+
+	// save an object to file
+    void saveToFile(List<Gorilla> gorillas, File dataFile) throws IOException {
+        try(var out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(dataFile)))) {
+            for (Gorilla gorilla : gorillas)
+                out.writeObject(gorilla;)
+        }
+    }
+
+	// read an object from file
+    List<Gorilla> readFromFile(File dataFile)
+            throws IOException, ClassNotFoundException {
+        var gorillas = new ArrayList<Gorilla>();
+        try (var in = new ObjectInputStream(
+                new BufferedInputStream(new FileInputStream(dataFile)))) {
+            while (true) {
+                var object = in.readObject();
+                if (object instanceof Gorilla)
+                    gorillas.add((Gorilla) object);
+            }
+
+        } catch (EOFException e) {
+            // File end reached
+        }
+        return gorillas;
+    }
+    ```
+
+1. It should be noted that the constructor and any instance initializations defined in the serialized class are ignored during the deserialization process. Java only calls the constructor of the first non-serializable parent class in the class hierarchy.
+
+1. A diagram of I/O stream classes is shown below:
+    <p align="center">
+        <img src="res/figure_8.4.JPG" width="396" height="457">
+    </p>
