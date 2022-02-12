@@ -2731,9 +2731,7 @@
     // InputStream and Reader
     public boolean markSupported();
     public void mark(int readLimit);
-
     public reset() throws IOException;
-
     public long skip(long n) throws IOException;
     ```
 
@@ -2854,3 +2852,179 @@
     <p align="center">
         <img src="res/figure_8.4.JPG" width="396" height="457">
     </p>
+
+1. The *java.io.Console* class is designed to handle user interactions. The below example will ask the user a series of questions and print the results based on this information:
+    ```java
+    public void readConsole() {
+        Console console = System.console();
+        if (console == null) {
+            throw new RuntimeException("Console not available");
+        } else {
+            String name = console.readLine("Please enter your name: ");
+            console.writer().format("Hi %s", name);
+            console.writer().println();
+            console.format("What is your address?");
+            String address = console.readLine();
+            char[] password = console.readPassword(
+                    "Enter a password " + "between %d and %d characters: ", 5,
+                    10);
+            char[] verify = console.readPassword("Enter the password again: ");
+            console.printf(
+                    "Passwords " + (Arrays.equals(password, verify) ? "match"
+                            : "do not match"));
+        }
+    }
+    ```
+
+### NIO.2
+
+1. NIO.2 is an acronym that stands for the second version of the Non-blocking Input/Output API, and it is sometimes referred to as the "New I/O". NIO.2 allows us to do a lot more with files and directories than the original *java.io* API. At its core NIO.2 is a replacement for the legacy *java.io.File* class that aims to provide a more intuitive, more feature-rich API for working with files and directories.
+
+1. The cornerstore of NIO.2 is the *java.nio.file.Path* interface. A *Path* represents a hierarchical path on the storage system to a file or directory. A *Path* can be thought of as a replacement for the *java.io.File* class, although it is used a bit differently. Unlike the *java.io.File* class, the *Path* interface contains support for symbolic links. NIO.2 includes full support for creating, detecting, and navigating symbolic links within the file system.
+
+1. *Path* is an interface, and the JVM returns a file system-specific implementation when a *Path* is created, such as a Windows or Unix *Path* class. Examples for creating a *Path* object are shown below:
+    ```java
+    // Path factory method
+    public static Path of(String first, String... more);
+
+    // example 1
+    Path path1 = Path.of("pandas/cuddly.png");
+    Path path2 = Path.of("c:\\zooinfo\\November\\employees.txt");
+    Path path3 = Path.of("/home/zoodirectory");
+
+    // example 2
+    Path path1 = Path.of("pandas", "cuddly.png");
+    Path path2 = Path.of("c:", "zooinfo", "November", "employees.txt");
+    Path path3 = Path.of("/", "home", "zoodirectory");
+    ```
+
+1. Another way of obtaining a *Path* instance is from the *java.nio.file.Paths* factory class. Note the *s* at the end to distinguish it from the *Path* interface. Examples are shown below:
+    ```java
+    // Paths factory method
+    public static Path get(String first, String... more);
+
+    Path path1 = Paths.get("pandas/cuddly.png");
+    Path path2 = Paths.get("c:\\zooinfo\\November\\employees.txt");
+    Path path3 = Paths.get("/", "home", "zoodirectory");
+    ```
+
+1. A *Path* can also be obtained using the *Paths* class with a URI value. Examples are shown below:
+    ```java
+    // URI Constructor
+    public URI(String str) throws URISyntaxException;
+
+    URI a = new URI("file://icecream.txt");
+    Path b = Path.of(a);
+    Path c = Paths.get(a);
+    URI d = b.toUri();
+    ```
+
+1. A *Path* can also be obtained using the *FileSystems* class. Examples are shown below:
+    ```java
+    // FileSystems factory method
+    public static FileSystem getDefault();
+
+    // FileSystem instance method
+    public Path getPath(String first, String... more);
+
+    Path path1 = FileSystems.getDefault().getPath("pandas/cuddly.png");
+    Path path2 = FileSystems.getDefault().getPath("c:\\zooinfo\\November\\employees.txt");
+    Path path3 = FileSystems.getDefault().getPath("/home/zoodirectory");
+    ```
+
+1. Finally, a *Path* instance can be obtained using the legacy *java.io.File* class. Examples are shown below:
+    ```java
+    // Path to File, using Path instance method
+    public default File toFile();
+
+    // File to Path, using java.io.File instance method
+    public Path toPath();
+
+    File file = new File("husky.png");
+    Path path = file.toPath();
+    File backToFile = path.toFile();
+    ```
+
+1. The relationships between NIO.2 classes and interfaces is shown below:
+    <p align="center">
+        <img src="res/figure9_2.JPG">
+    </p>
+
+1. Many NIO.2 methods include a varargs that takes an optional list of value. The table below shows the commonly used arguments:
+    <p align="center">
+        <img src="res/table_9.2.JPG">
+    </p>
+
+1. An example is shown below:
+    ```java
+    void copy(Path source, Path target) throws IOException {
+        Files.move(source, target, LinkOption.NOFOLLOW_LINKS,
+                StandardCopyOption.ATOMIC_MOVE);
+    }
+    ```
+
+1. Common causes of an *IOException* include a loss of communication to the file system, inaccessibility of files or directories, an inability to overwrite a file, or a file or directory being required but not exist.
+
+1. Other common *Path* instance methods are shown below:
+    ```java
+    Path of(String, String...);
+    Path getParent();
+    URI toURI();
+    boolean isAbsolute();
+    String toString();
+    Path toAbsolutePath();
+    int getNameCount();
+    Path relativize();
+    Path getName(int);
+    Path resolve(Path);
+    Path subpath(int, int);
+    Path normalize();
+    Path getFileName();
+    Path toRealPath(LinkOption...);
+    ```
+
+1. The *Files* helper class can interact with real files and directories within the file system. Common static methods in the *Files* class are shown below:
+    ```java
+    boolean exists(Path, LinkOption...);
+    Path move(Path, Path, CopyOption...);
+    boolean isSameFile(Path, Path);
+    void delete(Path);
+    Path createDirectory(Path, FileAttribute<?>...);
+    BufferedReader newBufferedReader(Path);
+    Path copy(Path, Path, CopyOption...);
+    BufferedWriter newBufferedWriter(Path, OpenOption...);
+    long copy(InputStream, Path, CopyOption...);
+    List<String> readAllLines(Path);
+    long copy(Path, OutputStream);
+    ```
+
+1. The *Files* attribute also provides methods for accessing file and directory metadata, referred to as file attributes. These methods include:
+    ```java
+    public static boolean isDirectory(Path path, LinkOption... options);
+    public static boolean isSymbolicLink(Path path);
+    public static boolean isRegularFile(Path path, LinkOption... options);
+    public static boolean isHidden(Path path) throws IOException;
+    public static boolean isReadable(Path path);
+    public static boolean isWriteable(Path path);
+    public static boolean isExecutable(Path path);
+    public static long size(Path path) throws IOException;
+    public static FileTime getLastModifiedTime(Path path, LinkOption... options) throws IOException;
+    ```
+
+1. NIO.2 includes two methods for working with attributes. For each method, you need to provide a file system type object. The BasicFileAttributes type is the most used. Examples of reading and updating using these methods are shown below:
+    ```java
+    public static <A extends BasicFileAttributes> A readAttributes(Path path,
+        Class<A> type, LinkOption... options) throws IOException;
+    public static <V extends FileAttributeView> V getFileAttributeView(
+        Path path, Class<V> type, LinkOption... options);
+    
+    // read
+    var path = Paths.get("/turtles/sea.txt");
+    BasicFileAttributes data = Files.readAttributes(path, BasicFileAttributes.class);
+
+    // update
+    BasicFileAttributes view = Files.readAttributes(path, BasicFileAttributes.class);
+    BasicfileAttributes attributes = view.readAttributes();
+    FileTime lastModifiedTime = FileTime.fromMillis(attributes.lastModifiedTime().toMillis() + 10_000);
+    view.setTimes(lastModifiedTime, null, null);
+    ```
