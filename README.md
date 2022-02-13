@@ -2572,13 +2572,13 @@
 
 1. In the above example the iterator on *keySet()* is not properly updated after the first element is removed, so an exception is thrown. Concurrent collection classes should be used any time multiple threads are going to modify a collections object outside of a *synchronized* block. Concurrent collection classes are shown below:
     ```java
-    ConcurrentHashMap
-    ConcurrentLinkedQueue
-    ConcurrentSkipListMap
-    ConcurrentSkipListSet
-    CopyOnWriteArrayList
-    CopyOnWriteArraySet
-    LinkedBlockingQueue
+    ConcurrentHashMap;
+    ConcurrentLinkedQueue;
+    ConcurrentSkipListMap;
+    ConcurrentSkipListSet;
+    CopyOnWriteArrayList;
+    CopyOnWriteArraySet;
+    LinkedBlockingQueue;
     ```
 
 1. The *SkipList* classes, *ConcurrentSkipListSet* and *ConcurrentSkipListMap*, are concurrent versions of their sorted counterparts, *Treeset* and *Treemap*, respectively. They maintain their elements or keys in the natural ordering of their elements.
@@ -2880,7 +2880,7 @@
 
 1. NIO.2 is an acronym that stands for the second version of the Non-blocking Input/Output API, and it is sometimes referred to as the "New I/O". NIO.2 allows us to do a lot more with files and directories than the original *java.io* API. At its core NIO.2 is a replacement for the legacy *java.io.File* class that aims to provide a more intuitive, more feature-rich API for working with files and directories.
 
-1. The cornerstore of NIO.2 is the *java.nio.file.Path* interface. A *Path* represents a hierarchical path on the storage system to a file or directory. A *Path* can be thought of as a replacement for the *java.io.File* class, although it is used a bit differently. Unlike the *java.io.File* class, the *Path* interface contains support for symbolic links. NIO.2 includes full support for creating, detecting, and navigating symbolic links within the file system.
+1. The cornerstone of NIO.2 is the *java.nio.file.Path* interface. A *Path* represents a hierarchical path on the storage system to a file or directory. A *Path* can be thought of as a replacement for the *java.io.File* class, although it is used a bit differently. Unlike the *java.io.File* class, the *Path* interface contains support for symbolic links. NIO.2 includes full support for creating, detecting, and navigating symbolic links within the file system.
 
 1. *Path* is an interface, and the JVM returns a file system-specific implementation when a *Path* is created, such as a Windows or Unix *Path* class. Examples for creating a *Path* object are shown below:
     ```java
@@ -2945,7 +2945,7 @@
     File backToFile = path.toFile();
     ```
 
-1. The relationships between NIO.2 classes and interfaces is shown below:
+1. The relationships between NIO.2 classes and interfaces are shown below:
     <p align="center">
         <img src="res/figure9_2.JPG">
     </p>
@@ -3025,6 +3025,132 @@
     // update
     BasicFileAttributes view = Files.readAttributes(path, BasicFileAttributes.class);
     BasicfileAttributes attributes = view.readAttributes();
-    FileTime lastModifiedTime = FileTime.fromMillis(attributes.lastModifiedTime().toMillis() + 10_000);
+    FileTime lastModifiedTime = FileTime.fromMi(attributes.lastModifiedTime().toMillis() + 10_000);
     view.setTimes(lastModifiedTime, null, null);
     ```
+
+1. The *Files* class contains useful Stream API methods that operate on files, directories, and directory trees. The example below performs a deep copy:
+    ```java
+    public void copyPath(Path source, Path target) {
+        try {
+            Files.copy(source, target);
+            if (Files.isDirectory(source)) {
+                try (Stream<Path> s = Files.list(source)) {
+                    s.forEach(
+                            p -> copyPath(p, target.resolve(p.getFileName())));
+                }
+            }
+        } catch (IOException e) {
+            // handle exception
+        }
+    }
+    ```
+
+1. The *Files.lines()* method is preferable to the *Files.readAllLines()* method as it does not read the entire file into memory, instead it lazily processes each line and prints it as it is read.
+
+### JDBC
+
+1. There are two main ways to access a relational database from Java. Java Database Connectivity Language (JDBC) accesses data as rows and columns. Java Persistence API (JPA) accesses data through Java objects using a concept called Object-Relational Mapping (ORM). Databases that store their data in a format other than tables, such as key/value, are known as NoSQL databases. NoSQL is out of scope for this exam.
+
+1. Create, Read, Update, Delete (CRUD) are the types of SQL statements. All database imports are in the *java.sql* package.
+
+1. The JDBC interfaces are declared in the JDK. The concrete classes come from the JDBC driver, and each database has a different JAR file with these classes. The interfaces and an example implementation are shown below:
+    <p align="center">
+        <img src="res/figure_10.2.JPG">
+    </p>
+
+1. *Driver* establishes a connection to the database, *Connection* sends commands to the database, *PreparedStatement* executes a SQL query, *CallableStatement* executes a SQL query, and *ResultSet* reads the results of a query. The example below shows end to end JDBC code:
+    ```java
+    public class MyFirstDatabaseConnection {
+        public static void main(String[] args) throws SQLException {
+            String url = "jdbc:derby:zoo";
+            try (Connection conn = DriverManager.getConnection(url);
+                    PreparedStatement ps = conn
+                            .prepareStatement("SELECT name FROM animal");
+                    ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    System.out.println(rs.getString(1));
+                }
+            }
+        }
+    }
+    ```
+
+1. The JDBC URL format includes the protocol, subprotocol, and subname. Examples are shown below:
+    ```java
+    jdbc:postgresql://localhost/zoo
+    jdbc:oracle:thin@123,123,123,123:1521:zoo
+    jdbc:mysql://localhost:3306
+    jdbc:mysql://localhost:3306/zoo?profileSQL=true
+    ```
+
+1. A *Connection* can be established with *DriverManager* or *DataSource*. *DriverManager* is the only one relevant in the exam, but in the real world *DataSource* is much more powerful as it can pool connection and store the database connection information outside the application.
+
+1. You have the choice of working with a *Statement*, *PreparedStatement*, or *CallableStatement*. *Statement* is an interface that both *PreparedStatement* and *CallableStatement* extend. A *PreparedStatement* takes parameters, while a *Statement* does not. A *CallableStatement* is for queries that are inside the database.
+
+1. *PreparedStatement* is preferred to *Statement* as it provides increased performance, security, readability, and makes future use easier. The *ps.execute()*, *ps.executeQuery()*, and *ps.executeUpdate()* methods are used to run SQL statements. The *ps.execute()* method returns a Boolean result type and true for all SELECT operations and false for all other operations, the *ps.executeQuery()* method returns a ResultSet and the relevent rows and columns for a SELECT operation and n/a for other operations, and the *ps.executeUpdate()* method returns n/a for a SELECT operation and the number of rows added/changed/removed for other operations.
+
+1. A *PreparedStatement* allows you to set parameters using the *setBoolean()*, *setDouble()*, *setInt*, *setLong*, *setObject*, and *setString* methods. It is important to note that the variables start counting from 1 and not from 0. An example is shown below:
+    ```java
+    public static void register(Connection conn, int key, int type, String name)
+            throws SQLException {
+        String sql = "INSERT INTO names VALUES(?,?,?)";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, key);
+            ps.setString(3, name);
+            ps.setInt(2, type);
+            ps.executeUpdate();
+        }
+    }
+    ```
+
+1. The *addBatch()* and *executeBatch()* methods can be used to run multiple statements in fewer trips to the database. As the database is often on a different machine than the machine the Java code runs, reducing the number of network calls can improve performance significantly.
+
+1. A *CallableStatement* can be used to execute a stored procedure on a database. An example is shown below with the *read_e_names()* stored procedure:
+    ```java
+    String sql = "{call read_e_names()}";
+    try(CallableStatement cs = conn.prepareCall(sql);
+            ResultSet rs = cs.executeQuery()) {
+        while(rs.next()) {
+            System.out.println(rs.getString(3));
+        }
+    }
+    ```
+
+1. An example calling the *read_names_by_letter()* stored procedure which requires a prefix parameter is shown below:
+    ```java
+    var sql = "{call read_names_by_letter(?)}";
+    try (var cs = conn.prepareCall(sql)) {
+        cs.setString("prefix", "Z");
+        try (var rs = cs.executeQuery()) {
+            while (rs.next()) {
+                System.out.println(rs.getString(3));
+            }
+        }
+    }
+    ```
+
+1. An example calling the *magic_number()* stored procedure which requires a Num parameter and returns an OUT parameter is shown below:
+    ```java
+    var sql = "?=call magic_number(?)}";
+    try (var cs = conn.prepareCall(sql)) {
+        cs.registerOutParameter(1, Types.INTEGER);
+        cs.execute();
+        System.out.println(cs.getInt("num"));
+    }
+    ```
+
+1. An example calling the *double_number()* stored procedure which requires a Num parameter and returns an INOUT parameter is shown below:
+    ```java
+    var sql = "{? = call double_number(?)}";
+    try (var cs = conn.prepareCall(sql)) {
+        cs.setInt(1, 8);
+        cs.registerOutParameter(1, Types.INTEGER);
+        cs.execute();
+        System.out.println(cs.getInt("num"));
+    }
+    ```
+
+1. JDBC resources, such as a *Connection*, are expensive to create. Not closing them creates a resource leak that will eventually slow down you program. The resources need to be closed in a specific order. The *ResultSet* is closed first, followed by the *PreparedStatement* (or *CallableStatement*), and then the *Connection*. Closing all three is not strictly necessary, as closing a JDBC resource should close any resources that it created. JDBC also automatically closes a *ResultSet* when you run another SQL statement from the same *Statement*, *PreparedStatement*, or *CallableStatement*.
+
+### Security
