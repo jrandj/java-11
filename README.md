@@ -882,8 +882,8 @@
 - [Exceptions, Assertions, and Localization](#Exceptions-Assertions-and-Localization)
 - [Modular Applications](#Modular-Applications) 
 - [Concurrency](#Concurrency) 
-- [I/O](#I/O) 
-- [NIO.2](#NIO.2) 
+- [I/O](#IO) 
+- [NIO.2](#NIO2) 
 - [JDBC](#JDBC) 
 - [Security](#Security)
 
@@ -3154,3 +3154,88 @@
 1. JDBC resources, such as a *Connection*, are expensive to create. Not closing them creates a resource leak that will eventually slow down you program. The resources need to be closed in a specific order. The *ResultSet* is closed first, followed by the *PreparedStatement* (or *CallableStatement*), and then the *Connection*. Closing all three is not strictly necessary, as closing a JDBC resource should close any resources that it created. JDBC also automatically closes a *ResultSet* when you run another SQL statement from the same *Statement*, *PreparedStatement*, or *CallableStatement*.
 
 ### Security
+
+1. A key security principle is to limit access as much as possible. This is known as the principle of least privilege. There are four levels of access control in Java, and the lowest level of accessible possible should be used.
+
+1. If subclassing is not required, classes should use the *final* modified to prevent subclassing.
+
+1. Object immutability should be used wherever possible. This can be achieved my marking the class *final*, marking all instance variables *private*, not defining any setter methods and marking parameters *final*, not allowing referenced mutable objects to be modified, and using a constructor to set all properties of the object (making a copy if needed).
+
+1. A copy can be returned easily using the *clone()* method if the class implements the *Clonable* interface. A shallow copy is returned if no custom implementation is provided. If required, a deep copy implementation can be written for the class.
+
+1. *Injection* is an attack where dangerous input runs in a program as part of a command. Sources of untrusted data include user input, reading from files, and retrieving data from a database. In the real world, any data that did not originate from your program should be considered suspect.
+
+1. Consider the following example:
+    ```java
+    public int getOpening(Connection conn, String day) throws SQLException {
+        String sql = "SELECT opens FROM hours WHERE day = " + day + "";
+
+        try (var stmt = conn.createStatement();
+                var rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt("opens");
+            }
+        }
+        return -1;
+    }
+
+    // good
+    int opening = attack.getOpening(comm, "monday"); // 10
+
+    // bad
+    int evil = attack.getOpening(conn, "monday' OR day IS NOT NULL OR day = 'sunday"); // 9
+    ```
+
+1. The second execution ran the following SQL statement which returns all rows (9 is returned as that happens to be the first result):
+    ```SQL
+    SELECT opens FROM hours
+    WHERE day = 'monday'
+    OR day IS NOT NULL
+    OR day = 'sunday'
+    ```
+
+1. Consider second execution with the following example where a *PreparedStatement* is used:
+    ```java
+    public int getOpening(Connection conn, String day) throws SQLException {
+        String sql = "SELECT opens FROM hours WHERE day = ?";
+
+        try (var ps = conn.prepareStatement(sql)) {
+            ps.setString(1, day);
+            try (var rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("opens");
+                }
+            }
+            return -1;
+        }
+    }
+
+    // bad
+    int evil = attack.getOpening(conn, "monday' OR day IS NOT NULL OR day = 'sunday"); // -1
+    ```
+
+1. The entire string is matched against the *day* column, and since there is no match, no rows are returned.
+
+1. *Command injection* is another type that uses operating system commands to do something unexpected. Consider the following example:
+    ```java
+    Console console = System.console();
+    String dirName = console.readLine();
+    Path path = Paths.get("c:/data/diets/" + dirName);
+    try (Stream<Path> stream = Files.walk(path)) {
+        stream.filter(p -> p.toString().endsWith(".txt"))
+                .forEach(System.out::println);
+    }
+    ```
+
+1. When run with .. as the directory name, a *secrets* directory could be returned. A whitelist can be implemented to control what directories can be searched:
+    ```java
+    Console console = System.console();
+    String dirName = console.readLine();
+    if (dirName.equals("mammal") || dirName.equals("birds")) {
+        Path path = Paths.get("c:/data/diets/" + dirName);
+        try (Stream<Path> stream = Files.walk(path)) {
+            stream.filter(p -> p.toString().endsWith(".txt"))
+                    .forEach(System.out::println);
+        }
+    }
+    ```
