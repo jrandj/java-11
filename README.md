@@ -3239,3 +3239,59 @@
         }
     }
     ```
+
+1. When working on a project, you will often encounter confidential or sensitive data. Confidential informatin should not be put into a *toString()* method, as it is likely to wind up logged somewhere that you did not intend. You should be be careful what methods you call in sensitive contexts such as writing to a log file, printing an exception or stack trace, *System.out* and *System.err* messages, or writing to data files.
+
+1. You also need to be careful about what is in memory. If the application crashes, it may generate a dump file which contains the values of everything in memory. For example, when calling the *readPassword()* method on *Console*, it returns a *char[]* instead of a *String*. This is safer because it will not be placed in the String pool, where it could remain in memory after that code that used it is run, and you can *null* out the value of the array element yourself rather than waiting for the garbage collector to do it. The idea is to have confidential data in memory for as short a time as possible.
+
+1. Imagine you are storing data in an *Employee* record. We want to write this data to a file and read this data back into memory, but we want to do this without writing any potentially sensitive data to disk. This can be achieved with serialization. Recall that Java skips calling the constructor when deserializing an object. This means validation performed in the constructor cannot be relied on.
+
+1. Consider the following class:
+    ```java
+    import java.io.*;
+
+    public class Employee implements Serializable {
+        private String name;
+        private int age;
+
+        // Constructors/getters/setters
+    }
+    ```
+
+1. Recall that marking a field as *transient* prevents it from being serialized. Serialized fields can also be whitelisted by including them in a *ObjectStreamField [] serialPersistentFields* object. Security requirements may require us to implement custom serialization. We have a requirement to store the Social Security number, and we do need to serialize this information. However, we do not want to store it in plain text, so we will need to write some custom code. Consider the following updated class which uses custom read and write methods to securely encrypt and decrypt the Social Security number:
+    ```java
+    public class Employee {
+        private String name;
+        private String ssn;
+        private int age;
+
+        // Constructors/getters/setters
+
+        private static final ObjectStreamField[] serialPersistentFields = {
+                new ObjectStreamField("name", String.class),
+                new ObjectStreamField("ssn", String.class) };
+
+        private static String encrypt(String input) {
+            // Implementation omitted
+        }
+
+        private static String decrypt(String input) {
+            // Implementation omitted
+        }
+
+        private void writeObject(ObjectOutputStream s) throws Exception {
+            ObjectOutputStream.PutField fields = s.putFields();
+            fields.put("name", name);
+            fields.put("ssn", encrypt(ssn));
+            s.writeFields();
+        }
+
+        private void readObject(ObjectInputStream s) throws Exception {
+            ObjectInputStream.GetField fields = s.readFields();
+            this.name = (String) fields.get("name", null);
+            this.ssn = decrypt((String) fields.get("ssn", null));
+        }
+    }
+    ```
+
+1. Some fields are too sensitive even for custom serialization. A password should never be decryptable. When a password is set for a user, it should be converted to a *String* value using a salt (initial random value) using a one-way hashing algorithm. Databases of stored passwords can get stolen. Having them properly encrypted means the attacker cannot do much with them.
