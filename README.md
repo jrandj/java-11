@@ -3240,7 +3240,7 @@
     }
     ```
 
-1. When working on a project, you will often encounter confidential or sensitive data. Confidential informatin should not be put into a *toString()* method, as it is likely to wind up logged somewhere that you did not intend. You should be be careful what methods you call in sensitive contexts such as writing to a log file, printing an exception or stack trace, *System.out* and *System.err* messages, or writing to data files.
+1. When working on a project, you will often encounter confidential or sensitive data. Confidential information should not be put into a *toString()* method, as it is likely to wind up logged somewhere that you did not intend. You should be careful what methods you call in sensitive contexts such as writing to a log file, printing an exception or stack trace, *System.out* and *System.err* messages, or writing to data files.
 
 1. You also need to be careful about what is in memory. If the application crashes, it may generate a dump file which contains the values of everything in memory. For example, when calling the *readPassword()* method on *Console*, it returns a *char[]* instead of a *String*. This is safer because it will not be placed in the String pool, where it could remain in memory after that code that used it is run, and you can *null* out the value of the array element yourself rather than waiting for the garbage collector to do it. The idea is to have confidential data in memory for as short a time as possible.
 
@@ -3295,3 +3295,14 @@
     ```
 
 1. Some fields are too sensitive even for custom serialization. A password should never be decryptable. When a password is set for a user, it should be converted to a *String* value using a salt (initial random value) using a one-way hashing algorithm. Databases of stored passwords can get stolen. Having them properly encrypted means the attacker cannot do much with them.
+
+1. Sometimes an object can have different contents in memory versus on disk. When present, the *readResolve()* method is run after the *readObject()* method and is capable of replacing the reference of the object returned by deserialization. Similarly, if we want to write an object to disk but do not completely trust the instance we are holding, we will want to write the object in memory instead of what is in the *this* instance. When present, the *writeReplace()* method is run before *writeObject()* and allows us to replace the object that gets serialized. This is shown below:
+    <p align="center">
+        <img src="res/figure_11.4.JPG">
+    </p>
+
+1. When constructing sensitive objects, you need to ensure that subclasses can't change the behaviour. This can be done by making methods *final*, making classes *final*, or making the constructor *private*.
+
+1. The person running your program will have access to the bytecode (.class) files, typically bundled in a JAR file. With the bytecode, they can decompile your code and get source code. It is not as well written as the code you wrote but has equivalent information. Using an obfuscator makes your decompiled bytecode harder to read and therefore harder to reverse engineer, it doesn't provide any security.
+
+1. A Denial of Service (DoS) attack can exploit poorly written code. This could include code that leaks resources (does not close a resource), creates very large resources, doesn't handle overflowing numbers correctly, or tries to exploit the limitations of data structures.
