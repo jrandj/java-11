@@ -2,6 +2,7 @@
 
 - [Java SE 11 Programmer I](#Java-SE-11-Programmer-I)
 - [Java SE 11 Programmer II](#Java-SE-11-Programmer-II)
+- [Practise Tests](#Practise-Tests)
 
 ## Java SE 11 Programmer I
 
@@ -3306,3 +3307,65 @@
 1. The person running your program will have access to the bytecode (.class) files, typically bundled in a JAR file. With the bytecode, they can decompile your code and get source code. It is not as well written as the code you wrote but has equivalent information. Using an obfuscator makes your decompiled bytecode harder to read and therefore harder to reverse engineer, it doesn't provide any security.
 
 1. A Denial of Service (DoS) attack can exploit poorly written code. This could include code that leaks resources (does not close a resource), creates very large resources, doesn't handle overflowing numbers correctly, or tries to exploit the limitations of data structures.
+
+## Practise Tests
+
+- [Working with Java Data Types](#Working-with-Java-Data-Types)
+- [Java Object Oriented Approach](#Java-Object-Oriented-Approach)
+- [Controlling Program Flow](#Controlling-Program-Flow)
+- [Arrays and Collections](#Arrays-and-Collections)
+- [Exception Handlng](#Exception-Handlng)
+- [Concurrency](#Concurrency)
+- [Java I/O + NIO](#Java-IO-+-NIO)
+- [Modules](#Modules)
+- [JDBC](#JDBC)
+- [Streams and Lambda](#Streams-and-Lambda)
+- [Localization](#Localization)
+- [Annotations](#Annotations)
+- [Security](#Security)
+
+### Working with Java Data Types
+
+1. What will the following code print when run?
+    ```java
+	public class TestCLass {
+	    public static Integer wiggler(Integer x) {
+	        Integer y = x + 10;
+	        x++;
+	        System.out.println(x);
+	        return y;
+	    }
+
+	    public static void main(String[] args) {
+	        Integer dataWrapper = new Integer(5);
+	        Integer value = wiggler(dataWrapper);
+	        System.out.println(dataWrapper + value);
+	    }
+	}
+    ```
+
+	* The printed output is `6 20`.
+
+### Java Object Oriented Approach
+
+### Controlling Program Flow
+
+### Arrays and Collections
+
+### Exception Handlng
+
+### Concurrency
+
+### Java I/O + NIO
+
+### Modules
+
+### JDBC
+
+### Streams and Lambda
+
+### Localization
+
+### Annotations
+
+### Security
