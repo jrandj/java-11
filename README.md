@@ -3328,7 +3328,7 @@
 
 1. What will the following code print when run?
     ```java
-	public class TestCLass {
+	public class TestClass {
 	    public static Integer wiggler(Integer x) {
 	        Integer y = x + 10;
 	        x++;
@@ -3345,6 +3345,32 @@
     ```
 
 	* The printed output is `6 20`.
+
+1. What will the following code print when run?
+    ```java
+	public class TestClass {
+	    public static void main(String args[]) {
+	        Object obj1 = new Object();
+	        Object obj2 = obj1;
+	        if (obj1.equals(obj2)) System.out.println("true");
+	        else System.out.println("false");
+	    }
+	}
+    ```
+
+	* This code will not compile as there are no brackets around the if-else statement. If there was only an if statement, it would compile but brackets are recommended for code style. If there were brackets the code would output `true`.
+
+1. Give the below code, what are the types of the variables `a` and `b`?
+    ```java
+	public class TestClass {
+	    public void myMethod(String... params) {
+	        var a = params;
+	        var b = params[0];
+	    }
+	}
+    ```
+
+	* The type of `a` is *String[]* and the type of `b` is *String*.
 
 ### Java Object Oriented Approach
 
