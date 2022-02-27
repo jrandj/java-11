@@ -3328,49 +3328,162 @@
 
 1. What will the following code print when run?
     ```java
-	public class TestClass {
-	    public static Integer wiggler(Integer x) {
-	        Integer y = x + 10;
-	        x++;
-	        System.out.println(x);
-	        return y;
-	    }
+    public class TestClass {
+        public static Integer wiggler(Integer x) {
+            Integer y = x + 10;
+            x++;
+            System.out.println(x);
+            return y;
+        }
 
-	    public static void main(String[] args) {
-	        Integer dataWrapper = new Integer(5);
-	        Integer value = wiggler(dataWrapper);
-	        System.out.println(dataWrapper + value);
-	    }
-	}
+        public static void main(String[] args) {
+            Integer dataWrapper = new Integer(5);
+            Integer value = wiggler(dataWrapper);
+            System.out.println(dataWrapper + value);
+        }
+    }
     ```
-
-	* The printed output is `6 20`.
+    * The printed output is `6 20`.
 
 1. What will the following code print when run?
     ```java
-	public class TestClass {
-	    public static void main(String args[]) {
-	        Object obj1 = new Object();
-	        Object obj2 = obj1;
-	        if (obj1.equals(obj2)) System.out.println("true");
-	        else System.out.println("false");
-	    }
-	}
+    public class TestClass {
+        public static void main(String args[]) {
+            Object obj1 = new Object();
+            Object obj2 = obj1;
+            if (obj1.equals(obj2)) System.out.println("true");
+            else System.out.println("false");
+        }
+    }
     ```
-
-	* This code will not compile as there are no brackets around the if-else statement. If there was only an if statement, it would compile but brackets are recommended for code style. If there were brackets the code would output `true`.
+    * This code will not compile as there are no brackets around the if-else statement. If there was only an if statement, it would compile but brackets are recommended for code style. If there were brackets the code would output `true`.
 
 1. Give the below code, what are the types of the variables `a` and `b`?
     ```java
-	public class TestClass {
-	    public void myMethod(String... params) {
-	        var a = params;
-	        var b = params[0];
-	    }
-	}
+    public class TestClass {
+        public void myMethod(String... params) {
+            var a = params;
+            var b = params[0];
+        }
+    }
+    ```
+    * The type of `a` is *String[]* and the type of `b` is *String*.
+
+1. You want to find out whether two strings are equal or not, in terms of the actual characters within the strings. What is the best way to do this?
+    * Use String's equals method.
+
+1. What will be the result of attempting to compile and run the following program?
+    ```java
+    public static void main(String args[]) {
+        StringBuilder sb = new StringBuilder("12345678");
+        sb.setLength(5);
+        sb.setLength(10);
+        System.out.println(sb.length());
+    }
+    ```
+    * The printed output is `10`.
+
+1. What will be the result of attempting to compile and run the following program?
+    ```java
+    public static void main(String args[]) {
+        int k = 1;
+        int[] a = { 1 };
+        k += (k = 4) * (k + 2);
+        a[0] += (a[0] = 4) * (a[0] + 2);
+        System.out.println(k + " , " + a[0]);
+    }
+    ```
+    * The printed output is `25 , 25`.
+
+1. What will be the result of attempting to compile and run the following program?
+    ```java
+    public class SM {
+        public String checkIt(String s) {
+            if (s.length() == 0 || s == null) {
+                return "EMPTY";
+            }
+            else return "NOT EMPTY";
+        }
+
+        public static void main(String args[]) {
+            SM a = new SM();
+            System.out.println(a.checkIt(null));
+        }
+    }
+    ```
+    * A *NullPointerException* is thrown because `s` is operated upon before the null check.
+
+1. Given the following class, which statements can be inserted at line 1 without causing the code to fail compilation?
+    ```java
+    public class TestClass {
+        int a;
+        int b = 0;
+        static int c;
+
+        public void m() {
+            int d;
+            int e = 0;
+            // Line 1
+        }
+    }
+    ```
+    * Variables `a`, `b`, `c`, and `e` can be incremented at Line 1. The variable `d` cannot be incremented as it has not been initialised.
+
+1. Which of these are valid expressions to create a string of value "hello world"?
+    * The following are valid:
+    ```java
+    System.out.println(" hello world".trim());
+    System.out.println("hello".concat(" world"));
+    System.out.println(
+            new StringBuilder("world").insert(0, "hello ").toString());
     ```
 
-	* The type of `a` is *String[]* and the type of `b` is *String*.
+1. Given the following class, what can be done to make this code compile and run?
+    ```java
+    public class Square {
+        private double side = 0; // Line 2
+        public static void main(String[] args) { // Line 4
+            Square sq = new Square(); // Line 5
+            side = 10; // Line 6
+        }
+    }
+    ```
+    * Line 6 needs to be replaced with `sq.side = 10`.
+
+1. What will the following program print when run?
+    ```java
+    public class Operators {
+
+        public static int operators() {
+            int x1 = -4;
+            int x2 = x1--;
+            int x3 = ++x2;
+            if (x2 > x3) {
+                --x3;
+            } else {
+                x1++;
+            }
+            return x1 + x2 + x3;
+        }
+
+        public static void main(String[] args) {
+            System.out.println(operators());
+        }
+    }
+    ```
+    * The output is `-10`.
+
+1. What will be the result of attempting to compile or run the following class?
+    ```java
+    public class TestClass {
+        public static void main(String args[]) {
+            int i, j, k;
+            i = j = k = 9;
+            System.out.println(i);
+        }
+    }
+    ```
+    * The code will compile and print a value of `9`.
 
 ### Java Object Oriented Approach
 
