@@ -3485,6 +3485,92 @@
     ```
     * The code will compile and print a value of `9`.
 
+1. What will the below program print if compiled and run using the `java Switcher 1 2 3` command line?
+    ```java
+    public class Switcher {
+        public static void main(String[] args) {
+            switch (Integer.parseInt(args[1])) // 1
+            {
+            case 0:
+                var b = false; // 2
+                break;
+
+            case 1:
+                b = true; // 3
+                break;
+            }
+
+            if (b) { // 4
+                System.out.println(args[2]);
+            }
+        }
+    }
+    ```
+    * It will fail to compile because at line 4 `b` is not defined.
+
+1. Which of the following operators can be used in conjunction with a String object?
+    * The `+`, `+=`, and `.` operators can be used with String objects.
+
+1. What will the following code print?
+    ```java
+    public static void main(String[] args) {
+        int i = 0;
+        int j = 1;
+        if ((i++ == 0) & (j++ == 2)) {
+            i = 12;
+        }
+        System.out.println(i + " " + j);
+    }
+    ```
+    * It will print `1 2`.
+
+1. What will the following code print?
+    ```java
+    public class TrimTest {
+        public static void main(String[] args) {
+            String blank = " "; // one space
+            String line = blank + "hello" + blank + blank;
+            line.concat("world");
+            String newLine = line.trim();
+            System.out.println((int) (line.length() + newLine.length()));
+        }
+    }
+    ```
+    * It will print `13`. The concatenation does not assign a new value to `line`, and trim takes spaces from the beginning and end of a String.
+
+1. Which of the following is not a primitive data value in Java?
+    * Strings and the Object class are not primitive data types.
+
+1. What will be the output of the following program?
+    ```java
+    public class SubstringTest {
+        public static void main(String args[]) {
+            String String = "string isa string";
+            System.out.println(String.substring(3, 6));
+        }
+    }
+    ```
+    * It will print `ing` (note there is no space as the 6th character is excluded).
+
+1. Consider the following lines of code, what variables can you put in place of `?` to cause the expression to evaluate to 'true'?
+    ```java
+    boolean greenLight = true;
+    boolean pedestrian = false;
+    boolean rightTurn = true;
+    boolean otherLane = false;
+    ((rightTurn && !pedestrian || otherLane) || (? && !pedestrian && greenLight)) == true;
+    ```
+    * You can ensure a `true` value by providing a `true` variable for `?`.
+
+1. Which of the following expressions will evaluate to true if preceded by the following code?
+    ```java
+    String a = "java";
+    char[] b = { 'j', 'a', 'v', 'a' };
+    String c = new String(b);
+    String d = a;
+    ```
+    * The expressions `a == d`, `b == d`, and `a.equals(c)` will all evaluate to `true`. The expression `a == "java"` will not evaluate to true as the String objects are different.
+
 ### Java Object Oriented Approach
 
 ### Controlling Program Flow
