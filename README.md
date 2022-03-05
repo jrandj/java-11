@@ -3571,6 +3571,73 @@
     ```
     * The expressions `a == d`, `b == d`, and `a.equals(c)` will all evaluate to `true`. The expression `a == "java"` will not evaluate to true as the String objects are different.
 
+1. What will the following code print?
+    ```java
+    String string = " hello java guru ".strip();
+    System.out.print(string);
+    ```
+    * It will print `hello java guru` as `strip()` will remove the spaces from the beginning and end of `string`.
+
+1. What will the following code print?
+    ```java
+    int i1 = 1, i2 = 2, i3 = 3;
+    int i4 = i1 + (i2 = i3);
+    System.out.println(i4);
+    ```
+    * It will print `4`.
+
+1. What will the following code print?
+    ```java
+    String str1 = "str1";
+    String str2 = "str2";
+    System.out.println(str1.concat(str2));
+    System.out.println(str1);
+    ```
+    * It will print `str1str2` and `str1`.
+
+1. What type can be inserted in the code above so that the above code compiles and runs as expected?
+    ```java
+    Byte condition = 1;
+    switch (condition) {
+    case 1:
+        System.out.println("1");
+        break;
+    case 2:
+        System.out.println("2");
+        break;
+    case 3:
+        System.out.println("3");
+        break;
+    }
+    ```
+    * The types `var condition = new Integer("1")` and `Byte condition = 1` types would allow the code to compile and run.
+
+1. What will the following lines of code print?
+    ```java
+    System.out.println(1 + 5 < 3 + 7);
+    System.out.println((2 + 2) >= 2 + 3);
+    ```
+    * It will print `true` and `false`.
+
+1. Which of the following options will empty the contents of the StringBuilder referred to by variable `sb` and method *dumpLog()*?
+    ```java
+	public class Logger {
+	    private StringBuilder sb = new StringBuilder();
+
+	    public void logMsg(String location, String message) {
+	        sb.append(location);
+	        sb.append("-");
+	        sb.append(message);
+	    }
+
+	    public void dumpLog() {
+	        System.out.println(sb.toString());
+	        // Empty the contents of sb here
+	    }
+	}
+    ```
+    * The `sb.delete(0, sb.length())` method can be used.
+
 ### Java Object Oriented Approach
 
 ### Controlling Program Flow
