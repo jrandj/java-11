@@ -3427,7 +3427,7 @@
         }
     }
     ```
-    * Variables `a`, `b`, `c`, and `e` can be incremented at Line 1. The variable `d` cannot be incremented as it has not been initialised.
+    * Variables `a`, `b`, `c`, and `e` can be incremented at Line 1. The variable `d` cannot be incremented as it has not been initialised. Unlike instance or static variables, local variables are not initialised automatically, and must be initialised if they are used.
 
 1. Which of these are valid expressions to create a string of value "hello world"?
     * The following are valid:
@@ -3509,7 +3509,7 @@
     * It will fail to compile because at line 4 `b` is not defined.
 
 1. Which of the following operators can be used in conjunction with a String object?
-    * The `+`, `+=`, and `.` operators can be used with String objects.
+    * The `+`, `+=`, and `.` operators can be used with String objects. There are no `++` or `*` operators for String.
 
 1. What will the following code print?
     ```java
@@ -3539,7 +3539,7 @@
     * It will print `13`. The concatenation does not assign a new value to `line`, and trim takes spaces from the beginning and end of a String.
 
 1. Which of the following is not a primitive data value in Java?
-    * Strings and the Object class are not primitive data types.
+    * Strings and the Object class are not primitive data types. The primitive data types are boolean, byte, char, int, long, float, and double.
 
 1. What will be the output of the following program?
     ```java
@@ -3550,7 +3550,7 @@
         }
     }
     ```
-    * It will print `ing` (note there is no space as the 6th character is excluded).
+    * It will print `ing` (note there is no space as the 6th character is excluded from the upper bound).
 
 1. Consider the following lines of code, what variables can you put in place of `?` to cause the expression to evaluate to 'true'?
     ```java
@@ -3560,7 +3560,7 @@
     boolean otherLane = false;
     ((rightTurn && !pedestrian || otherLane) || (? && !pedestrian && greenLight)) == true;
     ```
-    * You can ensure a `true` value by providing a `true` variable for `?`.
+    * Any value is alright as the first part of the expression evaluates to `true`.
 
 1. Which of the following expressions will evaluate to true if preceded by the following code?
     ```java
@@ -3569,7 +3569,16 @@
     String c = new String(b);
     String d = a;
     ```
-    * The expressions `a == d`, `b == d`, and `a.equals(c)` will all evaluate to `true`. The expression `a == "java"` will not evaluate to true as the String objects are different.
+    * The expressions `a == d`, `a == "java"`, and `a.equals(c)` will all evaluate to `true`. The expression `b == d"` cannot be used as the objects are of different types.
+
+1. What will the following code print
+    ```java
+    String abc = "";
+    abc.concat("abc");
+    abc.concat("def");
+    System.out.print(abc);
+    ```
+    * An empty String will be printed as the values as `abc` is not assigned any new value.
 
 1. What will the following code print?
     ```java
@@ -3599,18 +3608,18 @@
     ```java
     Byte condition = 1;
     switch (condition) {
-    case 1:
-        System.out.println("1");
-        break;
-    case 2:
-        System.out.println("2");
-        break;
-    case 3:
-        System.out.println("3");
-        break;
+        case 1:
+            System.out.println("1");
+            break;
+        case 2:
+            System.out.println("2");
+            break;
+        case 3:
+            System.out.println("3");
+            break;
     }
     ```
-    * The types `var condition = new Integer("1")` and `Byte condition = 1` types would allow the code to compile and run.
+    * The types `var condition = new Integer("1")` and `Byte condition = 1` types would allow the code to compile and run. Only String, byte, char, short, int, and their wrapper classes, and enums can be used as types of a switch variable.
 
 1. What will the following lines of code print?
     ```java
@@ -3621,22 +3630,58 @@
 
 1. Which of the following options will empty the contents of the StringBuilder referred to by variable `sb` and method *dumpLog()*?
     ```java
-	public class Logger {
-	    private StringBuilder sb = new StringBuilder();
+    public class Logger {
+        private StringBuilder sb = new StringBuilder();
 
-	    public void logMsg(String location, String message) {
-	        sb.append(location);
-	        sb.append("-");
-	        sb.append(message);
-	    }
+        public void logMsg(String location, String message) {
+            sb.append(location);
+            sb.append("-");
+            sb.append(message);
+        }
 
-	    public void dumpLog() {
-	        System.out.println(sb.toString());
-	        // Empty the contents of sb here
-	    }
-	}
+        public void dumpLog() {
+            System.out.println(sb.toString());
+            // Empty the contents of sb here
+        }
+    }
     ```
     * The `sb.delete(0, sb.length())` method can be used.
+
+1. Which of the above variables will have the value 45?
+    ```java
+    int expr1 = 3 + 5 * 9 - 7;
+    int expr2 = 3 + (5 * 9) - 7;
+    int expr3 = 3 + 5 * (9 - 7);
+    int expr4 = (3 + 5) * 9 - 7;
+    ```
+    * None of these variables will have the value 45.
+
+1. What will the following program print?
+    ```java
+    public class TestClass {
+        static String str = "Hello World";
+
+        public static void changeIt(String s) {
+            s = "Good bye world";
+        }
+
+        public static void main(String[] args) {
+            changeIt(str);
+            System.out.println(str);
+        }
+    }
+    ```
+    * It will print `Hello World` as the value of `s` is not returned and assigned to `str`.
+
+1. What will be the output of the following code snippet?
+    ```java
+    int a = 1;
+    int[] ia = new int[10];
+    int b = ia[a];
+    int c = b + a;
+    System.out.println(b = c);
+    ```
+    * The output will be `1`.
 
 ### Java Object Oriented Approach
 
